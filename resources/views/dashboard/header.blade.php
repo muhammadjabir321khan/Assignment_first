@@ -6,7 +6,7 @@
                             </div>
                             <div class="nk-header-brand d-xl-none">
                                 <a href="html/index.html" class="logo-link">
-                                    <img class="logo-light logo-img" src="{{asset('assets/images/logo.png')}}"  alt="logo">
+                                    <img class="logo-light logo-img" src="{{asset('assets/images/logo.png')}}" alt="logo">
                                     <img class="logo-dark logo-img" src="{{asset('images/logo-dark.png ')}}" alt="logo-dark">
                                 </a>
                             </div><!-- .nk-header-brand -->
@@ -95,7 +95,7 @@
                                             <div class="dropdown-inner">
                                                 <ul class="link-list">
                                                     <form method="POST" action="{{ route('logout') }}">
-                                                      @csrf
+                                                        @csrf
                                                         <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                                           this.closest('form').submit();">
                                                             {{ __('Log Out') }}
@@ -180,5 +180,5 @@
                                 </ul><!-- .nk-quick-nav -->
                             </div><!-- .nk-header-tools -->
                         </div><!-- .nk-header-wrap -->
-                    </div><!-- .container-fliud -->
+                    </div>
                 </div>
