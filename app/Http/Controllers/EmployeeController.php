@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+
 
 class EmployeeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+
     public function index()
     {
-        
-        return view('employee.index');
+
+        return view('employees.index');
     }
 
     /**
@@ -20,7 +23,8 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        $companies = Company::all();
+        return view('employees.create', compact('companies'));
     }
 
     /**
@@ -28,7 +32,7 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

@@ -30,9 +30,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('/companies',CompanyController::class);
-    Route::post('/companies/all', [CompanyController::class,'datatable']);
-
+    
 });
+     
+    Route::resource('/companies',CompanyController::class)->middleware('auth','role:admin');
+    Route::post('/companies/all', [CompanyController::class,'datatable'])->middleware('auth','role:admin');
+    Route::resource('/employees',EmployeeController::class)->middleware('auth','role:subAdmin');
+
+
+
 
 require __DIR__.'/auth.php';

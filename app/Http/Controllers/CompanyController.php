@@ -10,21 +10,34 @@ use Yajra\Datatables\Datatables;
 
 class CompanyController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission: create companies|edit companies| view companies|delete companies', ['only' => ['index','create']]);
+
+    }
+
+    
+
     public function index()
     {
         return view('companies.index');
     }
     public function datatable(Request  $request)
     {
+        
         if ($request->ajax()) {
             $company = Company::all();
             return Datatables::of($company)
                 ->addIndexColumn()
-                ->addColumn('action', function ($row) {
+                ->addColumn('action', function () {
                     $action = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
                     $action = $action . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="" data-original-title="Delete" class="btn btn-danger btn-sm deletePost">Delete</a>';
                     return $action;
-                })->toJson();
+                })
+                ->rawColumns(['action'])
+                ->toJson();
+
         }
 
         return view('companies.index', compact('company'));
@@ -39,15 +52,24 @@ class CompanyController extends Controller
 
     public function store(CompanyRequest  $request)
     {
-        $company = new  Company();
+        $company = new Company();
+
         if ($request->hasFile('image')) {
-            $request->hasFile('image');
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
             $filename = time() . '.' . $ext;
-            $file->move('./images', $filename);
+            $file->storeAs('public/images', $filename); 
             $company->logo = $filename;
         }
+        $company->name = $request->name;
+        $company->email = $request->email;
+        $company->save();
+        $url = asset('storage/images/' . $company->logo); 
+        return response([
+            'company' => 'company is created with logo ' . $url
+        ]);
+        
+        
         $company->name = $request->name;
         $company->email = $request->email;
         $company->save();

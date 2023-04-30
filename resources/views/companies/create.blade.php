@@ -1,5 +1,6 @@
 @extends('dashboard')
 @section('content')
+@section('title','Add-Company')
 <div class="container my-5">
     <form id="companyForm">
         <h5 class="text-center">Add Company</h5>

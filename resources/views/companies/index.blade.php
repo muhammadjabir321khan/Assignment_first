@@ -28,7 +28,7 @@
 <script>
     $(document).ready(function() {
     $('#companies-table').DataTable({
-        "processing": true,
+        "processing": false,
         "serverSide": true,
         "ajax": {
             "url": "{{url('companies/all') }}",
@@ -39,16 +39,22 @@
             },
         },
         "columns": [
-            { "data": "id" },
-            { "data": "name" },
-            { "data": "email" },
+            {
+                "data": "id"
+            },
+            {
+                "data": "name"
+            },
+            {
+                "data": "email"
+            },
             {
                 "data": "logo",
-                "render": function (data, type, row) {
-    return '<img src="./images/' + data + '" width="50" height="50" />';
-}
-
-            }
+                "render": function(data, type, row) {
+                    return '<img src="/storage/images/' + data + '" width="50" height="50" />';
+                }
+            },
+           
         ]
     });
 });

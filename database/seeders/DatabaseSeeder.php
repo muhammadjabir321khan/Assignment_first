@@ -17,25 +17,25 @@ class DatabaseSeeder extends Seeder
     {
 
         $adminRole = Role::create(['name' => 'admin']);
-        $userRole = Role::create(['name' => 'user',]);
-        $editCompanyPermission = Permission::create(['name' => 'edit company']);
-        $createCompanyPermission = Permission::create(['name' => 'create company']);
-        $viewCompanyPermission = Permission::create(['name' => 'view company']);
-        $deleteCompanyPermission = Permission::create(['name' => 'delete company']);
+        $userRole = Role::create(['name' => 'subAdmin']);
+        $editCompanyPermission = Permission::create(['name' => 'edit companies']);
+        $createCompanyPermission = Permission::create(['name' => 'create companies']);
+        $createEmployeePermission = Permission::create(['name' => 'create-employee']);
+        $viewCompanyPermission = Permission::create(['name' => 'view companies']);
+        $deleteCompanyPermission = Permission::create(['name' => 'delete companies']);
         $adminRole->givePermissionTo([$editCompanyPermission, $createCompanyPermission, $viewCompanyPermission, $deleteCompanyPermission]);
-        $userRole->givePermissionTo([$createCompanyPermission]);
-        // \App\Models\User::factory(10)->create();
+        $userRole->givePermissionTo([$createEmployeePermission]);
 
         \App\Models\User::factory()->create([
-            'name' => 'user',
+            'name' => 'subAdmin',
             'email' => 'sub-admin@admin.com',
             'password' => Hash::make('password')
-        ]);
+        ])->assignRole('subAdmin');
 
         \App\Models\User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@admin.com',
             'password' => Hash::make('password')
-        ]);
+        ])->assignRole('admin');
     }
 }
