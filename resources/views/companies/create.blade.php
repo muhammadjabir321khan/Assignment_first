@@ -56,7 +56,6 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
-                    alert(data.company);
                     $('#companyForm')[0].reset();
 
                 },
