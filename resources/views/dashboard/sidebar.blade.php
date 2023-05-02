@@ -10,38 +10,24 @@
                 <img class="logo-dark logo-img" src="./images/logo-dark.png" srcset="./images/logo-dark2x.png 2x" alt="logo-dark">
             </a>
         </div>
-<<<<<<< HEAD
     </div><!-- .nk-sidebar-element -->
     <div class="nk-sidebar-element nk-sidebar-body">
         <div class="nk-sidebar-content">
             <div class="nk-sidebar-menu" data-simplebar>
 
-=======
-    </div>
-    <div class="nk-sidebar-element nk-sidebar-body">
-        <div class="nk-sidebar-content">
-            <div class="nk-sidebar-menu" data-simplebar>
->>>>>>> cc91a8241a7876dbf5431c6817aca3859e24bef5
                 <ul class="nk-menu">
                     <li class="nk-menu-item">
                         <a href="html/crm/index.html" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="icon ni ni-dashboard-fill"></em></span>
                             <span class="nk-menu-text">Dashboard</span>
                         </a>
-<<<<<<< HEAD
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item has-sub">
                         <a href="" class="nk-menu-link nk-menu-toggle">
-=======
-                    </li>
-                    <li class="nk-menu-item has-sub">
-                        <a href="#" class="nk-menu-link nk-menu-toggle">
->>>>>>> cc91a8241a7876dbf5431c6817aca3859e24bef5
                             <span class="nk-menu-icon"><em class="icon ni ni-users-fill"></em></span>
                             <span class="nk-menu-text">Company</span>
                         </a>
                         <ul class="nk-menu-sub">
-<<<<<<< HEAD
                             @role('admin')
                             <li class="nk-menu-item">
                                 <a href="{{url('companies')}}" class="nk-menu-link"><span class="nk-menu-text"> Companies List</span></a>
@@ -70,7 +56,7 @@
                                 <a href="{{url('employees')}}" class="nk-menu-link"><span class="nk-menu-text">Employee list</span></a>
                             </li>
 
-                
+
                             @endcan
                         </ul>
                     </li>
@@ -81,19 +67,3 @@
         </div><!-- .nk-sidebar-content -->
     </div><!-- .nk-sidebar-element -->
 </div>
-=======
-                            <li class="nk-menu-item">
-                                <a href="{{url('companies/create')}}" class="nk-menu-link"><span class="nk-menu-text">Add</span></a>
-                            </li>
-                            <li class="nk-menu-item">
-                                <a href="{{url('companies')}}" class="nk-menu-link"><span class="nk-menu-text">All</span></a>
-                            </li>
-                        </ul>
-                    </li>
-
-
-                </ul>
-            </div>
-        </div>
-    </div>
->>>>>>> cc91a8241a7876dbf5431c6817aca3859e24bef5
