@@ -6,17 +6,47 @@ use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Storage;
+=======
+>>>>>>> cc91a8241a7876dbf5431c6817aca3859e24bef5
 use Yajra\Datatables\Datatables;
 
 class CompanyController extends Controller
 {
+<<<<<<< HEAD
 
     public function __construct()
     {
 
         $this->middleware('permission: create companies|edit companies| view companies|delete companies', ['only' => ['index', 'create']]);
+=======
+    public function index()
+    {
+        return view('companies.index');
+>>>>>>> cc91a8241a7876dbf5431c6817aca3859e24bef5
     }
+    public function datatable(Request  $request)
+    {
+        if ($request->ajax()) {
+            $company = Company::all();
+            return Datatables::of($company)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $action = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
+                    $action = $action . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="" data-original-title="Delete" class="btn btn-danger btn-sm deletePost">Delete</a>';
+                    return $action;
+                })->toJson();
+        }
+
+        return view('companies.index', compact('company'));
+    }
+
+
+
+
+
+
 
 
 
@@ -55,10 +85,19 @@ class CompanyController extends Controller
         return view('companies.create');
     }
 
+<<<<<<< HEAD
+=======
+
+
+    /**
+     * Store a newly created resource in storage.
+     */
+>>>>>>> cc91a8241a7876dbf5431c6817aca3859e24bef5
     public function store(CompanyRequest  $request)
     {
         $company = new Company();
         if ($request->hasFile('image')) {
+<<<<<<< HEAD
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
             $filename = time() . '.' . $ext;
@@ -79,6 +118,21 @@ class CompanyController extends Controller
                 'errors' => $request->errors(),
             ], 422);
         }
+=======
+            $request->hasFile('image');
+            $file = $request->file('image');
+            $ext = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $ext;
+            $file->move('./images', $filename);
+            $company->logo = $filename;
+        }
+        $company->name = $request->name;
+        $company->email = $request->email;
+        $company->save();
+        return response([
+            'company ' => ' company  is created' . $company->id
+        ]);
+>>>>>>> cc91a8241a7876dbf5431c6817aca3859e24bef5
     }
 
     /**
