@@ -8,6 +8,8 @@
                 <th>ID</th>
                 <th>FName</th>
                 <th>lname</th>
+                <th>Company</th>
+
                 <th>Actions</th>
 
             </tr>
@@ -43,6 +45,7 @@
                 {
                     "data": "lname"
                 },
+                {data: 'company', name: 'company'},
                 {
                     "data": "action",
                     "orderable": false,

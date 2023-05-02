@@ -27,8 +27,8 @@ class EmployeeController extends Controller
     public function emplyeedatatable(Request  $request)
     {
         if ($request->ajax()) {
-            $company = Employee::all();
-            return Datatables::of($company)
+            $employees = Employee::with('company')->get();
+            return Datatables::of($employees)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $action = '<a href="' . route('employees.edit', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
@@ -36,14 +36,14 @@ class EmployeeController extends Controller
                     $action .= '<a class="btn btn-danger  btn-sm mx-1 delete" data-table="companies-table" data-method="DELETE"
                     data-url="' . route('employees.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
                         Delete
-                    </a>';;
-
-                    return $action;
+                    </a>';
+                 return $action;
+                })->addColumn('company', function ($row) {
+                    return $row->company ? $row->company->name : 'N/A';
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'company'])
                 ->toJson();
         }
-
         return view('employees.index', compact('company'));
     }
 
