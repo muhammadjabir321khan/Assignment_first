@@ -30,14 +30,28 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
 });
-     
-    Route::resource('/companies',CompanyController::class)->middleware('auth','role:admin');
-    Route::post('/companies/all', [CompanyController::class,'datatable'])->middleware('auth','role:admin');
-    Route::resource('/employees',EmployeeController::class)->middleware('auth','role:subAdmin');
+
+Route::resource('companies', 'CompanyController')->names([
+    'index' => 'companies.index',
+    'create' => 'companies.create',
+    'store' => 'companies.store',
+    'show' => 'companies.show',
+    'edit' => 'companies.edit',
+    'update' => 'companies.update',
+    'destroy' => 'companies.destroy',
+])->middleware('auth', 'role:admin');
+Route::resource('companies', CompanyController::class);
+Route::resource('/employees', 'CompanyController')->names([
+    'index' => 'employees',
+]);
+
+Route::resource('/employees',EmployeeController::class);
+Route::post('/companies/all', [CompanyController::class, 'datatable'])->middleware('auth', 'role:admin');
+Route::post('/employee/all', [EmployeeController::class, 'emplyeedatatable']);
 
 
 
 
-require __DIR__.'/auth.php';
+
+require __DIR__ . '/auth.php';
