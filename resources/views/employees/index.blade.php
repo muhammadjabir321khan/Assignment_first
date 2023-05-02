@@ -53,7 +53,31 @@
             ]
         });
 
+        $(document).on('click', '.delete', function() {
+        var table = $(this).data('table');
+        var url = $(this).data('url');
+        var method = $(this).data('method');
+        if (confirm("Are you sure you want to delete this employee?")) {
+            $.ajax({
+                url: url,
+                type: method,
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(data) {
+                    alert(data.success);
+                    $('#' + table).DataTable().ajax.reload();
+                },
+                error: function(xhr, status, error) {
+                    $('.alert-success').text('Data successfully deleted!').fadeIn().delay(3000).fadeOut();
+
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+    });
     });
 
+    
     
 </script>

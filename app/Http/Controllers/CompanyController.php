@@ -63,13 +63,13 @@ class CompanyController extends Controller
             $file->storeAs('public/images', $filename);
             $company->logo = $filename;
         }
-        
+
         $company->name = $request->name;
         $company->email = $request->email;
         $company->save();
         if ($company) {
             return response([
-                'company ' => 'new company  is created  ' 
+                'company ' => 'new company  is created  '
             ]);
         } else {
             return response()->json([
@@ -112,11 +112,7 @@ class CompanyController extends Controller
             $path = $request->file('image')->storeAs('public/images', $filename);
             $company->logo = $filename;
         }
-
         $company->save();
-
-
-
         return response()->json([
             'success' => true,
             'message' => 'Company updated successfully.'
