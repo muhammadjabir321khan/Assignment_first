@@ -30,12 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-<<<<<<< HEAD
-=======
     Route::resource('/companies',CompanyController::class);
     Route::post('/companies/all', [CompanyController::class,'datatable']);
 
->>>>>>> cc91a8241a7876dbf5431c6817aca3859e24bef5
 });
 
 Route::resource('companies', 'CompanyController')->names([
