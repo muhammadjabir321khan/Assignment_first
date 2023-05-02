@@ -4,7 +4,7 @@
 <form id="employee-form">
     <div>
         <div class="col-md-10">
-        <div id="lname-error" class="text-danger"></div>
+            <div id="lname-error" class="text-danger"></div>
             <div class="form-group">
                 <label class="form-label" for="fname"> First Name</label>
                 <div class="form-control-wrap">
@@ -15,7 +15,7 @@
     </div>
     <div>
         <div class="col-md-10">
-        <div id="fname-error" class="text-danger"></div>
+            <div id="fname-error" class="text-danger"></div>
 
             <div class="form-group">
                 <label class="form-label" for="fname"> Last Name</label>
@@ -53,8 +53,10 @@
     }
 </style>
 @endsection
-
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="sweetalert2.all.min.js"></script>
+<script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
 <script>
     $(document).ready(function() {
         $('#employee-form').on('submit', function(e) {
@@ -75,7 +77,7 @@
                 },
 
                 success: function(response) {
-                    console.log(response);
+                   swal.fire("New Employee is added",response),
                     $('#employee-form')[0].reset();
                 },
                 error: function(xhr, status, error) {

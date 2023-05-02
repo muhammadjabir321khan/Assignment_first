@@ -22,8 +22,8 @@ class EmployeeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'lname' => 'required',
             'fname' => 'required',
+            'lname' => 'required',
             'company_id' => 'required'
         ];
     }

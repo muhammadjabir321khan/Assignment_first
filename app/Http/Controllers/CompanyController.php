@@ -69,7 +69,7 @@ class CompanyController extends Controller
         $company->save();
         if ($company) {
             return response([
-                'company ' => ' company  is created' . $company->id
+                'company ' => 'new company  is created  ' 
             ]);
         } else {
             return response()->json([

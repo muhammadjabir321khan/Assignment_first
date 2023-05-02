@@ -90,17 +90,24 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         $employee = Employee::find($id);
-        $company = Company::all();
-        return view('employees.edit', compact('employee', 'company'));
+        $companies = Company::all();
+        return view('employees.edit', compact('employee', 'companies'));
     }
 
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EmployeeRequest $request,  $id)
     {
-        //
+        $employee = Employee::find($id);
+        $employee->fname = $request->fname;
+        $employee->lname = $request->lname;
+        $employee->company_id = $request->company_id;
+        $employee->save();
+        return response([
+            'employee' => 'employee is updated succfully'
+        ]);
     }
 
     /**
