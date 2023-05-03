@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('/employees', EmployeeController::class)->middleware(['auth', 'role:subAdmin']);
+Route::resource('/employees', EmployeeController::class);
 Route::resource('/companies', CompanyController::class)->middleware(['auth', 'role:admin']);
 Route::resource('/projects', ProjectController::class)->middleware(['auth', 'role:admin']);
 

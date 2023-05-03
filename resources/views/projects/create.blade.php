@@ -42,10 +42,35 @@
                     </div>
                 </div>
             </div>
+            <div class="select-wrapper col-md-10">
+                <label for="company">Company:</label>
+                <select name="employee_id" id="employee_id">
+                    <option value="">Select a employees</option>
+                    @foreach ($employies as $employee)
+                    <option value="{{ $employee->id }}">{{ $employee->fname }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
         <button type="submit" class="btn btn-success my-3">save</button>
     </form>
 </div>
+<style>
+    .select-wrapper select {
+        font-size: 16px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .select-wrapper label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+</style>
 @endsection
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script>
@@ -64,7 +89,7 @@
                 },
                 success: function(response) {
                     $('#companyForm')[0].reset();
-                    alert(data.company);
+                    alert(response.project);
 
                 },
                 error: function(xhr, status, error) {

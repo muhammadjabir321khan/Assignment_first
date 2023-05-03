@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProjectRequest;
+use App\Models\Employee;
+use App\Models\Projects;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -11,23 +14,29 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
-    {  
-        return view('projects.create');
+    {
+        $employies = Employee::all();
+        return view('projects.create', compact('employies'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProjectRequest $request)
     {
         
+        $project = Projects::create($request->all());
+        $data=[1,2,3,4];
+        $project->employee()->attach($data);
+        return response([
+            'project' => 'project is created succesfully'
+        ]);
     }
 
     /**

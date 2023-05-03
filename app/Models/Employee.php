@@ -21,7 +21,7 @@ class Employee extends Model
 
     public function project()
     {
-        return $this->belongsToMany(Projects::class ,'employee_projects');
+        return $this->belongsToMany(Projects::class ,'employee_projects','project_id','employee_id');
     }
     use HasFactory;
 }
