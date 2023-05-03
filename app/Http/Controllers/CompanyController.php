@@ -6,6 +6,7 @@ use App\Http\Requests\CompanyRequest;
 use App\Jobs\MailJob;
 use App\Mail\CompanyCreated;
 use App\Models\Company;
+use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -49,33 +50,33 @@ class CompanyController extends Controller
         return view('companies.create');
     }
 
-    public function store(Request  $request)
+    public function store(CompanyRequest $request)
     {
-        $company = new Company();
-        if ($request->hasFile('image')) {
+        if ($request->has('image')) {
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
             $filename = time() . '.' . $ext;
             $file->storeAs('public/images', $filename);
-            $company->logo = $filename;
-        }
-
-        $company->name = $request->name;
-        $company->email = $request->email;
-        $company->save();
-        if ($company) {
-            $user = User::find(2);
-            \App\Jobs\MailJob::dispatch($user)->delay(now()->addSeconds(5));
-            return response([
-                'company ' => ' company  is created' . $company->id
-            ]);
+            $data = $request->all();
+            $data['logo'] = $filename;
         } else {
+            $request->validate();
+        }
+        Company::create($data);
+        try {
+            $user = User::find(2);
+            \App\Jobs\MailJob::dispatch($user)->delay(now()->addSecond(1));
+            return response([
+                'company ' => ' company  is created'
+            ]);
+        } catch (\Exception $e) {
             return response()->json([
                 'message' => 'The given data was invalid.',
                 'errors' => $request->errors(),
             ], 422);
         }
     }
+
 
     /**
      * Display the specified resource.
@@ -87,9 +88,8 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Company $company)
     {
-        $company = Company::find($id);
         return view('companies.edit', compact('company'));
     }
 
@@ -97,10 +97,8 @@ class CompanyController extends Controller
      * Update the specified resource in storage.
      */
     // Inside the update method of the controller
-    public function update(Request $request, string $id)
+    public function update(CompanyRequest $request, Company $company)
     {
-        $company = Company::find($id);
-
         $company->name = $request->input('name');
         $company->email = $request->input('email');
         if ($request->hasFile('image')) {
@@ -110,18 +108,15 @@ class CompanyController extends Controller
             $path = $request->file('image')->storeAs('public/images', $filename);
             $company->logo = $filename;
         }
-
         $company->save();
-        return redirect('/companies');
         return response()->json([
             'success' => true,
             'message' => 'Company updated successfully.'
         ]);
     }
 
-    public function destroy($id)
+    public function destroy(Company $company)
     {
-        $company = Company::findOrFail($id);
         $company->delete();
         return response()->json(['success' => 'Company has been deleted']);
     }
