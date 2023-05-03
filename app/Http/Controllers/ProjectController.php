@@ -6,13 +6,14 @@ use App\Http\Requests\ProjectRequest;
 use App\Models\Employee;
 use App\Models\Projects;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         if ($request->ajax()) {
             $employees = Projects::with('employee')->get();
@@ -26,15 +27,19 @@ class ProjectController extends Controller
                         Delete
                     </a>';
                     return $action;
-                })->addColumn('company', function ($row) {
-                    return $row->company ? $row->company->name : 'N/A';
+                })->addColumn('employee', function ($row) {
+                    $employee = $row->employee;
+                        $names = $employee->pluck('fname')->implode(', ');
+                        return $names ?: 'N/A';
                 })
-                ->rawColumns(['action', 'company'])
+
+                ->rawColumns(['action', 'employee'])
                 ->toJson();
         }
+        return view('projects.index');
     }
 
-   
+
     public function create()
     {
         $employies = Employee::all();
@@ -46,7 +51,7 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
-        
+
         $project = Projects::create($request->all());
         $project->employee()->attach($request->employee_id);
         return response([

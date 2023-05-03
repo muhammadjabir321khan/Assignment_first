@@ -6,9 +6,11 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>FName</th>
-                <th>lname</th>
-                <th>company</th>
+                <th>Name</th>
+                <th>Detail</th>
+                <th>totalCast</th>
+                <th>deadLine</th>
+                <th>Employee</th>
                 <th>Actions</th>
 
             </tr>
@@ -39,13 +41,19 @@
                     "data": "id"
                 },
                 {
-                    "data": "fname"
+                    "data": "name"
                 },
                 {
-                    "data": "lname"
+                    "data": "detail"
                 },
                 {
-                    "data": "company"
+                    "data": "totalCost"
+                },
+                {
+                    "data": "deadline"
+                },
+                {
+                    "data": "employee"
                 },
                 {
                     "data": "action",
