@@ -4,6 +4,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\CompanyController;
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -22,7 +23,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 Route::resource('/employees', EmployeeController::class)->middleware(['auth', 'role:subAdmin']);
-Route::resource('companies', CompanyController::class)->middleware(['auth', 'role:admin']);
+Route::resource('/companies', CompanyController::class)->middleware(['auth', 'role:admin']);
+Route::resource('/projects', ProjectController::class)->middleware(['auth', 'role:admin']);
+
 
 require __DIR__ . '/auth.php';

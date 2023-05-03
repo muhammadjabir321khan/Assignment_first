@@ -55,12 +55,26 @@
                             <li class="nk-menu-item">
                                 <a href="{{url('employees')}}" class="nk-menu-link"><span class="nk-menu-text">Employee list</span></a>
                             </li>
-
-
                             @endcan
                         </ul>
                     </li>
 
+                    <li class="nk-menu-item has-sub">
+                        <a href="" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-users-fill"></em></span>
+                            <span class="nk-menu-text">Project</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            @can('create companies')
+                            <li class="nk-menu-item">
+                                <a href="{{url('/projects/create')}}" class="nk-menu-link"><span class="nk-menu-text">Add Projcet</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="{{url('projects')}}" class="nk-menu-link"><span class="nk-menu-text">Project list</span></a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </li>
                     <!-- .nk-menu-item -->
                 </ul>
             </div><!-- .nk-sidebar-menu -->
