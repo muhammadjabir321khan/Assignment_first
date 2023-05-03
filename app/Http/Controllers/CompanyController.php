@@ -6,6 +6,7 @@ use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Yajra\Datatables\Datatables;
 
@@ -14,9 +15,10 @@ class CompanyController extends Controller
 
     public function __construct()
     {
-
-        $this->middleware('permission: create companies|edit companies| view companies|delete companies',
-         ['only' => ['index','store', 'create','edit','show','update','delete']]);
+        $this->middleware(
+            'permission: create companies|edit companies| view companies|delete companies',
+            ['only' => ['index', 'store', 'create', 'edit', 'show', 'update', 'delete']]
+        );
     }
 
     public function index(Request  $request)
@@ -57,14 +59,17 @@ class CompanyController extends Controller
         } else {
             $request->validate();
         }
+        DB::beginTransaction();
         Company::create($data);
         try {
             $user = User::find(2);
             \App\Jobs\MailJob::dispatch($user)->delay(now()->addSecond(1));
+            DB::commit();
             return response([
                 'company ' => ' company  is created'
             ]);
         } catch (\Exception $e) {
+            DB::rollback();
             return response()->json([
                 'message' => 'The given data was invalid.',
                 'errors' => $request->errors(),

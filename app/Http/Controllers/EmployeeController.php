@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 class EmployeeController extends Controller
 {
 
+    
     public function index(Request  $request)
     {
         if ($request->ajax()) {
@@ -51,6 +52,7 @@ class EmployeeController extends Controller
      */
     public function store(EmployeeRequest $request)
     {
+       
         try {
             $employe = Employee::create($request->all());
             return response([

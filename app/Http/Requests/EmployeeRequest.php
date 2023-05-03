@@ -24,7 +24,7 @@ class EmployeeRequest extends FormRequest
         return [
             'lname' => 'required',
             'fname' => 'required',
-            'company_id' => 'required'
+            'company_id' => 'required|exists:companies,id'
         ];
     }
 }
