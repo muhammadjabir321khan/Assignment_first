@@ -23,13 +23,8 @@ class CompanyRequest extends FormRequest
     {
         return [
             'name' =>'required',
-<<<<<<< HEAD
             'email' => 'required|unique:companies|max:255',
             'image' => 'required|dimensions:min_width=100,min_height=100|mimes:jpeg,png,gif'
-=======
-            'email' => 'required|unique:users|max:255',
-            // 'image' => 'required|dimensions:max_width=184,max_height=274|mimes:jpeg,png,gif'
->>>>>>> cc91a8241a7876dbf5431c6817aca3859e24bef5
     
         ];
     }

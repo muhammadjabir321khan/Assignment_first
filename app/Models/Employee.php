@@ -18,5 +18,10 @@ class Employee extends Model
     {
         return  $this->belongsTo(Company::class);
     }
+
+    public function project()
+    {
+        return $this->belongsToMany(Projects::class);
+    }
     use HasFactory;
 }

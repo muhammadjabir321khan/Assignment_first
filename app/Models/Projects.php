@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Projects extends Model
 {
-    use HasFactory;
+     use HasFactory;
+    public function employee()
+    {
+        return $this->belongsToMany(Employee::class);
+    }
 }

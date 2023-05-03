@@ -8,6 +8,7 @@
                 <th>ID</th>
                 <th>FName</th>
                 <th>lname</th>
+                <th>company</th>
                 <th>Actions</th>
 
             </tr>
@@ -27,8 +28,8 @@
             "processing": false,
             "serverSide": true,
             "ajax": {
-                "url": "{{url('employee/all') }}",
-                "type": "POST",
+                "url": "{{route('employees.index') }}",
+                "method": "GET",
                 "dataType": "json",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -42,6 +43,9 @@
                 },
                 {
                     "data": "lname"
+                },
+                {
+                    "data": "company"
                 },
                 {
                     "data": "action",

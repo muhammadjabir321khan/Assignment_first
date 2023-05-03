@@ -3,7 +3,7 @@
 <div class="container" style="margin-top: 100px;">
 
     <table id="companies-table">
-        <a href="{{url('/companies/create')}}" class="btn btn-primary mb-4" s>create company</a>
+        <a href="{{route('companies.create')}}" class="btn btn-primary mb-4" s>create company</a>
         <thead>
             <tr>
                 <th>ID</th>
@@ -30,8 +30,8 @@
             "processing": false,
             "serverSide": true,
             "ajax": {
-                "url": "{{url('companies/all') }}",
-                "type": "POST",
+                "url": "{{route('companies.index') }}",
+                "method": "GET",
                 "dataType": "json",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

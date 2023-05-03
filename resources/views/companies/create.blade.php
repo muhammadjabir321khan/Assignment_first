@@ -39,7 +39,6 @@
     </form>
 </div>
 @endsection
-
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script>
     $(document).ready(function() {
@@ -56,8 +55,8 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
-                    alert(data.company);
                     $('#companyForm')[0].reset();
+                    alert(data.company);
 
                 },
                 error: function(xhr, status, error) {

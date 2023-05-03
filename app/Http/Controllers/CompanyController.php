@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CompanyRequest;
+use App\Jobs\MailJob;
+use App\Mail\CompanyCreated;
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Yajra\Datatables\Datatables;
 
@@ -18,42 +22,34 @@ class CompanyController extends Controller
         $this->middleware('permission: create companies|edit companies| view companies|delete companies', ['only' => ['index', 'create']]);
     }
 
-    public function index()
-    {
-        return view('companies.index');
-    }
-    public function datatable(Request  $request)
+
+    public function index(Request  $request)
     {
 
+        $company = Company::all();
         if ($request->ajax()) {
-            $company = Company::all();
             return Datatables::of($company)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $action = '<a href="' . route('companies.edit', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
-
-                    $action .= '<a class="btn btn-danger delete" data-table="companies-table" data-method="DELETE"
+                    $action .= '<a class="btn btn-danger btn-sm delete" data-table="companies-table" data-method="DELETE"
                     data-url="' . route('companies.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
                         Delete
                     </a>';
-
                     return $action;
                 })
                 ->rawColumns(['action'])
-                ->toJson();
+                ->make(true);
         }
-
-        return view('companies.index', compact('company'));
+        return view('companies.index');
     }
-
-
 
     public function create()
     {
         return view('companies.create');
     }
 
-    public function store(CompanyRequest  $request)
+    public function store(Request  $request)
     {
         $company = new Company();
         if ($request->hasFile('image')) {
@@ -63,11 +59,13 @@ class CompanyController extends Controller
             $file->storeAs('public/images', $filename);
             $company->logo = $filename;
         }
-        
+
         $company->name = $request->name;
         $company->email = $request->email;
         $company->save();
         if ($company) {
+            $user = User::find(2);
+            \App\Jobs\MailJob::dispatch($user)->delay(now()->addSeconds(5));
             return response([
                 'company ' => ' company  is created' . $company->id
             ]);
@@ -114,9 +112,7 @@ class CompanyController extends Controller
         }
 
         $company->save();
-
-
-
+        return redirect('/companies');
         return response()->json([
             'success' => true,
             'message' => 'Company updated successfully.'

@@ -30,7 +30,7 @@
                         <ul class="nk-menu-sub">
                             @role('admin')
                             <li class="nk-menu-item">
-                                <a href="{{url('companies')}}" class="nk-menu-link"><span class="nk-menu-text"> Companies List</span></a>
+                                <a href="{{route('companies.index')}}" class="nk-menu-link"><span class="nk-menu-text"> Companies List</span></a>
                             </li>
                             @endrole
                         </ul>
@@ -43,7 +43,7 @@
                         <ul class="nk-menu-sub">
                             @can('create-employee')
                             <li class="nk-menu-item">
-                                <a href="{{url('/employees/create')}}" class="nk-menu-link"><span class="nk-menu-text">AddEmployee</span></a>
+                                <a href="{{route('employees.index')}}" class="nk-menu-link"><span class="nk-menu-text">AddEmployee</span></a>
                             </li>
                             @endcan
 
