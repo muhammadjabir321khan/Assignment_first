@@ -12,15 +12,6 @@ use Illuminate\Support\Facades\DB;
 class EmployeeController extends Controller
 {
 
-
- 
-
-    /**
-     * Show the form for creating a new resource.
-     */
-
-
-
     public function index(Request  $request)
     {
         if ($request->ajax()) {
@@ -60,16 +51,17 @@ class EmployeeController extends Controller
      */
     public function store(EmployeeRequest $request)
     {
-        $employe = Employee::create($request->all());
-        if ($employe) {
+        try {
+            $employe = Employee::create($request->all());
             return response([
-                'company ' => 'Employee is created' . $employe->id
+                'company ' => 'Employee is created'
             ]);
-        } else {
-            return response()->json([
-                'message' => 'The given data was invalid.',
-                'errors' => $request->errors(),
-            ], 422);
+        } catch (\Exception $e) { {
+                return response()->json([
+                    'message' => 'The given data was invalid.',
+                    'errors' => $request->errors(),
+                ], 422);
+            }
         }
     }
 
@@ -84,9 +76,8 @@ class EmployeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Employee $employee)
     {
-        $employee = Employee::find($id);
         $companies = Company::all();
         return view('employees.edit', compact('employee', 'companies'));
     }
@@ -95,13 +86,11 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EmployeeRequest $request,  $id)
+    public function update(EmployeeRequest $request,  Employee $employee)
     {
-        $employee = Employee::find($id);
-        $employee->fname = $request->fname;
-        $employee->lname = $request->lname;
-        $employee->company_id = $request->company_id;
-        $employee->save();
+        $employee->update([
+            $request->all()
+        ]);
         return response([
             'employee' => 'employee is updated succfully'
         ]);
@@ -110,10 +99,9 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Employee $employee)
     {
-        $Employee = Employee::findOrFail($id);
-        $Employee->delete();
+        $employee->delete();
         return response()->json(['success' => 'Employee has been deleted']);
     }
 }

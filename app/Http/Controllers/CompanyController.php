@@ -3,14 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CompanyRequest;
-use App\Jobs\MailJob;
-use App\Mail\CompanyCreated;
 use App\Models\Company;
-use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Yajra\Datatables\Datatables;
 
@@ -20,9 +15,9 @@ class CompanyController extends Controller
     public function __construct()
     {
 
-        $this->middleware('permission: create companies|edit companies| view companies|delete companies', ['only' => ['index', 'create']]);
+        $this->middleware('permission: create companies|edit companies| view companies|delete companies',
+         ['only' => ['index','store', 'create','edit','show','update','delete']]);
     }
-
 
     public function index(Request  $request)
     {
