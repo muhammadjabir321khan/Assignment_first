@@ -3,12 +3,12 @@
 @section('title','Add Company')
 <div class="container my-5">
     <form id="companyForm">
-        <h5 class="text-center">Add Company</h5>
+        <h5 class="text-center">Add Project</h5>
         <div class="row g-gs">
             <div class="col-md-10">
                 <div id="name-error" class="text-danger"></div>
                 <div class="form-group">
-                    <label class="form-label" for="name"> Name</label>
+                    <label class="form-label" for="name">Name:</label>
                     <div class="form-control-wrap">
                         <input type="text" class="form-control" id="name" placeholder="Name" name="name" class="@error('name') is-invalid @enderror">
                     </div>
@@ -17,20 +17,28 @@
             <div class="col-md-10">
                 <div id="email-error" class="text-danger"></div>
                 <div class="form-group">
-                    <label class="form-label" for="email"> Email</label>
+                    <label class="form-label" for="detail">Detaill:</label>
                     <div class="form-control-wrap">
-                        <input type="email" class="form-control" id="email" placeholder="Email" name="email">
+                        <input type="text" class="form-control" id="detail" placeholder="Project detail" name="detail">
                     </div>
 
                 </div>
             </div>
             <div class="col-md-10">
                 <div id="logo-error" class="text-danger"></div>
-
                 <div class="form-group">
-                    <label class="form-label" for="email">Logo</label>
+                    <label class="form-label" for="totalCost">Total Cost:</label>
                     <div class="form-control-wrap">
-                        <input type="file" class="form-control" id="logo" placeholder="logo" name="image">
+                        <input type="text" class="form-control" id="totalCost" placeholder="Total Cost" name="totalCost">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div id="logo-error" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="form-label" for="deadline">Deadline:</label>
+                    <div class="form-control-wrap">
+                        <input type="date" class="form-control" id="deadline" placeholder="deadline" name="deadline">
                     </div>
                 </div>
             </div>
@@ -46,7 +54,7 @@
             e.preventDefault();
             var formData = new FormData(this);
             $.ajax({
-                url: "{{url('companies')}}",
+                url: "{{url('projects')}}",
                 type: 'POST',
                 data: formData,
                 processData: false,
