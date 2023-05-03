@@ -14,11 +14,27 @@ class ProjectController extends Controller
      */
     public function index()
     {
+        if ($request->ajax()) {
+            $employees = Projects::with('employee')->get();
+            return Datatables::of($employees)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $action = '<a href="' . route('employees.edit', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
+
+                    $action .= '<a class="btn btn-danger  btn-sm mx-1 delete" data-table="companies-table" data-method="DELETE"
+                    data-url="' . route('employees.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
+                        Delete
+                    </a>';
+                    return $action;
+                })->addColumn('company', function ($row) {
+                    return $row->company ? $row->company->name : 'N/A';
+                })
+                ->rawColumns(['action', 'company'])
+                ->toJson();
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+   
     public function create()
     {
         $employies = Employee::all();
@@ -32,8 +48,7 @@ class ProjectController extends Controller
     {
         
         $project = Projects::create($request->all());
-        $data=[1,2,3,4];
-        $project->employee()->attach($data);
+        $project->employee()->attach($request->employee_id);
         return response([
             'project' => 'project is created succesfully'
         ]);
