@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
+use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -119,5 +120,24 @@ class CompanyController extends Controller
     {
         $company->delete();
         return response()->json(['success' => 'Company has been deleted']);
+    }
+
+    public  function search(Request $request)
+    {
+        $search = request('search');
+        $projects = Project::Where('detail', 'like', "%$search%")->pluck('detail');
+        $companies = Company::where(function ($query) use ($projects) {
+            foreach ($projects  as $project) {
+                $query->orWhere('name', 'like', "%$project%");
+            }
+        })->get();
+        // projects search by name
+        // $companies= Company::Where('name', 'like', "%$search%")->pluck('name','email');
+        // $companies = Project::where(function ($query) use ($companies) {
+        //     foreach ($companies as $project) {
+        //         $query->orWhere('detail', 'like', "%$project%");
+        //     }
+        // })->get();
+        return view('companies.searching', compact('companies'));
     }
 }

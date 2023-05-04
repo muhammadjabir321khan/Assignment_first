@@ -32,6 +32,9 @@
                             <li class="nk-menu-item">
                                 <a href="{{route('companies.index')}}" class="nk-menu-link"><span class="nk-menu-text"> Companies List</span></a>
                             </li>
+                            <li class="nk-menu-item">
+                                <a href="{{route('companies.search')}}" class="nk-menu-link"><span class="nk-menu-text">Search</span></a>
+                            </li>
                             @endrole
                         </ul>
                     </li>

@@ -12,7 +12,6 @@
                 <th>deadLine</th>
                 <th>Employee</th>
                 <th>Actions</th>
-
             </tr>
         </thead>
         <tbody>
