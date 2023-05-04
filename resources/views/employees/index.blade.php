@@ -11,6 +11,7 @@
                 <th>FName</th>
                 <th>lname</th>
                 <th>company</th>
+                <th>project</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -50,6 +51,9 @@
                 },
                 {
                     "data": "company"
+                },
+                {
+                    "data": "projects"
                 },
                 {
                     "data": "action",

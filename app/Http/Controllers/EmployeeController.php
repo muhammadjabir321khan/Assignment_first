@@ -14,7 +14,7 @@ class EmployeeController extends Controller
     public function index(Request  $request)
     {
         if ($request->ajax()) {
-            $employees = Employee::with('company')->get();
+            $employees = Employee::with(['company', 'projects'])->get();
             return Datatables::of($employees)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -27,8 +27,11 @@ class EmployeeController extends Controller
                     return $action;
                 })->addColumn('company', function ($row) {
                     return $row->company ? $row->company->name : 'N/A';
+                })->addColumn('projects', function ($row) {
+                    $project = $row->projects;
+                    return $project->pluck('name')->implode(', ');
                 })
-                ->rawColumns(['action', 'company'])
+                ->rawColumns(['action', 'company', 'projects'])
                 ->toJson();
         }
 
@@ -67,12 +70,9 @@ class EmployeeController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
-        //
     }
 
     /**

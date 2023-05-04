@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectRequest;
 use App\Models\Employee;
-use App\Models\Projects;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
@@ -16,7 +16,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $employees = Projects::with('employee')->get();
+            $employees = Project::with('employee')->get();
             return Datatables::of($employees)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -51,7 +51,7 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request)
     {
 
-        $project = Projects::create($request->all());
+        $project = Project::create($request->all());
         $project->employee()->attach($request->employee_id);
         return response([
             'project' => 'project is created succesfully'
@@ -69,7 +69,7 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Projects $project)
+    public function edit(Project $project)
     {
         $employies  = Employee::all();
         return view('projects.edit', compact('project', 'employies'));
@@ -78,7 +78,7 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProjectRequest $request, Projects $project)
+    public function update(ProjectRequest $request, Project $project)
     {
         $project->update($request->all());
         $project->employee()->sync([$request->employee_id]);
@@ -90,7 +90,7 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Projects $project)
+    public function destroy(Project $project)
     {
         $project->delete();
         return response([

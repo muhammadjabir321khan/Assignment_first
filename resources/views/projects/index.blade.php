@@ -1,7 +1,7 @@
 @extends('dashboard')
 @section('content')
 <div class="container" style="margin-top: 100px;">
-
+<a href="{{route('projects.create')}}" class="btn btn-primary mb-4" s>create company</a>
     <table id="table">
         <thead>
             <tr>
@@ -57,6 +57,7 @@
                 {
                     "data": "employee"
                 },
+             
                 {
                     "data": "action",
                     "orderable": false,
