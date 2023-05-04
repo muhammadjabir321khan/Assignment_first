@@ -73,6 +73,8 @@
 </style>
 @endsection
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
 <script>
     $(document).ready(function() {
         $('#companyForm').on('submit', function(e) {
@@ -89,7 +91,7 @@
                 },
                 success: function(response) {
                     $('#companyForm')[0].reset();
-                    alert(response.project);
+                    swal.fire(response.project);
 
                 },
                 error: function(xhr, status, error) {

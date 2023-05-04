@@ -43,15 +43,10 @@
                         <ul class="nk-menu-sub">
                             @can('create-employee')
                             <li class="nk-menu-item">
-                                <a href="{{route('employees.index')}}" class="nk-menu-link"><span class="nk-menu-text">AddEmployee</span></a>
+                                <a href="{{route('employees.create')}}" class="nk-menu-link"><span class="nk-menu-text">Add Employee</span></a>
                             </li>
                             @endcan
-
                             @can('create companies')
-                            <li class="nk-menu-item">
-                                <a href="{{url('/employees/create')}}" class="nk-menu-link"><span class="nk-menu-text">Add Employee</span></a>
-                            </li>
-
                             <li class="nk-menu-item">
                                 <a href="{{url('employees')}}" class="nk-menu-link"><span class="nk-menu-text">Employee list</span></a>
                             </li>

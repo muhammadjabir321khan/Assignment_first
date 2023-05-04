@@ -20,17 +20,16 @@ class ProjectController extends Controller
             return Datatables::of($employees)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $action = '<a href="' . route('employees.edit', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
-
+                    $action = '<a href="' . route('projects.edit', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
                     $action .= '<a class="btn btn-danger  btn-sm mx-1 delete" data-table="companies-table" data-method="DELETE"
-                    data-url="' . route('employees.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
+                    data-url="' . route('projects.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
                         Delete
                     </a>';
                     return $action;
                 })->addColumn('employee', function ($row) {
                     $employee = $row->employee;
-                        $names = $employee->pluck('fname')->implode(', ');
-                        return $names ?: 'N/A';
+                    $names = $employee->pluck('fname')->implode(', ');
+                    return $names ?: 'N/A';
                 })
 
                 ->rawColumns(['action', 'employee'])
@@ -70,24 +69,32 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Projects $project)
     {
-        //
+        $employies  = Employee::all();
+        return view('projects.edit', compact('project', 'employies'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProjectRequest $request, Projects $project)
     {
-        //
+        $project->update($request->all());
+        $project->employee()->sync([$request->employee_id]);
+        return response([
+            'status' => 'data is updated'
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Projects $project)
     {
-        //
+        $project->delete();
+        return response([
+            'status' => 'project is deleted'
+        ]);
     }
 }

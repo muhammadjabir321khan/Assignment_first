@@ -7,11 +7,9 @@ use App\Models\Employee;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Http\Requests\EmployeeRequest;
-use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
-
 
     public function index(Request  $request)
     {
@@ -33,6 +31,8 @@ class EmployeeController extends Controller
                 ->rawColumns(['action', 'company'])
                 ->toJson();
         }
+
+
         return view('employees.index');
     }
 
@@ -90,9 +90,9 @@ class EmployeeController extends Controller
      */
     public function update(EmployeeRequest $request,  Employee $employee)
     {
-        $employee->update([
+        $employee->update(
             $request->all()
-        ]);
+        );
         return response([
             'employee' => 'employee is updated succfully'
         ]);
