@@ -24,14 +24,13 @@ class CompanyController extends Controller
 
     public function index(Request  $request)
     {
-
         $company = Company::all();
         if ($request->ajax()) {
             return Datatables::of($company)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $action = '<a href="' . route('companies.edit', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
-                    $action .= '<a class="btn btn-danger btn-sm delete" data-table="companies-table" data-method="DELETE"
+                    $action .= '<a class="btn btn-danger mx-1 btn-sm delete" data-table="companies-table" data-method="DELETE"
                     data-url="' . route('companies.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
                         Delete
                     </a>';
@@ -39,7 +38,7 @@ class CompanyController extends Controller
                 })
                 ->rawColumns(['action'])
                 ->make(true);
-        }
+            }
         return view('companies.index');
     }
 

@@ -14,7 +14,7 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary"> save</button>
+            <button type="submit" class="btn btn-primary mb-2"> save</button>
         </form>
         <thead>
 

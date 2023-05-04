@@ -4,12 +4,7 @@
             <a href="#" class="nk-nav-toggle nk-quick-nav-icon d-xl-none" data-target="sidebarMenu"><em class="icon ni ni-arrow-left"></em></a>
             <a href="#" class="nk-nav-compact nk-quick-nav-icon d-none d-xl-inline-flex" data-target="sidebarMenu"><em class="icon ni ni-menu"></em></a>
         </div>
-        <div class="nk-sidebar-brand">
-            <a href="html/index.html" class="logo-link nk-sidebar-logo">
-                <img class="logo-light logo-img" src="./images/logo.png" srcset="./images/logo2x.png 2x" alt="logo">
-                <img class="logo-dark logo-img" src="./images/logo-dark.png" srcset="./images/logo-dark2x.png 2x" alt="logo-dark">
-            </a>
-        </div>
+        
     </div><!-- .nk-sidebar-element -->
     <div class="nk-sidebar-element nk-sidebar-body">
         <div class="nk-sidebar-content">
@@ -33,7 +28,7 @@
                                 <a href="{{route('companies.index')}}" class="nk-menu-link"><span class="nk-menu-text"> Companies List</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="{{route('companies.search')}}" class="nk-menu-link"><span class="nk-menu-text">Search</span></a>
+                                <a href="{{route('companies.search')}}" class="nk-menu-link"><span class="nk-menu-text">Search Company</span></a>
                             </li>
                             @endrole
                         </ul>
