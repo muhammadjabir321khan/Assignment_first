@@ -59,7 +59,7 @@
                 },
                 success: function(response) {
                     $('#companyForm')[0].reset();
-                    alert(data.company);
+                    swal.fire("company is created",response.company)
 
                 },
                 error: function(xhr, status, error) {

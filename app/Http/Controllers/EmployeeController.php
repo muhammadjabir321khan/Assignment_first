@@ -20,7 +20,7 @@ class EmployeeController extends Controller
                 ->addColumn('action', function ($row) {
                     $action = '<a href="' . route('employees.edit', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
 
-                    $action .= '<a class="btn btn-danger  btn-sm mx-1 delete" data-table="companies-table" data-method="DELETE"
+                    $action .= '<a class="btn btn-danger mx-1 btn-sm delete" data-table="companies-table" data-method="DELETE"
                     data-url="' . route('employees.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
                         Delete
                     </a>';
@@ -28,8 +28,9 @@ class EmployeeController extends Controller
                 })->addColumn('company', function ($row) {
                     return $row->company ? $row->company->name : 'N/A';
                 })->addColumn('projects', function ($row) {
-                    $project = $row->projects;
-                    return $project->pluck('name')->implode(', ');
+                    $project = $row->projects ;
+                    $newData= $project->pluck('name')->implode(', ');
+                    return  $newData ? $newData : 'No PROJECT AVALIABLE';
                 })
                 ->rawColumns(['action', 'company', 'projects'])
                 ->toJson();

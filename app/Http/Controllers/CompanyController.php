@@ -99,7 +99,7 @@ class CompanyController extends Controller
      * Update the specified resource in storage.
      */
     // Inside the update method of the controller
-    public function update(CompanyRequest $request, Company $company)
+    public function update(Request $request, Company $company)
     {
         $company->name = $request->input('name');
         $company->email = $request->input('email');
@@ -110,7 +110,7 @@ class CompanyController extends Controller
             $path = $request->file('image')->storeAs('public/images', $filename);
             $company->logo = $filename;
         }
-        $company->save();
+        $company->update();
         return response()->json([
             'success' => true,
             'message' => 'Company updated successfully.'

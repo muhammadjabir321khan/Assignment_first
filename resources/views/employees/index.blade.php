@@ -49,7 +49,6 @@
                 {
                     "data": "lname"
                 },
-                {data: 'company', name: 'company'},
                 {
                     "data": "company"
                 },
