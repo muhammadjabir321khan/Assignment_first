@@ -4,12 +4,6 @@
                             <div class="nk-menu-trigger d-xl-none ml-n1">
                                 <a href="#" class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu"><em class="icon ni ni-menu"></em></a>
                             </div>
-                            <div class="nk-header-brand d-xl-none">
-                                <a href="html/index.html" class="logo-link">
-                                    <img class="logo-light logo-img" src="{{asset('assets/images/logo.png')}}" alt="logo">
-                                    <img class="logo-dark logo-img" src="{{asset('images/logo-dark.png ')}}" alt="logo-dark">
-                                </a>
-                            </div><!-- .nk-header-brand -->
                             <div class="nk-header-news d-none d-xl-block">
                                 <div class="nk-news-list">
                                     <a class="nk-news-item" href="#">
@@ -17,7 +11,6 @@
                                             <em class="icon ni ni-card-view"></em>
                                         </div>
                                         <div class="nk-news-text">
-                                            <p>Do you know the latest update of 2022? <span> A overview of our is now available on YouTube</span></p>
                                             <em class="icon ni ni-external"></em>
                                         </div>
                                     </a>
@@ -67,7 +60,6 @@
                                                     <em class="icon ni ni-user-alt"></em>
                                                 </div>
                                                 <div class="user-info d-none d-md-block">
-                                                    <div class="user-status">Administrator</div>
                                                     <div class="user-name dropdown-indicator">{{ Auth::user()->name }}</div>
                                                 </div>
                                             </div>
@@ -80,7 +72,7 @@
                                                     </div>
                                                     <div class="user-info">
                                                         <span class="lead-text">{{ Auth::user()->name }}</span>
-                                                        <span class="sub-text">info@softnio.com</span>
+                                                        <span class="sub-text">{{ Auth::user()->email }}</span>
                                                     </div>
                                                 </div>
                                             </div>

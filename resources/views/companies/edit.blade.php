@@ -55,7 +55,7 @@
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    Swal.fire(response.message)
+                    window.location.href = "/companies";
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr.responseText);

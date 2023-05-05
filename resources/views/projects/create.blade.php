@@ -3,12 +3,12 @@
 @section('title','Add Company')
 <div class="container my-5">
     <form id="companyForm">
-        <h5 class="text-center">Add Company</h5>
+        <h5 class="text-center">Add Project</h5>
         <div class="row g-gs">
             <div class="col-md-10">
                 <div id="name-error" class="text-danger"></div>
                 <div class="form-group">
-                    <label class="form-label" for="name"> Name</label>
+                    <label class="form-label" for="name">Name:</label>
                     <div class="form-control-wrap">
                         <input type="text" class="form-control" id="name" placeholder="Name" name="name" class="@error('name') is-invalid @enderror">
                     </div>
@@ -17,39 +17,71 @@
             <div class="col-md-10">
                 <div id="email-error" class="text-danger"></div>
                 <div class="form-group">
-                    <label class="form-label" for="email"> Email</label>
+                    <label class="form-label" for="detail">Detaill:</label>
                     <div class="form-control-wrap">
-                        <input type="email" class="form-control" id="email" placeholder="Email" name="email">
+                        <input type="text" class="form-control" id="detail" placeholder="Project detail" name="detail">
                     </div>
 
                 </div>
             </div>
             <div class="col-md-10">
                 <div id="logo-error" class="text-danger"></div>
-
                 <div class="form-group">
-                    <label class="form-label" for="email">Logo</label>
+                    <label class="form-label" for="totalCost">Total Cost:</label>
                     <div class="form-control-wrap">
-                        <input type="file" class="form-control" id="logo" placeholder="logo" name="image">
+                        <input type="text" class="form-control" id="totalCost" placeholder="Total Cost" name="totalCost">
                     </div>
                 </div>
+            </div>
+            <div class="col-md-10">
+                <div id="logo-error" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="form-label" for="deadline">Deadline:</label>
+                    <div class="form-control-wrap">
+                        <input type="date" class="form-control" id="deadline" placeholder="deadline" name="deadline">
+                    </div>
+                </div>
+            </div>
+            <div class="select-wrapper col-md-10">
+                <label for="company">Company:</label>
+                <select name="employee_id" id="employee_id">
+                    <option value="">Select a employees</option>
+                    @foreach ($employies as $employee)
+                    <option value="{{ $employee->id }}">{{ $employee->fname }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
         <button type="submit" class="btn btn-success my-3">save</button>
     </form>
 </div>
+<style>
+    .select-wrapper select {
+        font-size: 16px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .select-wrapper label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+</style>
 @endsection
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="sweetalert2.all.min.js"></script>
-<script src="sweetalert2.min.js"></script>
-<link rel="stylesheet" href="sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
 <script>
     $(document).ready(function() {
         $('#companyForm').on('submit', function(e) {
             e.preventDefault();
             var formData = new FormData(this);
             $.ajax({
-                url: "{{url('companies')}}",
+                url: "{{url('projects')}}",
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -59,7 +91,7 @@
                 },
                 success: function(response) {
                     $('#companyForm')[0].reset();
-                    swal.fire("company is created",response.company)
+                    swal.fire(response.project);
 
                 },
                 error: function(xhr, status, error) {

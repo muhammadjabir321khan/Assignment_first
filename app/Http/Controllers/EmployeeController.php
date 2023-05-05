@@ -7,44 +7,37 @@ use App\Models\Employee;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Http\Requests\EmployeeRequest;
-use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
 
-
-    public function index()
-    {
-        return view('employees.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-
-
-
-    public function emplyeedatatable(Request  $request)
+    public function index(Request  $request)
     {
         if ($request->ajax()) {
-            $employees = Employee::with('company')->get();
+            $employees = Employee::with(['company', 'projects'])->get();
             return Datatables::of($employees)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $action = '<a href="' . route('employees.edit', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
 
-                    $action .= '<a class="btn btn-danger  btn-sm mx-1 delete" data-table="companies-table" data-method="DELETE"
+                    $action .= '<a class="btn btn-danger mx-1 btn-sm delete" data-table="companies-table" data-method="DELETE"
                     data-url="' . route('employees.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
                         Delete
                     </a>';
-                 return $action;
+                    return $action;
                 })->addColumn('company', function ($row) {
                     return $row->company ? $row->company->name : 'N/A';
+                })->addColumn('projects', function ($row) {
+                    $project = $row->projects ;
+                    $newData= $project->pluck('name')->implode(', ');
+                    return  $newData ? $newData : 'No PROJECT AVALIABLE';
                 })
-                ->rawColumns(['action', 'company'])
+                ->rawColumns(['action', 'company', 'projects'])
                 ->toJson();
         }
-        return view('employees.index', compact('company'));
+
+
+        return view('employees.index');
     }
 
 
@@ -63,33 +56,31 @@ class EmployeeController extends Controller
      */
     public function store(EmployeeRequest $request)
     {
-        $employe = Employee::create($request->all());
-        if ($employe) {
+
+        try {
+            $employe = Employee::create($request->all());
             return response([
-                'company ' => 'Employee is created' . $employe->id
+                'company ' => 'Employee is created'
             ]);
-        } else {
-            return response()->json([
-                'message' => 'The given data was invalid.',
-                'errors' => $request->errors(),
-            ], 422);
+        } catch (\Exception $e) { {
+                return response()->json([
+                    'message' => 'The given data was invalid.',
+                    'errors' => $request->errors(),
+                ], 422);
+            }
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Employee $employee)
     {
-        $employee = Employee::find($id);
         $companies = Company::all();
         return view('employees.edit', compact('employee', 'companies'));
     }
@@ -98,13 +89,11 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EmployeeRequest $request,  $id)
+    public function update(EmployeeRequest $request,  Employee $employee)
     {
-        $employee = Employee::find($id);
-        $employee->fname = $request->fname;
-        $employee->lname = $request->lname;
-        $employee->company_id = $request->company_id;
-        $employee->save();
+        $employee->update(
+            $request->all()
+        );
         return response([
             'employee' => 'employee is updated succfully'
         ]);
@@ -113,10 +102,9 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Employee $employee)
     {
-        $Employee = Employee::findOrFail($id);
-        $Employee->delete();
+        $employee->delete();
         return response()->json(['success' => 'Employee has been deleted']);
     }
 }
