@@ -64,11 +64,10 @@ class CompanyController extends Controller
                 $request->validate();
             }
             Company::create($data);
-        if($request->user()->hasRole('admin')){
-             $user=Auth::user();
-            \App\Jobs\MailJob::dispatch($user)->delay(now()->addSecond(1));
-        }
-          
+            if ($request->user()->hasRole('admin')) {
+                $user = Auth::user();
+                \App\Jobs\MailJob::dispatch($user)->delay(now()->addSecond(1));
+            }
             DB::commit();
             return response([
                 'company ' => ' company  is created'
@@ -129,8 +128,8 @@ class CompanyController extends Controller
     public  function search(Request $request)
     {
         $search = request('search');
-        $projects = Project::Where('detail', 'like', "%$search%")->pluck('detail');
-        
+        $projects = Project::where('detail', 'like', "%$search%")->pluck('detail');
+
         $companies = Company::where(function ($query) use ($projects) {
             foreach ($projects  as $project) {
                 $query->orWhere('name', 'like', "%$project%");

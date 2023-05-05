@@ -81,7 +81,7 @@ class ProjectController extends Controller
     public function update(ProjectRequest $request, Project $project)
     {
         $project->update($request->all());
-        $project->employee()->sync([$request->employee_id]);
+        // $project->employee()->sync([$request->employee_id]);
         return response([
             'status' => 'data is updated'
         ]);
