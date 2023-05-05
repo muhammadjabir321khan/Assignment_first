@@ -40,6 +40,9 @@
 </div>
 @endsection
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="sweetalert2.all.min.js"></script>
+<script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
 <script>
     $(document).ready(function() {
         $('#companyForm').on('submit', function(e) {
