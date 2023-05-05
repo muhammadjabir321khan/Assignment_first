@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Yajra\Datatables\Datatables;
+use League\Flysystem\Visibility;
 
 class CompanyController extends Controller
 {
@@ -38,7 +39,7 @@ class CompanyController extends Controller
                 })
                 ->rawColumns(['action'])
                 ->make(true);
-            }
+        }
         return view('companies.index');
     }
 
@@ -53,7 +54,10 @@ class CompanyController extends Controller
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
             $filename = time() . '.' . $ext;
-            $file->storeAs('public/images', $filename);
+            $filePath = '/public/images';
+            $visibility = Visibility::PUBLIC;
+            Storage::disk('local')->put($filePath . '/' . $filename, file_get_contents($file), $visibility);
+            $data = $request->all();
             $data = $request->all();
             $data['logo'] = $filename;
         } else {
