@@ -27,7 +27,6 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('/companies', CompanyController::class)->middleware(['auth', 'role:admin']);
 Route::get('/search', [CompanyController::class, 'search'])->name('companies.search');
-Route::post('/search', [CompanyController::class, 'CompanySearch'])->name('companies.searching');
 Route::resource('/projects', ProjectController::class)->middleware(['auth', 'role:admin']);
 
 

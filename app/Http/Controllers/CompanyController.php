@@ -7,10 +7,10 @@ use App\Models\Company;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Yajra\Datatables\Datatables;
-use League\Flysystem\Visibility;
 
 class CompanyController extends Controller
 {
@@ -50,22 +50,25 @@ class CompanyController extends Controller
 
     public function store(CompanyRequest $request)
     {
-        if ($request->has('image')) {
-            $file = $request->file('image');
-            $ext = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $ext;
-            $filePath = '/public/images';
-            Storage::disk('local')->put($filePath . '/' . $filename, file_get_contents($file));
-            $data = $request->all();
-            $data['logo'] = $filename;
-        } else {
-            $request->validate();
-        }
-        DB::beginTransaction();
-        Company::create($data);
         try {
-            $user = User::find(2);
+            DB::beginTransaction();
+            if ($request->has('image')) {
+                $file = $request->file('image');
+                $ext = $file->getClientOriginalExtension();
+                $filename = time() . '.' . $ext;
+                $filePath = '/public/images';
+                Storage::disk('local')->put($filePath . '/' . $filename, file_get_contents($file));
+                $data = $request->all();
+                $data['logo'] = $filename;
+            } else {
+                $request->validate();
+            }
+            Company::create($data);
+        if($request->user()->hasRole('admin')){
+             $user=Auth::user();
             \App\Jobs\MailJob::dispatch($user)->delay(now()->addSecond(1));
+        }
+          
             DB::commit();
             return response([
                 'company ' => ' company  is created'
@@ -74,7 +77,7 @@ class CompanyController extends Controller
             DB::rollback();
             return response()->json([
                 'message' => 'The given data was invalid.',
-                'errors' => $request->errors(),
+                'errors' => $e->getMessage(),
             ], 422);
         }
     }
@@ -127,6 +130,7 @@ class CompanyController extends Controller
     {
         $search = request('search');
         $projects = Project::Where('detail', 'like', "%$search%")->pluck('detail');
+        
         $companies = Company::where(function ($query) use ($projects) {
             foreach ($projects  as $project) {
                 $query->orWhere('name', 'like', "%$project%");
