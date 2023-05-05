@@ -55,9 +55,7 @@ class CompanyController extends Controller
             $ext = $file->getClientOriginalExtension();
             $filename = time() . '.' . $ext;
             $filePath = '/public/images';
-            $visibility = Visibility::PUBLIC;
-            Storage::disk('local')->put($filePath . '/' . $filename, file_get_contents($file), $visibility);
-            $data = $request->all();
+            Storage::disk('local')->put($filePath . '/' . $filename, file_get_contents($file));
             $data = $request->all();
             $data['logo'] = $filename;
         } else {
