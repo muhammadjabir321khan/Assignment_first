@@ -22,13 +22,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('/employees', EmployeeController::class);
 });
 
-Route::resource('/employees', EmployeeController::class);
 Route::resource('/companies', CompanyController::class)->middleware(['auth', 'role:admin']);
-Route::get('/search',[CompanyController::class,'search'])->name('companies.search');
-Route::post('/search',[CompanyController::class,'CompanySearch'])->name('companies.searching');
-
+Route::get('/search', [CompanyController::class, 'search'])->name('companies.search');
+Route::post('/search', [CompanyController::class, 'CompanySearch'])->name('companies.searching');
 Route::resource('/projects', ProjectController::class)->middleware(['auth', 'role:admin']);
 
 

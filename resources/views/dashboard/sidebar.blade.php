@@ -17,22 +17,23 @@
                             <span class="nk-menu-text">Dashboard</span>
                         </a>
                     </li><!-- .nk-menu-item -->
+                    @role('admin')
                     <li class="nk-menu-item has-sub">
                         <a href="" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-icon"><em class="icon ni ni-users-fill"></em></span>
                             <span class="nk-menu-text">Company</span>
                         </a>
                         <ul class="nk-menu-sub">
-                            @role('admin')
+                         
                             <li class="nk-menu-item">
                                 <a href="{{route('companies.index')}}" class="nk-menu-link"><span class="nk-menu-text"> Companies List</span></a>
                             </li>
                             <li class="nk-menu-item">
                                 <a href="{{route('companies.search')}}" class="nk-menu-link"><span class="nk-menu-text">Search Company</span></a>
                             </li>
-                            @endrole
                         </ul>
                     </li>
+                    @endrole
                     <li class="nk-menu-item has-sub">
                         <a href="" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-icon"><em class="icon ni ni-users-fill"></em></span>
@@ -51,23 +52,24 @@
                             @endcan
                         </ul>
                     </li>
-
+                    @can('create companies')
                     <li class="nk-menu-item has-sub">
                         <a href="" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-icon"><em class="icon ni ni-users-fill"></em></span>
                             <span class="nk-menu-text">Project</span>
                         </a>
                         <ul class="nk-menu-sub">
-                            @can('create companies')
+                           
                             <li class="nk-menu-item">
                                 <a href="{{url('/projects/create')}}" class="nk-menu-link"><span class="nk-menu-text">Add Projcet</span></a>
                             </li>
                             <li class="nk-menu-item">
                                 <a href="{{url('projects')}}" class="nk-menu-link"><span class="nk-menu-text">Project list</span></a>
                             </li>
-                            @endcan
+                       
                         </ul>
                     </li>
+                    @endcan
                     <!-- .nk-menu-item -->
                 </ul>
             </div><!-- .nk-sidebar-menu -->
