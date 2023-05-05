@@ -27,23 +27,23 @@ class EmployeeController extends Controller
     public function emplyeedatatable(Request  $request)
     {
         if ($request->ajax()) {
-            $company = Employee::all();
-            return Datatables::of($company)
+            $employees = Employee::with('company')->get();
+            return Datatables::of($employees)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $action = '<a href="' . route('employees.edit', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
 
-                    $action .= '<a class="btn btn-danger delete" data-table="companies-table" data-method="DELETE"
-                     data-url="' .  route('employees.edit', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
-                         Delete
-                     </a>';
-
-                    return $action;
+                    $action .= '<a class="btn btn-danger  btn-sm mx-1 delete" data-table="companies-table" data-method="DELETE"
+                    data-url="' . route('employees.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
+                        Delete
+                    </a>';
+                 return $action;
+                })->addColumn('company', function ($row) {
+                    return $row->company ? $row->company->name : 'N/A';
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'company'])
                 ->toJson();
         }
-
         return view('employees.index', compact('company'));
     }
 
@@ -90,17 +90,24 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         $employee = Employee::find($id);
-        $company = Company::all();
-        return view('employees.edit', compact('employee', 'company'));
+        $companies = Company::all();
+        return view('employees.edit', compact('employee', 'companies'));
     }
 
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EmployeeRequest $request,  $id)
     {
-        //
+        $employee = Employee::find($id);
+        $employee->fname = $request->fname;
+        $employee->lname = $request->lname;
+        $employee->company_id = $request->company_id;
+        $employee->save();
+        return response([
+            'employee' => 'employee is updated succfully'
+        ]);
     }
 
     /**
@@ -108,6 +115,8 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $Employee = Employee::findOrFail($id);
+        $Employee->delete();
+        return response()->json(['success' => 'Employee has been deleted']);
     }
 }

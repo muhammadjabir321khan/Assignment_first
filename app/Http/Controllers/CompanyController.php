@@ -32,7 +32,7 @@ class CompanyController extends Controller
                 ->addColumn('action', function ($row) {
                     $action = '<a href="' . route('companies.edit', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
 
-                    $action .= '<a class="btn btn-danger delete" data-table="companies-table" data-method="DELETE"
+                    $action .= '<a class="btn btn-danger  btn-sm mx-1 delete" data-table="companies-table" data-method="DELETE"
                     data-url="' . route('companies.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
                         Delete
                     </a>';
@@ -63,13 +63,13 @@ class CompanyController extends Controller
             $file->storeAs('public/images', $filename);
             $company->logo = $filename;
         }
-        
+
         $company->name = $request->name;
         $company->email = $request->email;
         $company->save();
         if ($company) {
             return response([
-                'company ' => ' company  is created' . $company->id
+                'company ' => 'new company  is created  '
             ]);
         } else {
             return response()->json([
@@ -112,11 +112,7 @@ class CompanyController extends Controller
             $path = $request->file('image')->storeAs('public/images', $filename);
             $company->logo = $filename;
         }
-
         $company->save();
-
-
-
         return response()->json([
             'success' => true,
             'message' => 'Company updated successfully.'
