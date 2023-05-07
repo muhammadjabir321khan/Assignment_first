@@ -15,13 +15,13 @@ use Yajra\Datatables\Datatables;
 class CompanyController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware(
-            'permission: create companies|edit companies| view companies|delete companies',
-            ['only' => ['index', 'store', 'create', 'edit', 'show', 'update', 'delete']]
-        );
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware(
+    //         'permission: create companies|edit companies| view companies|delete companies',
+    //         ['only' => ['index', 'store', 'create', 'edit', 'show', 'update', 'delete']]
+    //     );
+    // }
 
     public function index(Request  $request)
     {
