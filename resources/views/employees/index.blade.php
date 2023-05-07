@@ -1,7 +1,7 @@
 @extends('dashboard')
 @section('content')
 @can('create companies')
-<div class="container" style="margin-top: 100px;">
+<div class="container" >
 
 <a href="{{route('employees.create')}}" class="btn btn-primary mb-4" s>create employee</a>
     <table id="table">

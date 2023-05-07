@@ -12,24 +12,21 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
     <head>
-</head>
-
+    </head>
     <link rel="stylesheet" href="{{asset('assets/css/dashlite.css?ver=2.9.1')}}">
     <link id="skin-default" rel="stylesheet" href="{{asset('/assets/css/theme.css?ver=2.9.1 ')}}">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-   
-
 </head>
 
 <body class="nk-body bg-lighter npc-general has-sidebar ">
-<div class="nk-app-root">
+    <div class="nk-app-root">
         <div class="nk-main ">
-       @include('dashboard.sidebar')
+            @include('dashboard.sidebar')
             <div class="nk-wrap ">
-               @include('dashboard.header')
+                @include('dashboard.header')
                 <div class="nk-content ">
                     <div class="container-fluid">
-                      @yield('content')
+                        @yield('content')
                     </div>
                 </div>
                 @include('dashboard.footer')

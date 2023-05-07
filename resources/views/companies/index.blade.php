@@ -1,6 +1,6 @@
 @extends('dashboard')
 @section('content')
-<div class="container" style="margin-top: 100px;">
+<div class="container">
 
     <table id="companies-table">
         <a href="{{route('companies.create')}}" class="btn btn-primary mb-4" s>create company</a>
