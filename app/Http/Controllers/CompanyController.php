@@ -64,13 +64,13 @@ class CompanyController extends Controller
             DB::commit();
             return response([
                 'company ' => ' company  is created'
-            ]);
+            ],201);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json([
                 'message' => 'The given data was invalid.',
                 'errors' => $e->getMessage(),
-            ], 422);
+            ],403);
         }
     }
 
