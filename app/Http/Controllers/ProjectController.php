@@ -50,12 +50,19 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
-
+      try {
         $project = Project::create($request->all());
         $project->employee()->attach($request->employee_id);
         return response([
             'project' => 'project is created succesfully'
-        ]);
+        ],201);
+      } catch (\Exception $e) {
+        return response([
+            'Erorr' => 'project is created succesfully',
+             'message'=>$e->getMessage(),
+        ], 401);
+      }
+        
     }
 
     /**

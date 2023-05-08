@@ -40,9 +40,6 @@ class EmployeeController extends Controller
         return view('employees.index');
     }
 
-
-
-
     public function create()
     {
         $companies = Company::all();
