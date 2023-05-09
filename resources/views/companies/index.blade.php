@@ -41,6 +41,8 @@
                                             <label class="form-label" for="phone-no-1">Image</label>
                                             <div class="form-control-wrap">
                                                 <input type="file" class="form-control" id="phone-no-1" name="image">
+                                                <img id="company-image" src="" alt="Company Image" width="70" class="my-3">
+
                                             </div>
                                         </div>
                                     </div>
@@ -140,31 +142,45 @@
                 },
                 error: function(xhr, status, error) {
                     $('.alert-success').text('Data successfully deleted!').fadeIn().delay(3000).fadeOut();
-
                     console.log(xhr.responseText);
                 }
             });
         }
 
-        $(document).on('show.bs.modal', '#edit-company-modal', function(event) {
-            var button = $(event.relatedTarget);
-            var companyId = button.data('id');
 
-            var modal = $(this);
-            $.ajax({
-                url: "{{url('companies','') }}" + '/' + companyId + '/edit',
-                type: 'GET',
-                success: function(response) {
-                    console.log(response.data.company)
-                    // var company = response.data;
-                    modal.find('#full-name-1').val(company.name);
-                    modal.find('#email-address-1').val(company.email);
-                    modal.find('#phone-no-1').val('');
-                    modal.find('.modal-content form').attr('action', '/companies/' + company.id);
-                }
-            });
+    });
+    $(document).on('click', '.edit', function() {
+        var id = $(this).data('id');
+        $.ajax({
+            url: '{{ url("companies","")}}' + '/' + id + '/edit',
+            method: 'Get',
+            success: function(response) {
+                console.log(response.data);
+                $('#edit-company-modal').modal('show');
+                $('#full-name-1').val(response.data.name)
+                $('#email-address-1').val(response.data.email)
+                $('#company-image').attr('src', "/storage/images/" + response.data.logo);
+            }
+
         });
+    });
+    $('#companyForm').submit(function(event) {
+        event.preventDefault();
+        var formData = new FormData($(this)[0]);
+        formData.append('_method', 'PUT');
 
-
+        $.ajax({
+            url: '{{ url("companies","")}}' + '/' + id + '/update',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                window.location.href = "/companies";
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        });
     });
 </script>

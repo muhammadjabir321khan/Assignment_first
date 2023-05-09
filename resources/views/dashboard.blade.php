@@ -20,8 +20,6 @@
 </head>
 
 <body class="nk-body bg-lighter npc-general has-sidebar ">
-
-
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -37,8 +35,6 @@
             </div>
         </div>
     </div>
-
-
 
 
     <div class="nk-app-root">
@@ -57,7 +53,6 @@
     </div>
     <script src="{{asset('assets/js/bundle.js?ver=2.9.1')}}"></script>
     <script src="{{ asset('assets/js/scripts.js?ver=2.9.1 ')}}"></script>
-    <!-- <script src="{{asset('assets/js/charts/chart-crm.js?ver=2.9.1 ')}}"></script> -->
     <script>
         $('#myModal').on('show.bs.modal', function(e) {
             var url = '/companies/create'; // URL for your create page
