@@ -22,7 +22,7 @@ class CompanyController extends Controller
             return Datatables::of($company)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $action = '<a href="' . route('companies.edit', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
+                    $action = '<a href="#" data-toggle="modal" data-target="#edit-company-modal" data-id="{{ $row->id }}" class="edit btn btn-primary btn-sm">Edit</a>     ';
                     $action .= '<a class="btn btn-danger mx-1 btn-sm delete" data-table="companies-table" data-method="DELETE"
                     data-url="' . route('companies.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
                         Delete
@@ -87,8 +87,11 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        return view('companies.edit', compact('company'));
+        return response()->json([
+            'data' => $company
+        ]);
     }
+
 
     /**
      * Update the specified resource in storage.
