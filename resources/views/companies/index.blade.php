@@ -1,23 +1,25 @@
 @extends('dashboard')
 @section('content')
+<a href=" {{route('companies.create')}}" data-toggle="modal" data-target="#myModal" class="btn btn-primary mb-4">Create Company</a>
 <div class="container">
-
-    <table id="companies-table">
-        <a href="{{route('companies.create')}}" class="btn btn-primary mb-4" s>create company</a>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Logo</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <div class="card card-preview">
+        <div class="card-inner">
+            <table id="table" class="datatable-init nowrap table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Logo</th>
+                        <th scope="col">actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-
 
 @endsection
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -26,7 +28,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#companies-table').DataTable({
+        $('#table').DataTable({
             "processing": false,
             "serverSide": true,
             "ajax": {
@@ -56,7 +58,8 @@
                     "data": "action",
                     "orderable": false,
                     "searchable": false
-                }
+                },
+
             ]
         });
 

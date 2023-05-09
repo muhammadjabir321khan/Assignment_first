@@ -1,23 +1,30 @@
 @extends('dashboard')
 @section('content')
 @can('create companies')
-<div class="container" >
+<div class="container">
+    <!-- Button trigger modal -->
 
-<a href="{{route('employees.create')}}" class="btn btn-primary mb-4" s>create employee</a>
-    <table id="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>FName</th>
-                <th>lname</th>
-                <th>company</th>
-                <th>project</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+
+    <a href="{{route('employees.create')}}" class="btn btn-primary mb-4">create employee</a>
+    <div class="card card-preview">
+        <div class="card-inner">
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>FName</th>
+                        <th>lname</th>
+                        <th>company</th>
+                        <th>project</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 @endcan
 
@@ -64,28 +71,28 @@
         });
 
         $(document).on('click', '.delete', function() {
-        var table = $(this).data('table');
-        var url = $(this).data('url');
-        var method = $(this).data('method');
-        if (confirm("Are you sure you want to delete this employee?")) {
-            $.ajax({
-                url: url,
-                type: method,
-                data: {
-                    _token: $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(data) {
-                    alert(data.success);
-                    $('#' + table).DataTable().ajax.reload();
-                },
-                error: function(xhr, status, error) {
-                    $('.alert-success').text('Data successfully deleted!').fadeIn().delay(3000).fadeOut();
+            var table = $(this).data('table');
+            var url = $(this).data('url');
+            var method = $(this).data('method');
+            if (confirm("Are you sure you want to delete this employee?")) {
+                $.ajax({
+                    url: url,
+                    type: method,
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        alert(data.success);
+                        $('#' + table).DataTable().ajax.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        $('.alert-success').text('Data successfully deleted!').fadeIn().delay(3000).fadeOut();
 
-                    console.log(xhr.responseText);
-                }
-            });
-        }
-    });
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+        });
     });
     $(document).on('click', '.delete', function() {
         var table = $(this).data('table');
