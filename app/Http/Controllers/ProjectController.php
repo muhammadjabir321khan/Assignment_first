@@ -20,7 +20,7 @@ class ProjectController extends Controller
             return Datatables::of($employees)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $action = '<a href="' . route('projects.edit', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
+                    $action = '<a href="javascript:void(0)"  class="btn btn-primary btn-sm edit" data-id="' . $row->id . '">Edit</a>     ';
                     $action .= '<a class="btn btn-danger  btn-sm mx-1 delete" data-table="companies-table" data-method="DELETE"
                     data-url="' . route('projects.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
                         Delete
@@ -50,19 +50,18 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
-      try {
-        $project = Project::create($request->all());
-        $project->employee()->attach($request->employee_id);
-        return response([
-            'project' => 'project is created succesfully'
-        ],201);
-      } catch (\Exception $e) {
-        return response([
-            'Erorr' => 'project is created succesfully',
-             'message'=>$e->getMessage(),
-        ], 401);
-      }
-        
+        try {
+            $project = Project::create($request->all());
+            $project->employee()->attach($request->employee_id);
+            return response([
+                'project' => 'project is created succesfully'
+            ], 201);
+        } catch (\Exception $e) {
+            return response([
+                'Erorr' => 'project is created succesfully',
+                'message' => $e->getMessage(),
+            ], 401);
+        }
     }
 
     /**
@@ -79,7 +78,13 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $employies  = Employee::all();
-        return view('projects.edit', compact('project', 'employies'));
+
+        return response()->json([
+            'employee' => $employies,
+            'project' => $project
+
+        ]);
+        // return view('projects.edit', compact('project', 'employies'));
     }
 
     /**

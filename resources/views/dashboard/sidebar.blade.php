@@ -4,7 +4,7 @@
             <a href="#" class="nk-nav-toggle nk-quick-nav-icon d-xl-none" data-target="sidebarMenu"><em class="icon ni ni-arrow-left"></em></a>
             <a href="#" class="nk-nav-compact nk-quick-nav-icon d-none d-xl-inline-flex" data-target="sidebarMenu"><em class="icon ni ni-menu"></em></a>
         </div>
-        
+
     </div><!-- .nk-sidebar-element -->
     <div class="nk-sidebar-element nk-sidebar-body">
         <div class="nk-sidebar-content">
@@ -24,7 +24,7 @@
                             <span class="nk-menu-text">Company</span>
                         </a>
                         <ul class="nk-menu-sub">
-                         
+
                             <li class="nk-menu-item">
                                 <a href="{{route('companies.index')}}" class="nk-menu-link"><span class="nk-menu-text"> Companies List</span></a>
                             </li>
@@ -59,14 +59,10 @@
                             <span class="nk-menu-text">Project</span>
                         </a>
                         <ul class="nk-menu-sub">
-                           
-                            <li class="nk-menu-item">
-                                <a href="{{url('/projects/create')}}" class="nk-menu-link"><span class="nk-menu-text">Add Projcet</span></a>
-                            </li>
                             <li class="nk-menu-item">
                                 <a href="{{url('projects')}}" class="nk-menu-link"><span class="nk-menu-text">Project list</span></a>
                             </li>
-                       
+
                         </ul>
                     </li>
                     @endcan

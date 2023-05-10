@@ -20,6 +20,7 @@
                                 <div class="form-control-wrap">
                                     <input type="text" class="form-control" id="full-name-1" name="name">
                                 </div>
+                                <div id="name-error" class="text-danger"></div>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -28,6 +29,7 @@
                                 <div class="form-control-wrap">
                                     <input type="text" class="form-control" id="email-address-1" name="email">
                                 </div>
+                                <div id="email-error" class="text-danger"></div>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -50,6 +52,9 @@
     </div>
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css" integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <script>
     $(document).ready(function() {
         $('#companyForm').on('submit', function(e) {
@@ -65,8 +70,12 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
+                    setTimeout(function() {
+                        toastr.success('Data added successfully!', 'Success', {
+                            positionClass: 'toast-top-left'
+                        });
+                    }, 1000);
                     $('#companyForm')[0].reset();
-                    swal.fire("company is created", response.company)
 
                 },
                 error: function(xhr, status, error) {

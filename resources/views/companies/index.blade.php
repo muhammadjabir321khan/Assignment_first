@@ -1,6 +1,6 @@
 @extends('dashboard')
 @section('content')
-<a href=" {{route('companies.create')}}" data-toggle="modal" data-target="#myModal" class="btn btn-primary mb-3 mx-5" style="margin-left: 100px;">Create Company</a>
+<a href=" {{route('companies.create')}}" data-toggle="modal" data-target="#myModal" class="btn btn-primary mb-3  mx-5">Create Company</a>
 <div id="edit-company-modal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -66,7 +66,7 @@
 <div class="container">
     <div class="card card-preview mx-5">
         <div class="card-inner  mx-5 my-3">
-            <table id="table" class="datatable-init nowrap table my-3">
+            <table id="company">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -86,11 +86,13 @@
 @endsection
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
 
 
 <script>
     $(document).ready(function() {
-        $('#table').DataTable({
+        $('#company').DataTable({
             "processing": false,
             "serverSide": true,
             "ajax": {
@@ -138,7 +140,7 @@
                     _token: $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(data) {
-                    alert(data.success);
+                    swal.fire(data.success);
                     $('#' + table).DataTable().ajax.reload();
                 },
                 error: function(xhr, status, error) {

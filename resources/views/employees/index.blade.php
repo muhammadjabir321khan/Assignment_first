@@ -2,7 +2,7 @@
 @section('content')
 @can('create companies')
 <div class="container">
-    <a href="{{ route('employees.create') }}" data-toggle="modal" data-target="#myModal1" class="btn btn-primary mb-3 mx-5" style="margin-left: 100px;">create employee</a>
+    <a href="{{ route('employees.create') }}" data-toggle="modal" data-target="#myModal1" class="btn btn-primary my-2 mx-1">create employee</a>
     <div id="edit-company-modal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -10,7 +10,7 @@
                     <div class="nk-block nk-block-lg mb-5">
                         <div class="nk-block-head">
                             <div class="nk-block-head-content">
-                                <h4 class="title nk-block-title">Edit Company Details</h4>
+                                <h4 class="title nk-block-title">Edit employee Details</h4>
                                 <div class="nk-block-des">
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
     </div>
     <div class="card card-preview ">
         <div class="card-inner my-3  mx-4">
-            <table id="table">
+            <table id="table" class="my-3">
                 <thead>
                     <tr>
                         <th>ID</th>
