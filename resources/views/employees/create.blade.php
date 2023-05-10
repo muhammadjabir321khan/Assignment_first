@@ -1,11 +1,8 @@
-@extends('dashboard')
-@section('content')
-@section('title','Add Employee')
 <div class="nk-block nk-block-lg mb-5">
     <div class="card card-bordered">
         <div class="card-inner">
             <div class="card-head">
-                <h5 class="card-title">Add Company</h5>
+                <h5 class="card-title">Add Employee</h5>
             </div>
             <form id="employee-form">
                 <div>
@@ -60,11 +57,7 @@
         font-weight: bold;
     }
 </style>
-@endsection
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="sweetalert2.all.min.js"></script>
-<script src="sweetalert2.min.js"></script>
-<link rel="stylesheet" href="sweetalert2.min.css">
 <script>
     $(document).ready(function() {
         $('#employee-form').on('submit', function(e) {

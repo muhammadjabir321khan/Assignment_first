@@ -1,6 +1,3 @@
-@extends('dashboard')
-@section('content')
-@section('title','Add Company')
 <div class="container my-3">
     <form id="companyForm">
         <h5 class="text-center">Add Project</h5>
@@ -71,7 +68,7 @@
         font-weight: bold;
     }
 </style>
-@endsection
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">

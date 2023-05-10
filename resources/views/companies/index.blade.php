@@ -1,6 +1,6 @@
 @extends('dashboard')
 @section('content')
-<a href=" {{route('companies.create')}}" data-toggle="modal" data-target="#myModal" class="btn btn-primary mb-4">Create Company</a>
+<a href=" {{route('companies.create')}}" data-toggle="modal" data-target="#myModal" class="btn btn-primary mb-3 mx-5" style="margin-left: 100px;">Create Company</a>
 <div id="edit-company-modal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -16,10 +16,11 @@
                     <div class="card card-bordered">
                         <div class="card-inner">
                             <div class="card-head">
-                                <h5 class="card-title">Eid Company</h5>
+                                <h5 class="card-title">Edit Company</h5>
                             </div>
                             <form id="companyForm">
                                 <div class="row g-4">
+                                    <input type="hidden" name="id" id="id" class="form-control" value="">
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="form-label" for="full-name-1"> Name</label>
@@ -48,7 +49,7 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-lg btn-primary">Save Informations</button>
+                                            <button type="button" class="btn btn-lg btn-primary save">Save Informations</button>
                                         </div>
                                     </div>
                                 </div>
@@ -63,9 +64,9 @@
 </div>
 
 <div class="container">
-    <div class="card card-preview">
-        <div class="card-inner">
-            <table id="table" class="datatable-init nowrap table">
+    <div class="card card-preview mx-5">
+        <div class="card-inner  mx-5 my-3">
+            <table id="table" class="datatable-init nowrap table my-3">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -158,23 +159,26 @@
                 console.log(response.data);
                 $('#edit-company-modal').modal('show');
                 $('#full-name-1').val(response.data.name)
+                $('#id').val(response.data.id)
                 $('#email-address-1').val(response.data.email)
                 $('#company-image').attr('src', "/storage/images/" + response.data.logo);
             }
 
         });
     });
-    $('#companyForm').submit(function(event) {
-        event.preventDefault();
-        var formData = new FormData($(this)[0]);
+    $(document).on('click', '.save', function() {
+        var form = $(this).closest('form');
+        var formData = new FormData(form[0]);
         formData.append('_method', 'PUT');
-
         $.ajax({
-            url: '{{ url("companies","")}}' + '/' + id + '/update',
+            url: '{{ route("companies.update", ["company" => ":id"]) }}'.replace(':id', $('#id').val()),
             type: 'POST',
             data: formData,
             processData: false,
             contentType: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             success: function(response) {
                 window.location.href = "/companies";
             },

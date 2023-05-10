@@ -37,6 +37,43 @@
     </div>
 
 
+
+
+    <!-- Employee modal -->
+    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"></h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- project modal -->
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"></h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="nk-app-root">
         <div class="nk-main ">
             @include('dashboard.sidebar')
@@ -51,6 +88,8 @@
             </div>
         </div>
     </div>
+
+
     <script src="{{asset('assets/js/bundle.js?ver=2.9.1')}}"></script>
     <script src="{{ asset('assets/js/scripts.js?ver=2.9.1 ')}}"></script>
     <script>
@@ -59,7 +98,20 @@
             var modalBody = $(this).find('.modal-body');
             modalBody.load(url);
         });
+        $('#myModal1').on('show.bs.modal', function(e) {
+            var url = '/employees/create';
+            var modalBody = $(this).find('.modal-body');
+            modalBody.load(url);
+        });
+
+        $('#myModal2').on('show.bs.modal', function(e) {
+            var url = '/projects/create';
+            var modalBody = $(this).find('.modal-body');
+            modalBody.load(url);
+        });
     </script>
+
+
 </body>
 
 

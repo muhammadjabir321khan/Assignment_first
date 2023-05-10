@@ -18,8 +18,7 @@ class EmployeeController extends Controller
             return Datatables::of($employees)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $action = '<a href="' . route('employees.edit', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
-
+                    $action = '<a href="javascript:void(0)"  class="btn btn-primary btn-sm edit" data-id="' . $row->id . '">Edit</a>     ';
                     $action .= '<a class="btn btn-danger mx-1 btn-sm delete" data-table="companies-table" data-method="DELETE"
                     data-url="' . route('employees.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
                         Delete
@@ -55,11 +54,11 @@ class EmployeeController extends Controller
     {
 
         try {
-           Employee::create($request->all());
+            Employee::create($request->all());
             return response([
                 'company ' => 'Employee is created'
-                 
-            ],201);
+
+            ], 201);
         } catch (\Exception $e) { {
                 return response()->json([
                     'message' => 'The given data was invalid.',
@@ -80,7 +79,10 @@ class EmployeeController extends Controller
     public function edit(Employee $employee)
     {
         $companies = Company::all();
-        return view('employees.edit', compact('employee', 'companies'));
+        return response()->json([
+            'comapnies' => $companies,
+            'employee' => $employee,
+        ]);
     }
 
 
@@ -89,6 +91,7 @@ class EmployeeController extends Controller
      */
     public function update(EmployeeRequest $request,  Employee $employee)
     {
+
 
         try {
             $employee->update(

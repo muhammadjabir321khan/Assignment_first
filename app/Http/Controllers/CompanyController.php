@@ -32,7 +32,7 @@ class CompanyController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('companies.index');
+        return view('companies.index', compact('company'));
     }
 
     public function create()
@@ -98,18 +98,25 @@ class CompanyController extends Controller
      * Update the specified resource in storage.
      */
     // Inside the update method of the controller
-    public function update(CompanyRequest $request, Company $company)
+    public function update(Request $request, $id)
     {
 
         try {
+            $existingCompany = Company::find($id);
+            if (!$existingCompany) {
+                throw new \Exception('Company not found.');
+            }
+
             if ($request->hasFile('image')) {
-                Storage::delete('public/images/' . $company->logo);
+                Storage::delete('public/images/' . $existingCompany->logo);
                 $image = $request->file('image');
                 $filename = $image->getClientOriginalName();
                 $path = $request->file('image')->storeAs('public/images', $filename);
-                $company->logo = $filename;
+                $existingCompany->logo = $filename;
             }
-            $company->update($request->all());
+
+            $existingCompany->update($request->all());
+
             return response()->json([
                 'success' => true,
                 'message' => 'Company updated successfully.'
@@ -117,10 +124,11 @@ class CompanyController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
-
             ], 401);
         }
     }
+
+
 
     public function destroy(Company $company)
     {

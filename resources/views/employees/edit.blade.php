@@ -70,6 +70,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
+                    console.log(response.employee);
                     window.location.href = "/employees";
                 },
                 error: function(xhr, status, error) {

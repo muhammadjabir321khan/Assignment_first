@@ -1,7 +1,7 @@
 @extends('dashboard')
 @section('content')
-<div class="container" >
-<a href="{{route('projects.create')}}" class="btn btn-primary mb-4" s>create project</a>
+<div class="container">
+    <a href="{{route('projects.create')}}" class="btn btn-primary mb-4" data-toggle="modal" data-target="#myModal2">create project</a>
     <table id="table">
         <thead>
             <tr>
@@ -56,7 +56,7 @@
                 {
                     "data": "employee"
                 },
-             
+
                 {
                     "data": "action",
                     "orderable": false,
