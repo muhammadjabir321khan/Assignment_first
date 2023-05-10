@@ -138,6 +138,7 @@ class CompanyController extends Controller
 
     public  function search(Request $request)
     {
+
         $search = request('search');
         $projects = Project::Where('detail', 'like', "%$search%")->pluck('detail');
 
