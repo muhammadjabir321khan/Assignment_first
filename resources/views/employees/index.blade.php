@@ -48,7 +48,6 @@
                                         <div class="select-wrapper col-md-10">
                                             <label for="company">Company:</label>
                                             <select name="company_id" id="company_id">
-                                                <option value="">Select a company</option>
                                             </select>
                                         </div>
                                         <button type="button" class="btn btn-primary my-3 save">Save Employee</button>
@@ -80,7 +79,7 @@
     </div>
     <div class="card card-preview ">
         <div class="card-inner my-3  mx-4">
-            <table id="table" class="my-3">
+            <table id="table">
                 <thead>
                     <tr>
                         <th>ID</th>

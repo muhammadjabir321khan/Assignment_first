@@ -16,6 +16,7 @@
     </head>
     <link rel="stylesheet" href="{{asset('assets/css/dashlite.css?ver=2.9.1')}}">
     <link id="skin-default" rel="stylesheet" href="{{asset('/assets/css/theme.css?ver=2.9.1 ')}}">
+    <!-- @vite(['resources/js/app.js']) -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 </head>
 

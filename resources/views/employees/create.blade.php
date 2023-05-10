@@ -58,6 +58,9 @@
     }
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css" integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <script>
     $(document).ready(function() {
         $('#employee-form').on('submit', function(e) {
@@ -78,8 +81,14 @@
                 },
 
                 success: function(response) {
-                    swal.fire("New Employee is added", response),
-                        $('#employee-form')[0].reset();
+                    setTimeout(function() {
+                        toastr.success('Data added successfully!', 'Success', {
+                            positionClass: 'toast-top-left'
+                        });
+                    }, 1000);
+                    $('#employee-form')[0].reset();
+                    window.location.href = "/employees";
+
                 },
                 error: function(xhr, status, error) {
                     var response = xhr.responseJSON;
