@@ -88,7 +88,8 @@
                 },
                 success: function(response) {
                     $('#companyForm')[0].reset();
-                    swal.fire(response.project);
+                    window.location.href = "/projects";
+
 
                 },
                 error: function(xhr, status, error) {

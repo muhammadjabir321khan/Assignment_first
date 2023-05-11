@@ -63,76 +63,92 @@
     </div>
 </div>
 
-<div class="container">
-    <div class="card card-preview mx-5">
-        <div class="card-inner  mx-5 my-3">
-            <table id="company">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Logo</th>
-                        <th scope="col">actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+
+<div class="nk-content ">
+    <div class="container-fluid">
+        <div class="nk-content-inner">
+            <div class="nk-content-body">
+                <div class="components-preview wide-md mx-auto">
+                    <div class="nk-block nk-block-lg">
+                        <div class="card card-preview">
+                            <div class="card-inner">
+                                <div class="table-responsive">
+                                    <table id="company" class="datatable-init nowrap table">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Logo</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+    <style>
+        .table-responsive {
+            overflow-x: auto;
+        }
+    </style>
+    @endsection
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
 
-@endsection
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
 
+    <script>
+        $(document).ready(function() {
+            $('#company').DataTable({
+                "responsive": true,
+                "processing": false,
+                "serverSide": true,
+                "ajax": {
+                    "url": "{{route('companies.index') }}",
+                    "method": "GET",
+                    "dataType": "json",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                },
+                "columns": [{
+                        "data": "id"
+                    },
+                    {
+                        "data": "name"
+                    },
+                    {
+                        "data": "email"
+                    },
+                    {
+                        "data": "logo",
+                        "render": function(data, type, row) {
+                            return '<img src="/storage/images/' + data + '" width="50" height="50" />';
+                        }
+                    },
+                    {
+                        "data": "action",
+                        "orderable": false,
+                        "searchable": false
+                    },
 
-<script>
-    $(document).ready(function() {
-        $('#company').DataTable({
-            "processing": false,
-            "serverSide": true,
-            "ajax": {
-                "url": "{{route('companies.index') }}",
-                "method": "GET",
-                "dataType": "json",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-            },
-            "columns": [{
-                    "data": "id"
-                },
-                {
-                    "data": "name"
-                },
-                {
-                    "data": "email"
-                },
-                {
-                    "data": "logo",
-                    "render": function(data, type, row) {
-                        return '<img src="/storage/images/' + data + '" width="50" height="50" />';
-                    }
-                },
-                {
-                    "data": "action",
-                    "orderable": false,
-                    "searchable": false
-                },
+                ]
+            });
 
-            ]
         });
-
-    });
-    $(document).on('click', '.delete', function() {
-        var table = $(this).data('table');
-        var url = $(this).data('url');
-        var method = $(this).data('method');
-        if (confirm("Are you sure you want to delete this company?")) {
+        $(document).on('click', '.delete-company', function() {
+            var table = $(this).data('table');
+            var url = $(this).data('url');
+            var method = $(this).data('method');
             $.ajax({
                 url: url,
                 type: method,
@@ -148,45 +164,45 @@
                     console.log(xhr.responseText);
                 }
             });
-        }
 
 
-    });
-    $(document).on('click', '.edit', function() {
-        var id = $(this).data('id');
-        $.ajax({
-            url: '{{ url("companies","")}}' + '/' + id + '/edit',
-            method: 'Get',
-            success: function(response) {
-                console.log(response.data);
-                $('#edit-company-modal').modal('show');
-                $('#full-name-1').val(response.data.name)
-                $('#id').val(response.data.id)
-                $('#email-address-1').val(response.data.email)
-                $('#company-image').attr('src', "/storage/images/" + response.data.logo);
-            }
 
         });
-    });
-    $(document).on('click', '.save', function() {
-        var form = $(this).closest('form');
-        var formData = new FormData(form[0]);
-        formData.append('_method', 'PUT');
-        $.ajax({
-            url: '{{ route("companies.update", ["company" => ":id"]) }}'.replace(':id', $('#id').val()),
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(response) {
-                window.location.href = "/companies";
-            },
-            error: function(xhr, status, error) {
-                console.log(xhr.responseText);
-            }
+        $(document).on('click', '.edit', function() {
+            var id = $(this).data('id');
+            $.ajax({
+                url: '{{ url("companies","")}}' + '/' + id + '/edit',
+                method: 'Get',
+                success: function(response) {
+                    console.log(response.data);
+                    $('#edit-company-modal').modal('show');
+                    $('#full-name-1').val(response.data.name)
+                    $('#id').val(response.data.id)
+                    $('#email-address-1').val(response.data.email)
+                    $('#company-image').attr('src', "/storage/images/" + response.data.logo);
+                }
+
+            });
         });
-    });
-</script>
+        $(document).on('click', '.save', function() {
+            var form = $(this).closest('form');
+            var formData = new FormData(form[0]);
+            formData.append('_method', 'PUT');
+            $.ajax({
+                url: '{{ route("companies.update", ["company" => ":id"]) }}'.replace(':id', $('#id').val()),
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    window.location.href = "/companies";
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+    </script>

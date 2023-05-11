@@ -1,7 +1,8 @@
 @extends('dashboard')
 @section('content')
+
 <div class="container">
-    <a href="{{route('projects.create')}}" class="btn btn-primary mb-4" data-toggle="modal" data-target="#myModal2">create project</a>
+    <a href="#" class="btn btn-primary mx-5" data-toggle="modal" data-target="#myModal2">create project</a>
     <div id="edit-company-modal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -96,23 +97,40 @@
             </div>
         </div>
     </div>
-    <table id="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Detail</th>
-                <th>totalCast</th>
-                <th>deadLine</th>
-                <th>Employee</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <div class="nk-content ">
+        <div class="container-fluid">
+            <div class="nk-content-inner">
+                <div class="nk-content-body">
+                    <div class="components-preview wide-md mx-auto">
+                        <div class="nk-block nk-block-lg">
+                            <div class="card card-preview">
+                                <div class="card-inner">
+                                    <div class="table-responsive">
+                                        <table id="table" class="datatable-init nowrap table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Detail</th>
+                                                    <th>totalCast</th>
+                                                    <th>deadLine</th>
+                                                    <th>Employee</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
 
 @endsection
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -161,7 +179,7 @@
             ]
         });
 
-        $(document).on('click', '.delete', function() {
+        $(document).on('click', '.delete-project', function() {
             var table = $(this).data('table');
             var url = $(this).data('url');
             var method = $(this).data('method');
@@ -175,6 +193,7 @@
                 success: function(data) {
                     $('#' + table).DataTable().ajax.reload();
                     swal.fire(data.status);
+
                 },
                 error: function(xhr, status, error) {}
             });

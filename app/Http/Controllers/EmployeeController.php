@@ -18,9 +18,9 @@ class EmployeeController extends Controller
             return Datatables::of($employees)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $action = '<a href="javascript:void(0)"  class="btn btn-primary btn-sm edit" data-id="' . $row->id . '">Edit</a>     ';
-                    $action .= '<a class="btn btn-danger mx-1 btn-sm delete" data-table="companies-table" data-method="DELETE"
-                    data-url="' . route('employees.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
+                    $action = '<a href="javascript:void(0)" class="btn btn-primary btn-sm edit" data-id="' . $row->id . '">Edit</a> ';
+                    $action .= '<a class="btn btn-danger btn-sm mx-1 delete-record" data-table="companies-table" data-method="DELETE"
+                        data-url="' . route('employees.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
                         Delete
                     </a>';
                     return $action;
@@ -41,6 +41,7 @@ class EmployeeController extends Controller
 
     public function create()
     {
+
         $companies = Company::all();
         return view('employees.create', compact('companies'));
     }

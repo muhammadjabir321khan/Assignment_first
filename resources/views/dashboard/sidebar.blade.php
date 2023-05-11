@@ -5,10 +5,7 @@
             <a href="#" class="nk-nav-compact nk-quick-nav-icon d-none d-xl-inline-flex" data-target="sidebarMenu"><em class="icon ni ni-menu"></em></a>
         </div>
         <div class="nk-sidebar-brand">
-            <a href="html/index.html" class="logo-link nk-sidebar-logo">
-                <img class="logo-light logo-img" src="./images/logo.png" srcset="./images/logo2x.png 2x" alt="logo">
-                <img class="logo-dark logo-img" src="./images/logo-dark.png" srcset="./images/logo-dark2x.png 2x" alt="logo-dark">
-            </a>
+
         </div>
     </div>
     <div class="nk-sidebar-element nk-sidebar-body">
@@ -16,7 +13,7 @@
             <div class="nk-sidebar-menu" data-simplebar>
                 <ul class="nk-menu">
                     <li class="nk-menu-item">
-                        <a href="html/crm/index.html" class="nk-menu-link">
+                        <a href="{{route('dashboard')}}" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="icon ni ni-dashboard-fill"></em></span>
                             <span class="nk-menu-text">Dashboard</span>
                         </a>
@@ -27,12 +24,14 @@
                             <span class="nk-menu-text">Employee</span>
                         </a>
                         <ul class="nk-menu-sub">
+                            @can('create companies')
                             <li class="nk-menu-item">
-                                <a href="{{route('employees.index')}}"><span class="nk-menu-text mx-5">Create Employee</span></a>
+                                <a href="{{route('employees.index')}}"><span class="nk-menu-text mx-5">Employee List</span></a>
                             </li>
+                            @endcan('create companies')
                             @can('create-employee')
                             <li class="nk-menu-item">
-                                <a href="{{route('employees.create')}}" data-toggle="modal" data-target="#myModal1"><span class="nk-menu-text mx-5">Organization</span></a>
+                                <a href="{{route('employees.create')}}" data-toggle="modal" data-target="#myModal1"><span class="nk-menu-text mx-5">Add Employee</span></a>
                             </li>
                             @endcan
                         </ul>

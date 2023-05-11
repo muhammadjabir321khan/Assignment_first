@@ -23,7 +23,7 @@ class CompanyController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $action = '<a href="javascript:void(0)"  class="btn btn-primary btn-sm edit" data-id="' . $row->id . '">Edit</a>     ';
-                    $action .= '<a class="btn btn-danger mx-1 btn-sm delete" data-table="companies-table" data-method="DELETE"
+                    $action .= '<a class="btn btn-danger mx-1 btn-sm delete-company" data-table="company" data-method="DELETE"
                     data-url="' . route('companies.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
                         Delete
                     </a>';

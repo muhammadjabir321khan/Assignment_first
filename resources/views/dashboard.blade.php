@@ -14,10 +14,9 @@
 
     <head>
     </head>
-    <!-- <link rel="stylesheet" href="{{asset('assets/css/dashlite.css?ver=2.9.1')}}"> -->
     @vite('resources/assets/css/dashlite.css')
-    <!-- @vite('resources/assets/js/bundle.js')
-    @vite('resources/assets/js/scripts.js') -->
+    <!-- @vite('resources/assets/js/bundle.js') -->
+
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 </head>
@@ -38,11 +37,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-    <!-- Employee modal -->
     <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -58,9 +52,6 @@
             </div>
         </div>
     </div>
-
-
-    <!-- project modal -->
     <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -77,6 +68,7 @@
         </div>
     </div>
 
+
     <div class="nk-app-root">
         <div class="nk-main ">
             @include('dashboard.sidebar')
@@ -91,27 +83,27 @@
             </div>
         </div>
     </div>
-
-
     <script src="{{asset('assets/js/bundle.js?ver=2.9.1')}}"></script>
     <script src="{{ asset('assets/js/scripts.js?ver=2.9.1 ')}}"></script>
     <script>
-        $('#myModal').on('show.bs.modal', function(e) {
-            var url = '/companies/create'; // URL for your create page
-            var modalBody = $(this).find('.modal-body');
-            modalBody.load(url);
-        });
-        $('#myModal1').on('show.bs.modal', function(e) {
-            var url = '/employees/create';
-            var modalBody = $(this).find('.modal-body');
-            modalBody.load(url);
-        });
+        $(document).ready(function() {
+            $('#myModal').on('show.bs.modal', function(e) {
+                var url = '/companies/create'; // URL for your create page
+                var modalBody = $(this).find('.modal-body');
+                modalBody.load(url);
+            });
+            $('#myModal1').on('show.bs.modal', function(e) {
+                var url = '/employees/create';
+                var modalBody = $(this).find('.modal-body');
+                modalBody.load(url);
+            });
 
-        $('#myModal2').on('show.bs.modal', function(e) {
-            var url = '/projects/create';
-            var modalBody = $(this).find('.modal-body');
-            modalBody.load(url);
-        });
+            $('#myModal2').on('show.bs.modal', function(e) {
+                var url = '/projects/create';
+                var modalBody = $(this).find('.modal-body');
+                modalBody.load(url);
+            });
+        })
     </script>
 
 
