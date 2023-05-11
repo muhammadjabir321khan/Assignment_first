@@ -18,24 +18,7 @@
                             <span class="nk-menu-text">Dashboard</span>
                         </a>
                     </li><!-- .nk-menu-item -->
-                    <li class="nk-menu-item has-sub">
-                        <a href="#" class="nk-menu-link nk-menu-toggle">
-                            <span class="nk-menu-icon"><em class="icon ni ni-users-fill"></em></span>
-                            <span class="nk-menu-text">Employee</span>
-                        </a>
-                        <ul class="nk-menu-sub">
-                            @can('create companies')
-                            <li class="nk-menu-item">
-                                <a href="{{route('employees.index')}}"><span class="nk-menu-text mx-5">Employee List</span></a>
-                            </li>
-                            @endcan('create companies')
-                            @can('create-employee')
-                            <li class="nk-menu-item">
-                                <a href="{{route('employees.create')}}" data-toggle="modal" data-target="#myModal1"><span class="nk-menu-text mx-5">Add Employee</span></a>
-                            </li>
-                            @endcan
-                        </ul>
-                    </li>
+
                     @role('admin')
                     <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
@@ -52,6 +35,25 @@
                         </ul>
                     </li>
                     @endrole
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-users-fill"></em></span>
+                            <span class="nk-menu-text">Employee</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            @can('create companies')
+                            <li class="nk-menu-item">
+                                <a href="{{route('employees.index')}}"><span class="nk-menu-text mx-5">Employee List</span></a>
+                            </li>
+                            @endcan
+                            @can('create-employee')
+                            <li class="nk-menu-item">
+                                <a href="{{route('employees.create')}}" data-toggle="modal" data-target="#myModal1"><span class="nk-menu-text mx-5">Add Employee</span></a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </li>
+
                     @can('create companies')
                     <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">

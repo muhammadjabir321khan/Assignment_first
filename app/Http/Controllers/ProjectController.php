@@ -55,11 +55,11 @@ class ProjectController extends Controller
             $project->employee()->attach($request->employee_id);
             return response([
                 'project' => 'project is created succesfully'
-            ], 201);
+            ], 200);
         } catch (\Exception $e) {
             return response([
-                'Erorr' => 'project is created succesfully',
-                'message' => $e->getMessage(),
+                'errors' => 'project is Not succesfully',
+                'errors' => $e->getMessage(),
             ], 401);
         }
     }

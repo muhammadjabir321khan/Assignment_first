@@ -7,23 +7,25 @@
             <form id="employee-form">
                 <div>
                     <div class="col-md-10">
-                        <div id="lname-error" class="text-danger"></div>
+
                         <div class="form-group">
                             <label class="form-label" for="fname"> First Name</label>
                             <div class="form-control-wrap">
                                 <input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname">
                             </div>
+                            <div id="fname-error" class="text-danger"></div>
                         </div>
                     </div>
                 </div>
                 <div>
                     <div class="col-md-10">
-                        <div id="fname-error" class="text-danger"></div>
+
                         <div class="form-group">
                             <label class="form-label" for="fname"> Last Name</label>
                             <div class="form-control-wrap">
                                 <input type="text" class="form-control" id="fname" placeholder="First Name" name="lname">
                             </div>
+                            <div id="lname-error" class="text-danger"></div>
                         </div>
                     </div>
                 </div>

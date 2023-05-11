@@ -29,24 +29,26 @@
                                         <div>
                                             <div class="col-md-10">
                                                 <input type="hidden" name="id" id="id">
-                                                <div id="lname-error" class="text-danger"></div>
+
                                                 <div class="form-group">
                                                     <label class="form-label" for="fname"> First Name</label>
                                                     <div class="form-control-wrap">
                                                         <input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname">
                                                     </div>
+                                                    <div id="fname-error" class="text-danger"></div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div>
                                             <div class="col-md-10">
-                                                <div id="fname-error" class="text-danger"></div>
                                                 <div class="form-group">
                                                     <label class="form-label" for="fname"> Last Name</label>
                                                     <div class="form-control-wrap">
                                                         <input type="text" class="form-control" id="fname" placeholder="First Name" name="fname">
                                                     </div>
+
                                                 </div>
+                                                <!-- <div id="lname-error" class="text-danger"></div> -->
                                             </div>
                                         </div>
                                         <div class="select-wrapper col-md-10">
@@ -115,6 +117,12 @@
         </div>
     </div>
 </div>
+<style>
+    td.action-column {
+        padding: 0px 0px;
+    }
+</style>
+
 @endcan
 
 
@@ -154,9 +162,13 @@
                 {
                     "data": "action",
                     "orderable": false,
-                    "searchable": false
+                    "searchable": false,
+                    "className": "action-column"
                 }
+
+
             ]
+
         });
 
         $(document).on('click', '.delete-record', function() {

@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('welcome');
 });
 
 
-Route::get('/dashboard', function () {
+Route::get('dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/employees', EmployeeController::class);
 });
 
-    Route::group(['middleware' => ['can:create companies, edit companies, upadte companies, delete companies',]], function () {
+Route::group(['middleware' => ['can:create companies, edit companies, upadte companies, delete companies',]], function () {
     Route::resource('/companies', CompanyController::class)->middleware(['auth', 'role:admin']);
     Route::resource('/projects', ProjectController::class)->middleware(['auth', 'role:admin']);
     Route::get('/search', [CompanyController::class, 'search'])->name('companies.search');

@@ -3,12 +3,13 @@
         <h5 class="text-center">Add Project</h5>
         <div class="row g-gs">
             <div class="col-md-10">
-                <div id="name-error" class="text-danger"></div>
+
                 <div class="form-group">
                     <label class="form-label" for="name">Name:</label>
                     <div class="form-control-wrap">
                         <input type="text" class="form-control" id="name" placeholder="Name" name="name" class="@error('name') is-invalid @enderror">
                     </div>
+                    <div id="name-error" class="text-danger"></div>
                 </div>
             </div>
             <div class="col-md-10">
@@ -18,6 +19,7 @@
                     <div class="form-control-wrap">
                         <input type="text" class="form-control" id="detail" placeholder="Project detail" name="detail">
                     </div>
+                    <div id="detail-error" class="text-danger"></div>
 
                 </div>
             </div>
@@ -29,15 +31,19 @@
                         <input type="text" class="form-control" id="totalCost" placeholder="Total Cost" name="totalCost">
                     </div>
                 </div>
+                <div id="totalCost-error" class="text-danger"></div>
+
             </div>
             <div class="col-md-10">
-                <div id="logo-error" class="text-danger"></div>
                 <div class="form-group">
                     <label class="form-label" for="deadline">Deadline:</label>
                     <div class="form-control-wrap">
                         <input type="date" class="form-control" id="deadline" placeholder="deadline" name="deadline">
                     </div>
                 </div>
+                <div id="deadline-error" class="text-danger"></div>
+
+
             </div>
             <div class="select-wrapper col-md-10">
                 <label for="company">Company:</label>

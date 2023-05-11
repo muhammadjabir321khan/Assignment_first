@@ -23,7 +23,7 @@ class EmployeeController extends Controller
                         data-url="' . route('employees.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
                         Delete
                     </a>';
-                    return $action;
+                    return  $action;
                 })->addColumn('company', function ($row) {
                     return $row->company ? $row->company->name : 'N/A';
                 })->addColumn('projects', function ($row) {
@@ -59,12 +59,12 @@ class EmployeeController extends Controller
             return response([
                 'company ' => 'Employee is created'
 
-            ], 201);
+            ], 200);
         } catch (\Exception $e) { {
                 return response()->json([
                     'message' => 'The given data was invalid.',
                     'errors' => $e->getMessage()
-                ], 422);
+                ], 401);
             }
         }
     }
