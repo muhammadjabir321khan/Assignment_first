@@ -46,7 +46,7 @@
 
             </div>
             <div class="select-wrapper col-md-10">
-                <label for="company">Company:</label>
+                <label for="company">Employee:</label>
                 <select name="employee_id" id="employee_id">
                     <option value="">Select a employees</option>
                     @foreach ($employies as $employee)

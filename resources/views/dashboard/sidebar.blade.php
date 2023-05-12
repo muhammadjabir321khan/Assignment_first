@@ -27,10 +27,10 @@
                         </a>
                         <ul class="nk-menu-sub">
                             <li class="nk-menu-item">
-                                <a href="{{route('companies.index')}}"><span class="nk-menu-text mx-5">Compnay List</span></a>
+                                <a href="{{route('companies.index')}}" class="nk-menu-link"><span class="nk-menu-text">Compnay List</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="{{route('companies.search')}}"><span class="nk-menu-text mx-5">Search Company</span></a>
+                                <a href="{{route('companies.search')}}" class="nk-menu-link"><span class="nk-menu-text">Search Company</span></a>
                             </li>
                         </ul>
                     </li>
@@ -43,7 +43,7 @@
                         <ul class="nk-menu-sub">
                             @can('create companies')
                             <li class="nk-menu-item">
-                                <a href="{{route('employees.index')}}"><span class="nk-menu-text mx-5">Employee List</span></a>
+                                <a href="{{route('employees.index')}}" class="nk-menu-link"><span class="nk-menu-text ">Employee List</span></a>
                             </li>
                             @endcan
                             @can('create-employee')
@@ -62,7 +62,7 @@
                         </a>
                         <ul class="nk-menu-sub">
                             <li class="nk-menu-item">
-                                <a href="{{url('projects')}}"><span class="nk-menu-text mx-5">Projects</span></a>
+                                <a href="{{url('projects')}}" class="nk-menu-link"><span class="nk-menu-text ">Projects</span></a>
                             </li>
                         </ul>
                     </li>
