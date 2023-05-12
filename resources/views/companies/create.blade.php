@@ -1,12 +1,5 @@
 <div class="container my-5">
     <div class="nk-block nk-block-lg mb-5">
-        <!-- <div class="nk-block-head">
-            <div class="nk-block-head-content">
-                <h4 class="title nk-block-title">Add Company Details</h4>
-                <div class="nk-block-des">
-                </div>
-            </div>
-        </div> -->
         <div class="card card-bordered">
             <div class="card-inner">
                 <div class="card-head">

@@ -1,5 +1,6 @@
 @extends('dashboard.layout')
 @section('content')
+
 <div class="container">
     <a href=" {{route('companies.create')}}" data-toggle="modal" data-target="#myModal" class="btn btn-primary mb-2 mx-3">Create Company</a>
     <div id="edit-company-modal" class="modal fade" tabindex="-1" role="dialog">
