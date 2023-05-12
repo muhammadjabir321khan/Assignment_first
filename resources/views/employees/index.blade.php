@@ -1,4 +1,4 @@
-@extends('dashboard')
+@extends('dashboard.layout')
 @section('content')
 @can('create companies')
 
@@ -6,7 +6,7 @@
 
 
 <div class="container">
-    <a href="{{ route('employees.create') }}" data-toggle="modal" data-target="#myModal1" class="btn btn-primary mx-5">create employee</a>
+    <a href="{{ route('employees.create') }}" data-toggle="modal" data-target="#myModal1" class="btn btn-primary mx-3">create employee</a>
     <div id="edit-company-modal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -92,7 +92,7 @@
                             <div class="card card-preview">
                                 <div class="card-inner">
                                     <div class="table-responsive">
-                                        <table id="companies-table">
+                                        <table id="companies-table" class="table">
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
@@ -125,12 +125,9 @@
 
 @endcan
 
-
 @endsection
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+
+@section('scripts')
 <script>
     $(document).ready(function() {
         $('#companies-table').DataTable({
@@ -269,3 +266,4 @@
         }
     });
 </script>
+@endsection

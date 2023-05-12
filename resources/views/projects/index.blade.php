@@ -1,8 +1,7 @@
-@extends('dashboard')
+@extends('dashboard.layout')
 @section('content')
-
 <div class="container">
-    <a href="#" class="btn btn-primary mx-5" data-toggle="modal" data-target="#myModal2">create project</a>
+    <a href="#" class="btn btn-primary mx-3 " data-toggle="modal" data-target="#myModal2">create project</a>
     <div id="edit-company-modal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -97,30 +96,32 @@
             </div>
         </div>
     </div>
-    <div class="nk-content ">
-        <div class="container-fluid">
-            <div class="nk-content-inner">
-                <div class="nk-content-body">
-                    <div class="components-preview wide-md mx-auto">
-                        <div class="nk-block nk-block-lg">
-                            <div class="card card-preview">
-                                <div class="card-inner">
-                                    <div class="table-responsive">
-                                        <table id="table" class="datatable-init nowrap table">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Name</th>
-                                                    <th>Detail</th>
-                                                    <th>totalCast</th>
-                                                    <th>deadLine</th>
-                                                    <th>Employee</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
+    <div class="nk-content">
+        <div class="nk-content ">
+            <div class="container-fluid">
+                <div class="nk-content-inner">
+                    <div class="nk-content-body">
+                        <div class="components-preview wide-md mx-auto">
+                            <div class="nk-block nk-block-lg">
+                                <div class="card card-preview">
+                                    <div class="card-inner">
+                                        <div class="table-responsive">
+                                            <table id="table" class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Name</th>
+                                                        <th>Detail</th>
+                                                        <th>totalCast</th>
+                                                        <th>deadLine</th>
+                                                        <th>Employee</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -133,10 +134,7 @@
 </div>
 
 @endsection
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+@section('scripts')
 <script>
     $(document).ready(function() {
         $('#table').DataTable({
@@ -247,3 +245,4 @@
         });
     });
 </script>
+@endsection

@@ -1,12 +1,12 @@
 <div class="container my-5">
     <div class="nk-block nk-block-lg mb-5">
-        <div class="nk-block-head">
+        <!-- <div class="nk-block-head">
             <div class="nk-block-head-content">
                 <h4 class="title nk-block-title">Add Company Details</h4>
                 <div class="nk-block-des">
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="card card-bordered">
             <div class="card-inner">
                 <div class="card-head">
@@ -42,7 +42,7 @@
                         </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <button type="submit" class="btn btn-lg btn-primary">Save Informations</button>
+                                <button type="submit" class="btn btn-primary">Save Informations</button>
                             </div>
                         </div>
                     </div>
@@ -51,10 +51,6 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css" integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 <script>
     $(document).ready(function() {
         $('#companyForm').on('submit', function(e) {
@@ -70,11 +66,11 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
-                    setTimeout(function() {
-                        toastr.success('Data added successfully!', 'Success', {
-                            positionClass: 'toast-top-left'
-                        });
-                    }, 1000);
+                    toastr.success('Data added successfully!', 'Success', {
+                        positionClass: 'toast-top-left'
+                    });
+
+                    window.location.href = "/companies";
                     $('#companyForm')[0].reset();
 
                 },

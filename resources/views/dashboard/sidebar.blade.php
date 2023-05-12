@@ -22,7 +22,7 @@
                     @role('admin')
                     <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
-                            <span class="nk-menu-icon"><em class="icon ni ni-cart-fill"></em></span>
+                            <span class="nk-menu-icon"><em class="icon ni ni-building"></em></span>
                             <span class="nk-menu-text">Company</span>
                         </a>
                         <ul class="nk-menu-sub">
@@ -38,7 +38,7 @@
                     <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-icon"><em class="icon ni ni-users-fill"></em></span>
-                            <span class="nk-menu-text">Employee</span>
+                            <span class="nk-menu-text">Employees</span>
                         </a>
                         <ul class="nk-menu-sub">
                             @can('create companies')
@@ -57,7 +57,7 @@
                     @can('create companies')
                     <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
-                            <span class="nk-menu-icon"><em class="icon ni ni-tranx"></em></span>
+                            <span class="nk-menu-icon"><em class="icon ni ni-list-index-fill"></em></span>
                             <span class="nk-menu-text ">project</span>
                         </a>
                         <ul class="nk-menu-sub">
