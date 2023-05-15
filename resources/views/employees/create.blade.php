@@ -38,7 +38,7 @@
                         @endforeach
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary my-3">Save Employee</button>
+                <button type="submit" class="btn btn-primary my-3" style="margin-left: 13px;">Save Employee</button>
             </form>
         </div>
     </div>

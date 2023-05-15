@@ -141,12 +141,33 @@ class CompanyController extends Controller
 
         $search = request('search');
         $projects = Project::Where('detail', 'like', "%$search%")->pluck('detail');
-
         $companies = Company::where(function ($query) use ($projects) {
             foreach ($projects  as $project) {
                 $query->orWhere('name', 'like', "%$project%");
             }
         })->get();
         return view('companies.searching', compact('companies'));
+    }
+
+
+    public function showSearch()
+    {
+        $companies = Company::all();
+        return view('companies.company', compact('companies'));
+    }
+
+    public function company(Request $request)
+    {
+        $search = $request->input('search') ?? "";
+        $companies = Company::query();
+        if ($search != "") {
+            $companies->whereHas('employee', function ($query) use ($request) {
+                $query->where('fname', 'like', "%$request->search%")->orWhere('lname', 'like', "%$request->search%");
+            });
+        }
+        $companies = $companies->get();
+        return response([
+            'company' => $companies
+        ]);
     }
 }

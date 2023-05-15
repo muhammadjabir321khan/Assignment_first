@@ -29030,6 +29030,7 @@ a.fc-event-secondary-dim .fc-list-event-dot {
 span.fc-event-secondary-dim .dot {
     background-color: #e5ecf5 !important;
     border-color: #364a63 !important;
+   
 }
 
 .fc-event-secondary-dim:not(a) .fc-list-event-dot {

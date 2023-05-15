@@ -42,8 +42,6 @@
                     </div>
                 </div>
                 <div id="deadline-error" class="text-danger"></div>
-
-
             </div>
             <div class="select-wrapper col-md-10">
                 <label for="company">Employee:</label>
@@ -55,7 +53,7 @@
                 </select>
             </div>
         </div>
-        <button type="submit" class="btn btn-success my-3">save</button>
+        <button type="submit" class="btn btn-primary my-3">save</button>
     </form>
 </div>
 <style>

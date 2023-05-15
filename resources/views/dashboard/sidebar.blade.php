@@ -29,9 +29,14 @@
                             <li class="nk-menu-item">
                                 <a href="{{route('companies.index')}}" class="nk-menu-link"><span class="nk-menu-text">Compnay List</span></a>
                             </li>
-                            <li class="nk-menu-item">
+                            <!-- <li class="nk-menu-item">
                                 <a href="{{route('companies.search')}}" class="nk-menu-link"><span class="nk-menu-text">Search Company</span></a>
+                            </li> -->
+
+                            <li class="nk-menu-item">
+                                <a href="{{url('search-company')}}" class="nk-menu-link"><span class="nk-menu-text">Search Company</span></a>
                             </li>
+
                         </ul>
                     </li>
                     @endrole
@@ -44,6 +49,9 @@
                             @can('create companies')
                             <li class="nk-menu-item">
                                 <a href="{{route('employees.index')}}" class="nk-menu-link"><span class="nk-menu-text ">Employee List</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="{{url('filter')}}" class="nk-menu-link"><span class="nk-menu-text "> Filter Employee</span></a>
                             </li>
                             @endcan
                             @can('create-employee')

@@ -51,7 +51,7 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <button type="button" class="btn btn-lg btn-primary save">Save Informations</button>
+                                                <button type="button" class="btn btn-lg btn-primary save" style="height: 37px;">Update Informations</button>
                                             </div>
                                         </div>
                                     </div>

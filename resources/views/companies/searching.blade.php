@@ -1,6 +1,6 @@
 @extends('dashboard')
 @section('content')
-@section('title','Add Company')
+@section('title','Search Company')
 <div class="container my-5">
 
     <div class="form-group ">
