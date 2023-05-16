@@ -23,7 +23,7 @@
                                 <form id="companyForm">
                                     <div class="row g-4">
                                         <input type="hidden" name="id" id="id" class="form-control" value="">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label class="form-label" for="full-name-1"> Name</label>
                                                 <div class="form-control-wrap">
@@ -31,7 +31,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class=" col-lg-6">
+                                        <div class=" col-lg-12">
                                             <div class="form-group">
                                                 <label class="form-label" for="email-address-1">Email address</label>
                                                 <div class="form-control-wrap">
@@ -39,7 +39,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label class="form-label" for="phone-no-1">Image</label>
                                                 <div class="form-control-wrap">

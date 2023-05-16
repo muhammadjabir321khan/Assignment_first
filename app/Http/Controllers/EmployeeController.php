@@ -11,6 +11,8 @@ use App\Http\Requests\EmployeeRequest;
 class EmployeeController extends Controller
 {
 
+
+
     public function index(Request  $request)
     {
         if ($request->ajax()) {
@@ -36,6 +38,7 @@ class EmployeeController extends Controller
         }
 
 
+
         return view('employees.index');
     }
 
@@ -45,7 +48,6 @@ class EmployeeController extends Controller
         $companies = Company::all();
         return view('employees.create', compact('companies'));
     }
-
 
 
     /**

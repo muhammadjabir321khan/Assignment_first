@@ -520,6 +520,7 @@ video {
 
 .px-6 {
     color: white;
+    width: 500px;
 }
 
 .text-center {
@@ -554,6 +555,8 @@ video {
 .text-gray-600 {
     --tw-text-opacity: 1;
     color: rgb(75 85 99 / var(--tw-text-opacity));
+    padding-left: 20px;
+    margin-top: 20px;
 }
 
 .text-gray-900 {

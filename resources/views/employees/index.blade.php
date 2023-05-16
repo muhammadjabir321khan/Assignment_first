@@ -1,13 +1,12 @@
 @extends('dashboard.layout')
 @section('content')
-@can('create companies')
-
+@role('admin')
 <div class="modal fade" id="edit-employee-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
+            <h4 class="modal-title" id="myModalLabel">update</h4>
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel"></h4>
             </div>
             <div class="modal-body">
                 <form id="employee-form">
@@ -111,9 +110,7 @@
         padding: 0px 0px;
     }
 </style>
-
-@endcan
-
+@endrole
 @endsection
 
 @section('scripts')
