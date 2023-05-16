@@ -23,8 +23,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Add Company</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel"></h4>
                 </div>
                 <div class="modal-body">
                     <div id="modal-loader" style="display: none;">
@@ -49,8 +49,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Add Employee</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel"></h4>
                 </div>
                 <div class="modal-body">
                     <div id="modal1-loader" style="display: none;">
@@ -111,21 +111,6 @@
     <script src="{{ mix('js/app.js') }}"></script>
     <script src="{{ mix('js/theme.js') }}"></script>
     @yield('scripts')
-    <!-- <script>
-        $('#myModal').on('show.bs.modal', function(e) {
-            var url = '/companies/create'; // URL for your create page
-            var modalBody = $(this).find('.modal-body');
-            modalBody.load(url);
-        });
-       
-
-        $('#myModal2').on('show.bs.modal', function(e) {
-            var url = '/projects/create';
-            var modalBody = $(this).find('.modal-body');
-            modalBody.load(url);
-        });
-    </script> -->
-
     <script>
         $('#myModal').on('show.bs.modal', function(e) {
             var url = '/companies/create';

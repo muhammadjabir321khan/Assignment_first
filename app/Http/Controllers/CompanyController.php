@@ -120,7 +120,7 @@ class CompanyController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Company updated successfully.'
-            ], 201);
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
@@ -158,14 +158,16 @@ class CompanyController extends Controller
 
     public function company(Request $request)
     {
-        $search = $request->input('search') ?? "";
-        $companies = Company::query();
-        if ($search != "") {
-            $companies->whereHas('employee', function ($query) use ($request) {
-                $query->where('fname', 'like', "%$request->search%")->orWhere('lname', 'like', "%$request->search%");
+        $search = $request->input('search') ?? null;
+        $companies = Company::where(function ($query) use ($search, $request) {
+            $query->when($search, function ($query) use ($request) {
+                $query->where('name', 'like', "%$request->search%");
+                $query->orWhere('email', 'like', "%$request->search%");
+                $query->orWhereHas('employee', function ($query) use ($request) {
+                    $query->where('fname', 'like', "%$request->search%")->orWhere('lname', 'like', "%$request->search%");
+                });
             });
-        }
-        $companies = $companies->get();
+        })->get();
         return response([
             'company' => $companies
         ]);

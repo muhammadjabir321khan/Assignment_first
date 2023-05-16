@@ -2,87 +2,76 @@
 @section('content')
 @can('create companies')
 
+<div class="modal fade" id="edit-employee-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="employee-form">
+                    <div>
+                        <div class="col-md-10">
+                            <input type="hidden" name="id" id="id">
+                            <div class="form-group">
+                                <label class="form-label" for="fname"> First Name</label>
+                                <div class="form-control-wrap">
+                                    <input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname">
+                                </div>
+                                <div id="fname-error" class="text-danger"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <label class="form-label" for="fname"> Last Name</label>
+                                <div class="form-control-wrap">
+                                    <input type="text" class="form-control" id="fname" placeholder="First Name" name="fname">
+                                </div>
+
+                            </div>
+                            <!-- <div id="lname-error" class="text-danger"></div> -->
+                        </div>
+                    </div>
+                    <div class="select-wrapper col-md-10">
+                        <label for="company">Company:</label>
+                        <select name="company_id" id="company_id">
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary my-3 save" style="margin-left: 10px;">Update Employee</button>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<style>
+    .select-wrapper select {
+        font-size: 16px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .select-wrapper label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+</style>
 
 
 
 <div class="container">
     <a href="{{ route('employees.create') }}" data-toggle="modal" data-target="#myModal1" class="btn btn-primary mx-3">create employee</a>
-    <div id="edit-company-modal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="container my-5">
-                    <div class="nk-block nk-block-lg mb-5">
-                        <div class="nk-block-head">
-                            <div class="nk-block-head-content">
-                                <h4 class="title nk-block-title">Edit employee Details</h4>
-                                <div class="nk-block-des">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="nk-block nk-block-lg mb-5">
-                            <div class="card card-bordered mx-5">
-                                <div class="card-inner ">
-                                    <div class="card-head">
-                                        <h5 class="card-title">Add Employee</h5>
-                                    </div>
-                                    <form id="employee-form">
-                                        <div>
-                                            <div class="col-md-10">
-                                                <input type="hidden" name="id" id="id">
-
-                                                <div class="form-group">
-                                                    <label class="form-label" for="fname"> First Name</label>
-                                                    <div class="form-control-wrap">
-                                                        <input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname">
-                                                    </div>
-                                                    <div id="fname-error" class="text-danger"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="col-md-10">
-                                                <div class="form-group">
-                                                    <label class="form-label" for="fname"> Last Name</label>
-                                                    <div class="form-control-wrap">
-                                                        <input type="text" class="form-control" id="fname" placeholder="First Name" name="fname">
-                                                    </div>
-
-                                                </div>
-                                                <!-- <div id="lname-error" class="text-danger"></div> -->
-                                            </div>
-                                        </div>
-                                        <div class="select-wrapper col-md-10">
-                                            <label for="company">Company:</label>
-                                            <select name="company_id" id="company_id">
-                                            </select>
-                                        </div>
-                                        <button type="button" class="btn btn-primary my-3 save">Save Employee</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <style>
-                            .select-wrapper select {
-                                font-size: 16px;
-                                padding: 10px;
-                                border-radius: 5px;
-                                border: 1px solid #ccc;
-                                width: 100%;
-                                max-width: 400px;
-                            }
-
-                            .select-wrapper label {
-                                display: block;
-                                margin-bottom: 10px;
-                                font-weight: bold;
-                            }
-                        </style>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
     <div class="nk-content ">
         <div class="container-fluid">
             <div class="nk-content-inner">
@@ -202,7 +191,7 @@
             success: function(response) {
                 console.log("response", response.employee.id)
                 // console.log(response.data);
-                $('#edit-company-modal').modal('show');
+                $('#edit-employee-modal').modal('show');
                 $('#id').val(response.employee.id);
                 $('#lname').val(response.employee.lname)
                 $('#fname').val(response.employee.fname)

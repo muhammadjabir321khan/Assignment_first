@@ -6,6 +6,7 @@
         <label for="company">Company:</label>
         <select id="companySelect">
             @foreach ($companies as $company)
+            <option value="">Select Company</option>
             <option value="{{ $company->id }}">{{ $company->name }}</option>
             @endforeach
         </select>
@@ -24,12 +25,13 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>fname</th>
-                                                <th>lname</th>
+                                                <th>FirstName</th>
+                                                <th>lastName</th>
 
                                             </tr>
                                         </thead>
                                         <tbody id="employeeList">
+
                                         </tbody>
                                     </table>
                                     <!-- Display the employee list here -->
@@ -72,15 +74,17 @@
                 success: function(response) {
                     console.log('response', response);
 
-                    var employeefname = '';
-                    var employeelname = '';
-                    var key = '';
-
+                    var employeeHtml = '';
                     $.each(response.employee, function(index, employee) {
-                        employeefname += '<td> ' + employee.lname + ' ' + employee.fname + '</td>';
+                        var key = index + 1;
+                        employeeHtml += '<tr>';
+                        employeeHtml += '<td>' + key + '</td>';
+                        employeeHtml += '<td> ' + employee.lname + '</td>';
+                        employeeHtml += '<td> ' + employee.fname + '</td>';
+                        employeeHtml += '</tr>';
 
                     });
-                    $('#employeeList').html('<td>' + employeefname + '</td>');
+                    $('#employeeList').html(employeeHtml);
                 },
                 error: function(xhr) {
                     console.log(xhr.responseText);

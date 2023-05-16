@@ -19,6 +19,7 @@
                                                     <div class="form-control-wrap">
                                                         <input type="search" class="form-control" id="search" name="search">
                                                     </div>
+                                                    <a href="{{url('search-company')}}" class="btn btn-primary my-2">reset</a>
                                                 </div>
                                             </div>
                                         </form>
@@ -60,33 +61,43 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
+        function fetchData(value) {
+            $.ajax({
+                url: "{{URL::to('company-search')}}",
+                method: 'get',
+                data: {
+                    'search': value
+                },
+                success: function(data) {
+                    console.log("data", data);
+                    var companyHtml = '';
+                    data.company.forEach(function(company) {
+                        console.log(company)
+                        companyHtml += '<tr>';
+                        companyHtml += '<td>' + company.id + '</td>';
+                        companyHtml += '<td> ' + company.name + '</td>';
+                        companyHtml += '<td> ' + company.email + '</td>';
+                        companyHtml += '</tr>';
+                    });
+                    $('#content').html(companyHtml);
+                }
+            });
+        }
 
-
-        $('#search').on('keyup', function() {
-            $value = $(this).val();
-            if ($value.length === 3) {
-                $.ajax({
-                    url: "{{URL::to('company-search')}}",
-                    method: 'get',
-                    data: {
-                        'search': $value
-                    },
-                    success: function(data) {
-                        console.log("data", data);
-                        var companyHtml = '';
-                        data.company.forEach(function(company) {
-                            console.log(company)
-                            companyHtml += '<tr>';
-                            companyHtml += '<td>' + company.id + '</td>';
-                            companyHtml += '<td> ' + company.name + '</td>';
-                            companyHtml += '<td> ' + company.email + '</td>';
-                            companyHtml += '</tr>';
-                        });
-                        $('#content').html(companyHtml);
-                    }
-                });
+        $('#search').on({
+            keyup: function() {
+                var value = $(this).val();
+                if (value.length > 3) {
+                    fetchData(value);
+                }
+            },
+            keydown: function() {
+                var value = $(this).val();
+                if (value.length < 3) {
+                    fetchData(); // 
+                }
             }
         });
-    })
+    });
 </script>
 @endsection

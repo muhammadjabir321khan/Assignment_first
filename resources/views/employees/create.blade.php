@@ -1,47 +1,42 @@
 <div class="nk-block nk-block-lg mb-5">
-    <div class="card card-bordered">
-        <div class="card-inner">
-            <div class="card-head">
-                <h5 class="card-title">Add Employee</h5>
+
+    <form id="employee-form">
+        <div>
+            <div class="col-md-10">
+
+                <div class="form-group">
+                    <label class="form-label" for="fname"> First Name</label>
+                    <div class="form-control-wrap">
+                        <input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname">
+                    </div>
+                    <div id="fname-error" class="text-danger"></div>
+                </div>
             </div>
-            <form id="employee-form">
-                <div>
-                    <div class="col-md-10">
-
-                        <div class="form-group">
-                            <label class="form-label" for="fname"> First Name</label>
-                            <div class="form-control-wrap">
-                                <input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname">
-                            </div>
-                            <div id="fname-error" class="text-danger"></div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="col-md-10">
-
-                        <div class="form-group">
-                            <label class="form-label" for="fname"> Last Name</label>
-                            <div class="form-control-wrap">
-                                <input type="text" class="form-control" id="fname" placeholder="First Name" name="lname">
-                            </div>
-                            <div id="lname-error" class="text-danger"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="select-wrapper col-md-10">
-                    <label for="company">Company:</label>
-                    <select name="company_id" id="company_id">
-                        <option value="">Select a company</option>
-                        @foreach ($companies as $company)
-                        <option value="{{ $company->id }}">{{ $company->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary my-3" style="margin-left: 13px;">Save Employee</button>
-            </form>
         </div>
-    </div>
+        <div>
+            <div class="col-md-10">
+
+                <div class="form-group">
+                    <label class="form-label" for="fname"> Last Name</label>
+                    <div class="form-control-wrap">
+                        <input type="text" class="form-control" id="fname" placeholder="First Name" name="lname">
+                    </div>
+                    <div id="lname-error" class="text-danger"></div>
+                </div>
+            </div>
+        </div>
+        <div class="select-wrapper col-md-10">
+            <label for="company">Company:</label>
+            <select name="company_id" id="company_id">
+                <option value="">Select a company</option>
+                @foreach ($companies as $company)
+                <option value="{{ $company->id }}">{{ $company->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary my-3" style="margin-left: 13px;">Save Employee</button>
+    </form>
+
 </div>
 <style>
     .select-wrapper select {
