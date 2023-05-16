@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class EmployeeRequest extends FormRequest
 {
@@ -20,10 +21,24 @@ class EmployeeRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
     public function rules(): array
+
     {
-        return [
-            'fname' => 'required',
-            'company_id' => 'required|exists:companies,id'
-        ];
+        switch ($this->method()) {
+            case 'POST': {
+                    return [
+                        'fname' => 'required',
+                        'lname' => 'required',
+                        'company_id' => 'required|exists:companies,id'
+                    ];
+                }
+            case 'PUT':
+            case 'PATCH':
+                $id = $this->route('employees') ? $this->route('employees')->company_id : null; {
+                    return [
+                        'fname' => 'required',
+                        'lname' => 'required',
+                    ];
+                }
+        }
     }
 }

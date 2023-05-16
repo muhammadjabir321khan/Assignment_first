@@ -1,50 +1,15 @@
-<!DOCTYPE html>
-<html lang="zxx" class="js">
-
-<head>
-    <base href="../../">
-    <meta charset="utf-8">
-    <meta name="author" content="Softnio">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
-    <!-- Fav Icon  -->
-    <link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title')</title>
-    <head>
-</head>
-
-    <link rel="stylesheet" href="{{asset('assets/css/dashlite.css?ver=2.9.1')}}">
-    <link id="skin-default" rel="stylesheet" href="{{asset('/assets/css/theme.css?ver=2.9.1 ')}}">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-   
-
-</head>
-
-<body class="nk-body bg-lighter npc-general has-sidebar ">
-<div class="nk-app-root">
-        <div class="nk-main ">
-       @include('dashboard.sidebar')
-            <div class="nk-wrap ">
-               @include('dashboard.header')
-                <div class="nk-content ">
-                    <div class="container-fluid">
-                      @yield('content')
-                    </div>
-                </div>
-                @include('dashboard.footer')
+@extends('dashboard.layout')
+@section('content')
+<div class="nk-block nk-block-lg mb-5">
+    <div class="card card-bordered mx-5">
+        <div class="card-inner ">
+            <div class="card-head">
             </div>
+            <marquee behavior="scroll" direction="left">
+                <h1 class="text-center">WELCOME TO MINI CRM</h1>
+            </marquee>
+
         </div>
     </div>
-    <script src="{{asset('assets/js/bundle.js?ver=2.9.1')}}"></script>
-    <script src="{{ asset('assets/js/scripts.js?ver=2.9.1 ')}}"></script>
-    <script src="{{asset('assets/js/charts/chart-crm.js?ver=2.9.1 ')}}"></script>
-
-
-
-</body>
-
-
-
-
-</html>
+</div>
+@endsection

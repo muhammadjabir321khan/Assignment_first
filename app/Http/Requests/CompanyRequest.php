@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Company;
+use GuzzleHttp\Psr7\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CompanyRequest extends FormRequest
@@ -21,11 +24,25 @@ class CompanyRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' =>'required',
-            'email' => 'required|unique:companies|max:255',
-            'image' => 'required|dimensions:min_width=100,min_height=100|mimes:jpeg,png,gif'
-    
-        ];
+        switch ($this->method()) {
+            case 'POST': {
+                    return [
+                        'name' => 'required',
+                        'email' => 'required|unique:companies,email',
+                        'image' => 'required|dimensions:min_width=100,min_height=100|mimes:jpg,jpeg,png,bmp,tiff'
+                    ];
+                }
+            case 'PUT':
+            case 'PATCH':
+                $id = $this->route('company')->id; {
+                    return [
+                        'email' => [
+                            'required',
+                            Rule::unique('companies')->ignore($id),
+                        ],
+                        'image' => 'dimensions:min_width=100,min_height=100|mimes:jpeg,png,gif',
+                    ];
+                }
+        }
     }
 }
