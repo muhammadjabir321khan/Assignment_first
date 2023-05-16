@@ -15,6 +15,7 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
+        $employies = Employee::all();
         if ($request->ajax()) {
             $employees = Project::with('employee')->get();
             return Datatables::of($employees)
@@ -35,14 +36,13 @@ class ProjectController extends Controller
                 ->rawColumns(['action', 'employee'])
                 ->toJson();
         }
-        return view('projects.index');
+        return view('projects.index', compact('employies'));
     }
 
 
     public function create()
     {
-        $employies = Employee::all();
-        return view('projects.create', compact('employies'));
+        return abort(403);
     }
 
     /**

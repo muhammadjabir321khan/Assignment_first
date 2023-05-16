@@ -1,5 +1,61 @@
 @extends('dashboard.layout')
 @section('content')
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Add Company</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="companyForm">
+                    <div class="row g-4">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="form-label" for="full-name-1"> Name</label>
+                                <div class="form-control-wrap">
+                                    <input type="text" class="form-control" id="full-name-1" name="name">
+                                </div>
+                                <div id="name-error" class="text-danger"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="form-label" for="email-address-1">Email address</label>
+                                <div class="form-control-wrap">
+                                    <input type="text" class="form-control" id="email-address-1" name="email">
+                                </div>
+                                <div id="email-error" class="text-danger"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="form-label" for="phone-no-1">Image</label>
+                                <div class="form-control-wrap">
+                                    <input type="file" class="form-control" id="phone-no-1" name="image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Save Informations</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div id="modal-loader" style="display: none;">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <div id="modal-content"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="container">
     <a href=" {{route('companies.create')}}" data-toggle="modal" data-target="#myModal" class="btn btn-primary mb-2 mx-3">Create Company</a>
@@ -27,7 +83,7 @@
                                             <div class="form-group">
                                                 <label class="form-label" for="full-name-1"> Name</label>
                                                 <div class="form-control-wrap">
-                                                    <input type="text" class="form-control" id="full-name-1" name="name" value="">
+                                                    <input type="text" class="form-control" id="name" name="name" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -35,7 +91,7 @@
                                             <div class="form-group">
                                                 <label class="form-label" for="email-address-1">Email address</label>
                                                 <div class="form-control-wrap">
-                                                    <input type="text" class="form-control" id="email-address-1" name="email" value="">
+                                                    <input type="text" class="form-control" id="email" name="email" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -105,6 +161,44 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
+        $('#companyForm').on('submit', function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                url: "{{url('companies')}}",
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    toastr.success('Data added successfully!', 'Success', {
+                        positionClass: 'toast-top-left'
+                    });
+
+                    window.location.href = "/companies";
+                    $('#companyForm')[0].reset();
+
+                },
+                error: function(xhr, status, error) {
+                    var response = xhr.responseJSON;
+                    if (response && response.errors) {
+                        $.each(response.errors, function(key, value) {
+                            if (key == 'email' && value[0] == 'The email has already been taken.') {
+                                $('#' + key + '-error').text('Email is already taken.');
+                            } else {
+                                $('#' + key + '-error').text(value[0]);
+                            }
+                        });
+                    } else {
+                        console.log(error);
+                    }
+                }
+
+            });
+        });
         $('#company').DataTable({
             "responsive": true,
             "processing": false,
@@ -173,9 +267,9 @@
             success: function(response) {
                 console.log(response.data);
                 $('#edit-company-modal').modal('show');
-                $('#full-name-1').val(response.data.name)
+                $('#name').val(response.data.name)
                 $('#id').val(response.data.id)
-                $('#email-address-1').val(response.data.email)
+                $('#email').val(response.data.email)
                 $('#company-image').attr('src', "/storage/images/" + response.data.logo);
             }
 

@@ -19,31 +19,6 @@
 </head>
 
 <body class="nk-body bg-lighter npc-general has-sidebar ">
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Add Company</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <div id="modal-loader" style="display: none;">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                    </div>
-                    <div id="modal-content"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
 
     <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -68,32 +43,6 @@
     </div>
 
 
-
-
-
-    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel"></h4>
-                </div>
-                <div class="modal-body">
-                    <div id="modal2-loader" style="display: none;">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                    </div>
-                    <div id="modal2-content"></div>
-                </div>
-                <div class="modal-footer">
-                    <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <div class="nk-app-root">
         <div class="nk-main ">
             @include('dashboard.sidebar')
@@ -112,18 +61,6 @@
     <script src="{{ mix('js/theme.js') }}"></script>
     @yield('scripts')
     <script>
-        $('#myModal').on('show.bs.modal', function(e) {
-            var url = '/companies/create';
-            var modalBody = $(this).find('.modal-body');
-            var modalContent = modalBody.find('#modal-content');
-            var modalLoader = modalBody.find('#modal-loader');
-            modalContent.hide();
-            modalLoader.show();
-            modalBody.load(url, function() {
-                modalLoader.hide();
-                modalContent.show();
-            });
-        });
         $('#myModal1').on('show.bs.modal', function(e) {
             var url = '/employees/create';
             var modalBody = $(this).find('.modal-body');
@@ -134,21 +71,6 @@
             modalBody.load(url, function() {
                 modalLoader1.hide();
                 modalContent1.show();
-            });
-        });
-
-        $('#myModal2').on('show.bs.modal', function(e) {
-            var url = '/projects/create';
-            var modalBody = $(this).find('.modal-body');
-            modalBody.load(url);
-            var modalContent2 = modalBody.find('#modal2-content');
-            var modalLoader2 = modalBody.find('#modal2-loader');
-            modalContent2.hide();
-            modalLoader2.show();
-            modalBody.load(url);
-            modalBody.load(url, function() {
-                modalLoader2.hide();
-                modalContent2.show();
             });
         });
     </script>

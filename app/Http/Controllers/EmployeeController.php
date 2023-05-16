@@ -31,20 +31,17 @@ class EmployeeController extends Controller
                 })->addColumn('projects', function ($row) {
                     $project = $row->projects;
                     $newData = $project->pluck('name')->implode(', ');
-                    return  $newData ? $newData : 'No PROJECT AVALIABLE';
+                    return  $newData ? $newData : 'NA';
                 })
                 ->rawColumns(['action', 'company', 'projects'])
                 ->toJson();
         }
-
-
 
         return view('employees.index');
     }
 
     public function create()
     {
-
         $companies = Company::all();
         return view('employees.create', compact('companies'));
     }
