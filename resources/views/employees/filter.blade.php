@@ -5,8 +5,8 @@
     <div class="select-wrapper col-md-10">
         <label for="company">Company:</label>
         <select id="companySelect">
-            @foreach ($companies as $company)
             <option value="">Select Company</option>
+            @foreach ($companies as $company)
             <option value="{{ $company->id }}">{{ $company->name }}</option>
             @endforeach
         </select>
@@ -62,8 +62,8 @@
         font-weight: bold;
     }
 </style>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@endsection
+@section('scripts')
 <script>
     $(document).ready(function() {
         $('#companySelect').change(function() {
@@ -93,6 +93,4 @@
         });
     });
 </script>
-
-
 @endsection

@@ -81,7 +81,6 @@
     <a href="#" class="btn btn-primary mx-3 " data-toggle="modal" data-target="#myModal2">create project</a>
     <div id="edit-company-modal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
-
             <div class="modal-content">
                 <div class="container my-5">
                     <div class="nk-block nk-block-lg mb-5">
