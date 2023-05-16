@@ -2,39 +2,60 @@
 @section('content')
 @section('title','update Company')
 <div class="container my-5">
-    <form id="companyForm">
-        @csrf
-        <h5 class="text-center">Update Company</h5>
-        <div class="row g-gs">
-            <div class="col-md-10">
-                <div class="form-group">
-                    <label class="form-label" for="name"> Name</label>
-                    <div class="form-control-wrap">
-                        <input type="text" class="form-control" id="name" placeholder="Name" name="name" value="{{$company->name}}">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-10">
-                <div class="form-group">
-                    <label class="form-label" for="email"> Email</label>
-                    <div class="form-control-wrap">
-                        <input type="email" class="form-control" id="email" placeholder="Email" name="email" value="{{$company->email}}">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-10">
-                <div class="form-group">
-                    <label class="form-label" for="email">Logo</label>
-                    <div class="form-control-wrap">
-                        <input type="file" class="form-control" id="logo" placeholder="logo" name="image">
-                        <img src="{{asset('/storage/images/'.$company->logo)}}" alt="logo" width="100">
-                    </div>
+    <div class="nk-block nk-block-lg mb-5">
+        <div class="nk-block-head">
+            <div class="nk-block-head-content">
+                <h4 class="title nk-block-title">Edit Company Details</h4>
+                <div class="nk-block-des">
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-success my-3" id="saveBtn">save</button>
-    </form>
+        <div class="card card-bordered">
+            <div class="card-inner">
+                <div class="card-head">
+                    <h5 class="card-title">Eid Company</h5>
+                </div>
+                <form id="companyForm">
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-label" for="full-name-1"> Name</label>
+                                <div class="form-control-wrap">
+                                    <input type="text" class="form-control" id="full-name-1" name="name" value="{{$company->name}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" col-lg-6">
+                            <div class="form-group">
+                                <label class="form-label" for="email-address-1">Email address</label>
+                                <div class="form-control-wrap">
+                                    <input type="text" class="form-control" id="email-address-1" name="email" value="{{$company->email}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-label" for="phone-no-1">Image</label>
+                                <div class="form-control-wrap">
+                                    <input type="file" class="form-control" id="phone-no-1" name="image">
+                                    <img src="{{asset('/storage/images/'.$company->logo)}}" alt="logo" width="100" class="my-2">
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-lg btn-primary">Save Informations</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+
 @endsection
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="sweetalert2.all.min.js"></script>

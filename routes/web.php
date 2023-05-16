@@ -25,9 +25,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('/employees', EmployeeController::class);
 });
 
-Route::resource('/companies', CompanyController::class)->middleware(['auth', 'role:admin']);
-Route::get('/search', [CompanyController::class, 'search'])->name('companies.search');
-Route::resource('/projects', ProjectController::class)->middleware(['auth', 'role:admin']);
+    Route::group(['middleware' => ['can:create companies, edit companies, upadte companies, delete companies',]], function () {
+    Route::resource('/companies', CompanyController::class)->middleware(['auth', 'role:admin']);
+    Route::resource('/projects', ProjectController::class)->middleware(['auth', 'role:admin']);
+    Route::get('/search', [CompanyController::class, 'search'])->name('companies.search');
+});
 
 
 require __DIR__ . '/auth.php';

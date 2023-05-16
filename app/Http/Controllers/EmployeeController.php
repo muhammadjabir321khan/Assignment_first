@@ -28,8 +28,8 @@ class EmployeeController extends Controller
                 })->addColumn('company', function ($row) {
                     return $row->company ? $row->company->name : 'N/A';
                 })->addColumn('projects', function ($row) {
-                    $project = $row->projects ;
-                    $newData= $project->pluck('name')->implode(', ');
+                    $project = $row->projects;
+                    $newData = $project->pluck('name')->implode(', ');
                     return  $newData ? $newData : 'No PROJECT AVALIABLE';
                 })
                 ->rawColumns(['action', 'company', 'projects'])
@@ -39,9 +39,6 @@ class EmployeeController extends Controller
 
         return view('employees.index');
     }
-
-
-
 
     public function create()
     {
@@ -58,14 +55,15 @@ class EmployeeController extends Controller
     {
 
         try {
-            $employe = Employee::create($request->all());
+           Employee::create($request->all());
             return response([
                 'company ' => 'Employee is created'
-            ]);
+                 
+            ],201);
         } catch (\Exception $e) { {
                 return response()->json([
                     'message' => 'The given data was invalid.',
-                    'errors' => $request->errors(),
+                    'errors' => $e->getMessage()
                 ], 422);
             }
         }
@@ -91,12 +89,20 @@ class EmployeeController extends Controller
      */
     public function update(EmployeeRequest $request,  Employee $employee)
     {
-        $employee->update(
-            $request->all()
-        );
-        return response([
-            'employee' => 'employee is updated succfully'
-        ]);
+
+        try {
+            $employee->update(
+                $request->all()
+            );
+            return response([
+                'employee' => 'employee is updated succfully'
+            ]);
+        } catch (\Exception $e) {
+            return response([
+                'status' =>  401,
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 
     /**

@@ -15,14 +15,6 @@ use Yajra\Datatables\Datatables;
 class CompanyController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware(
-            'permission: create companies|edit companies| view companies|delete companies',
-            ['only' => ['index', 'store', 'create', 'edit', 'show', 'update', 'delete']]
-        );
-    }
-
     public function index(Request  $request)
     {
         $company = Company::all();
@@ -30,7 +22,7 @@ class CompanyController extends Controller
             return Datatables::of($company)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $action = '<a href="' . route('companies.edit', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
+                    $action = '<a href="javascript:void(0)"  class="btn btn-primary btn-sm edit" data-id="' . $row->id . '">Edit</a>     ';
                     $action .= '<a class="btn btn-danger mx-1 btn-sm delete" data-table="companies-table" data-method="DELETE"
                     data-url="' . route('companies.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
                         Delete
@@ -64,21 +56,21 @@ class CompanyController extends Controller
                 $request->validate();
             }
             Company::create($data);
-        if($request->user()->hasRole('admin')){
-             $user=Auth::user();
-            \App\Jobs\MailJob::dispatch($user)->delay(now()->addSecond(1));
-        }
-          
+            if ($request->user()->hasRole('admin')) {
+                $user = Auth::user();
+                \App\Jobs\MailJob::dispatch($user)->delay(now()->addSecond(1));
+            }
+
             DB::commit();
             return response([
                 'company ' => ' company  is created'
-            ]);
+            ], 201);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json([
                 'message' => 'The given data was invalid.',
                 'errors' => $e->getMessage(),
-            ], 422);
+            ], 403);
         }
     }
 
@@ -95,29 +87,39 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        return view('companies.edit', compact('company'));
+
+        return response()->json([
+            'data' => $company
+        ]);
     }
+
 
     /**
      * Update the specified resource in storage.
      */
     // Inside the update method of the controller
-    public function update(Request $request, Company $company)
+    public function update(CompanyRequest $request, Company $company)
     {
-        $company->name = $request->input('name');
-        $company->email = $request->input('email');
-        if ($request->hasFile('image')) {
-            Storage::delete('public/images/' . $company->logo);
-            $image = $request->file('image');
-            $filename = $image->getClientOriginalName();
-            $path = $request->file('image')->storeAs('public/images', $filename);
-            $company->logo = $filename;
+
+        try {
+            if ($request->hasFile('image')) {
+                Storage::delete('public/images/' . $company->logo);
+                $image = $request->file('image');
+                $filename = $image->getClientOriginalName();
+                $path = $request->file('image')->storeAs('public/images', $filename);
+                $company->logo = $filename;
+            }
+            $company->update($request->all());
+            return response()->json([
+                'success' => true,
+                'message' => 'Company updated successfully.'
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+
+            ], 401);
         }
-        $company->update();
-        return response()->json([
-            'success' => true,
-            'message' => 'Company updated successfully.'
-        ]);
     }
 
     public function destroy(Company $company)
@@ -130,19 +132,12 @@ class CompanyController extends Controller
     {
         $search = request('search');
         $projects = Project::Where('detail', 'like', "%$search%")->pluck('detail');
-        
+
         $companies = Company::where(function ($query) use ($projects) {
             foreach ($projects  as $project) {
                 $query->orWhere('name', 'like', "%$project%");
             }
         })->get();
-        // projects search by name
-        // $companies= Company::Where('name', 'like', "%$search%")->pluck('name','email');
-        // $companies = Project::where(function ($query) use ($companies) {
-        //     foreach ($companies as $project) {
-        //         $query->orWhere('detail', 'like', "%$project%");
-        //     }
-        // })->get();
         return view('companies.searching', compact('companies'));
     }
 }
