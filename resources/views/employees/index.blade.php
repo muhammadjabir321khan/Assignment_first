@@ -5,7 +5,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">update</h4>
+                <h4 class="modal-title" id="myModalLabel">Update Employee</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
@@ -36,7 +36,7 @@
                     </div>
                     <div class="select-wrapper col-md-10">
                         <label for="company">Company:</label>
-                        <select name="company_id" id="company_id">
+                        <select name="company_id" id="companyid">
                         </select>
                     </div>
                     <button type="button" class="btn btn-primary my-3 save" style="margin-left: 10px;">Update Employee</button>
@@ -192,7 +192,7 @@
                 $('#id').val(response.employee.id);
                 $('#lname').val(response.employee.lname)
                 $('#fname').val(response.employee.fname)
-                var companySelect = $('#company_id');
+                var companySelect = $('#companyid');
                 response.comapnies
                     .forEach(function(company) {
                         var option = $('<option>').attr('value', company.id).text(company.name);

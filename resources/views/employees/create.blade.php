@@ -1,4 +1,4 @@
-<div class="nk-block nk-block-lg mb-5">
+<div class="nk-block nk-block-lg ">
     <form id="employee-form">
         <div>
             <div class="col-md-10">
