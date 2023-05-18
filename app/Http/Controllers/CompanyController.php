@@ -67,10 +67,9 @@ class CompanyController extends Controller
             ], 200);
         } catch (\Exception $e) {
             DB::rollback();
-            return response()->json([
-                'message' => 'The given data was invalid.',
-                'errors' => $e->getMessage(),
-            ], 401);
+            return response([
+                'errors' => $e->getMessage()
+            ]);
         }
     }
 
@@ -98,7 +97,7 @@ class CompanyController extends Controller
      * Update the specified resource in storage.
      */
     // Inside the update method of the controller
-    public function update(Request $request, $id)
+    public function update(CompanyRequest $request, $id)
     {
 
         try {
@@ -123,7 +122,7 @@ class CompanyController extends Controller
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => $e->getMessage(),
+                'errors' => $e->getMessage(),
             ], 401);
         }
     }

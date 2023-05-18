@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Add Company</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <form id="companyForm">
@@ -16,7 +16,9 @@
                                 <div class="form-control-wrap">
                                     <input type="text" class="form-control" id="full-name-1" name="name">
                                 </div>
-                                <div id="name-error" class="text-danger"></div>
+                                <div id="cname">
+
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -25,7 +27,9 @@
                                 <div class="form-control-wrap">
                                     <input type="text" class="form-control" id="email-address-1" name="email">
                                 </div>
-                                <div id="email-error" class="text-danger"></div>
+                                <div id="cemail">
+
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -34,6 +38,8 @@
                                 <div class="form-control-wrap">
                                     <input type="file" class="form-control" id="phone-no-1" name="image">
                                 </div>
+                            </div>
+                            <div id="cimage">
                             </div>
                         </div>
                         <div class="col-12">
@@ -51,7 +57,7 @@
                 <div id="modal-content"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="footer">Close</button>
             </div>
         </div>
     </div>
@@ -64,7 +70,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Edit Company</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="updateclose"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="container my-2">
                 <form id="companyForm">
@@ -77,6 +83,7 @@
                                     <input type="text" class="form-control" id="name" name="name" value="">
                                 </div>
                             </div>
+                            <div id="upname"></div>
                         </div>
                         <div class=" col-lg-12">
                             <div class="form-group">
@@ -84,7 +91,9 @@
                                 <div class="form-control-wrap">
                                     <input type="text" class="form-control" id="email" name="email" value="">
                                 </div>
+                                <div id="update"></div>
                             </div>
+
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
@@ -92,9 +101,10 @@
                                 <div class="form-control-wrap">
                                     <input type="file" class="form-control" id="phone-no-1" name="image">
                                     <img id="company-image" src="" alt="Company Image" width="70" class="my-3">
-
                                 </div>
                             </div>
+
+                            <div id="upimage"></div>
                         </div>
                         <div class="col-12">
                             <div class="form-group">
@@ -106,7 +116,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="updatemodal">Close</button>
             </div>
         </div>
     </div>
@@ -152,7 +162,6 @@
     } */
 
     .myCustomButtonContainer {
-        display: flex;
         justify-content: flex-end;
         margin-top: 10px;
     }
@@ -163,8 +172,6 @@
         border: none;
         padding: 5px 10px;
         cursor: pointer;
-        margin-right: 136px;
-
 
     }
 
@@ -183,6 +190,7 @@
 <script>
     $(document).ready(function() {
         $('#companyForm').on('submit', function(e) {
+
             e.preventDefault();
             var formData = new FormData(this);
             $.ajax({
@@ -194,37 +202,62 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(response) {
-                    toastr.success('Data added successfully!', 'Success', {
-                        positionClass: 'toast-top-left'
-                    });
 
+
+                success: function(response) {
                     window.location.href = "/companies";
                     $('#companyForm')[0].reset();
-
                 },
-                error: function(xhr, status, error) {
-                    var response = xhr.responseJSON;
-                    if (response && response.errors) {
-                        $.each(response.errors, function(key, value) {
-                            if (key == 'email' && value[0] == 'The email has already been taken.') {
-                                $('#' + key + '-error').text('Email is already taken.');
-                            } else {
-                                $('#' + key + '-error').text(value[0]);
-                            }
-                        });
-                    } else {
-                        console.log(error);
+                error: function(response) {
+
+
+
+                    if (response.responseJSON.errors.name) {
+                        var errorMessage = JSON.stringify(response.responseJSON.errors.name);
+                        var formattedMessage = errorMessage.replace(/[\[\]"']+/g, '');
+                        $('#cname').html('<span class="text-danger">' + formattedMessage + '</span>');
+
+                    }
+
+                    // Display email error message
+                    if (response.responseJSON.errors.email) {
+                        var emailErrorMessage = JSON.stringify(response.responseJSON.errors.email[0]);
+                        var formattedEmailMessage = emailErrorMessage.replace(/[\[\]"']+/g, '');
+                        $('#cemail').html('<span class="text-danger">' + formattedEmailMessage + '</span>');
+
+                    }
+
+                    // Display image error message
+                    if (response.responseJSON.errors.image) {
+                        var imageErrorMessage = JSON.stringify(response.responseJSON.errors.image[0]);
+                        var formattedImageMessage = imageErrorMessage.replace(/[\[\]"']+/g, '');
+                        $('#cimage').html('<span class="text-danger">' + formattedImageMessage + '</span>');
+
                     }
                 }
 
+
             });
         });
+
+
+        function clear() {
+            $('#cname').html('');
+            $('#cemail').html('');
+            $('#cimage').html('');
+
+            setTimeout(function() {
+                $('#companyForm')[0].reset();
+            }, 500); // Adjust the delay time (in milliseconds) as needed
+        }
+
+        $('#footer').click(clear)
+        $('#close').click(clear)
         $('#company').DataTable({
             "responsive": true,
             "processing": false,
             "serverSide": true,
-            "dom": '<"row"<"col-md-4"l><"col-md-4"<"myCustomButtonContainer">><"col-md-4"f>>t<"row"<"col-md-8"i><"col-md-4"p>>',
+            "dom": '<"row"<"col-md-4"l><"col-md-3"<"myCustomButtonContainer">><"col-md-5"f>>t<"row"<"col-md-8"i><"col-md-4"p>>',
             "ajax": {
                 "url": "{{route('companies.index') }}",
                 "method": "GET",
@@ -296,15 +329,19 @@
             url: '{{ url("companies","")}}' + '/' + id + '/edit',
             method: 'Get',
             success: function(response) {
-                console.log(response.data);
                 $('#edit-company-modal').modal('show');
                 $('#name').val(response.data.name)
                 $('#id').val(response.data.id)
                 $('#email').val(response.data.email)
                 $('#company-image').attr('src', "/storage/images/" + response.data.logo);
+            },
+            error: function(response) {
+
             }
 
         });
+
+
     });
     $(document).on('click', '.save', function() {
         var form = $(this).closest('form');
@@ -322,10 +359,34 @@
             success: function(response) {
                 window.location.href = "/companies";
             },
-            error: function(xhr, status, error) {
-                console.log(xhr.responseText);
+            error: function(response) {
+                if (response.responseJSON.errors && response.responseJSON.errors.email) {
+                    $('#update').html('<span class="text-danger">' + response.responseJSON.errors.email[0] + '</span>');
+                }
+                console.log(response.responseJSON.errors);
+                if (response.responseJSON.errors) {
+                    if (response.responseJSON.errors.name) {
+                        $('#upname').html('<span class="text-danger">' + response.responseJSON.errors.name[0] + '</span>');
+                    }
+                    if (response.responseJSON.errors.image && response.responseJSON.errors.image.length > 0) {
+                        var errorMessage = '<span class="text-danger">' + response.responseJSON.errors.image[0] + '</span>';
+                        $('#upimage').html(errorMessage);
+                        $('.form-control-wrap').addClass('has-error');
+                    }
+                }
             }
         });
+
+
+        function clearUpdateErrors() {
+            $('#upname').html('');
+            $('#update').html('');
+            $('#upimage').html('');
+        }
+        $('#updatemodal').click(clearUpdateErrors);
+        $('#updateclose').click(clearUpdateErrors);
+
+
     });
 </script>
 @endsection

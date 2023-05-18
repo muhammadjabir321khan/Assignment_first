@@ -13,6 +13,7 @@
     <title>@yield('title')</title>
     <link href="{{ mix('css/theme.css') }}" rel="stylesheet">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    @yield('style')
 
     <head>
     </head>
@@ -72,6 +73,8 @@
                 modalLoader1.hide();
                 modalContent1.show();
             });
+
+
         });
     </script>
 </body>

@@ -6,7 +6,7 @@
                 <div class="form-group">
                     <label class="form-label" for="fname"> First Name</label>
                     <div class="form-control-wrap">
-                        <input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname">
+                        <input type="text" class="form-control" id="fname" placeholder="First Name" name="fname">
                     </div>
                     <div id="fname-error" class="text-danger"></div>
                 </div>
@@ -14,11 +14,10 @@
         </div>
         <div>
             <div class="col-md-10">
-
                 <div class="form-group">
                     <label class="form-label" for="fname"> Last Name</label>
                     <div class="form-control-wrap">
-                        <input type="text" class="form-control" id="fname" placeholder="First Name" name="lname">
+                        <input type="text" class="form-control" id="lname" placeholder="last Name" name="lname">
                     </div>
                     <div id="lname-error" class="text-danger"></div>
                 </div>
@@ -32,6 +31,7 @@
                 <option value="{{ $company->id }}">{{ $company->name }}</option>
                 @endforeach
             </select>
+            <div id="cname"></div>
         </div>
         <button type="submit" class="btn btn-primary my-3" style="margin-left: 13px;">Save Employee</button>
     </form>
@@ -73,27 +73,18 @@
                 },
 
                 success: function(response) {
-                    setTimeout(function() {
-                        toastr.success('Data added successfully!', 'Success', {
-                            positionClass: 'toast-top-left'
-                        });
-                    }, 1000);
                     $('#employee-form')[0].reset();
                     window.location.href = "/employees";
 
                 },
-                error: function(xhr, status, error) {
-                    var response = xhr.responseJSON;
-                    if (response && response.errors) {
-                        $.each(response.errors, function(key, value) {
-                            $('#' + key + '-error')
-                            $('#' + key + '-error').text(value[0]);
-                        });
-                    } else {
-                        console.log(error);
-                    }
+                error: function(response) {
+                    $('#fname-error').html('<span class="text-danger">' + response.responseJSON.errors.fname + '</span>')
+                    $('#lname-error').html('<span class="text-danger">' + response.responseJSON.errors.lname + '</span>')
+                    $('#cname').html('<span class="text-danger">' + response.responseJSON.errors.company_id + '</span>')
                 }
             });
         });
+
+
     });
 </script>

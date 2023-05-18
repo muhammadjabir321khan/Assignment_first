@@ -28,19 +28,17 @@ class CompanyRequest extends FormRequest
             case 'POST': {
                     return [
                         'name' => 'required',
-                        'email' => 'required|unique:companies,email',
-                        'image' => 'required|dimensions:min_width=100,min_height=100|mimes:jpg,jpeg,png,bmp,tiff'
+                        'email' => 'required|unique:companies,email|email',
+                        'image' => 'required|mimes:jpg,jpeg,png,bmp,tiff|dimensions:min_width=100,min_height=100
+                        '
                     ];
                 }
             case 'PUT':
-            case 'PATCH':
-                $id = $this->route('company')->id; {
+            case 'PATCH': {
                     return [
-                        'email' => [
-                            'required',
-                            Rule::unique('companies')->ignore($id),
-                        ],
-                        'image' => 'dimensions:min_width=100,min_height=100|mimes:jpeg,png,gif',
+                        'name' => ['required'],
+                        'email' => ['required', 'email', 'unique:companies,email,' . $this->id . ',id'],
+                        'image' => ['mimes:jpg,jpeg,png,bmp,tiff', 'dimensions:min_width=100,min_height=100']
                     ];
                 }
         }

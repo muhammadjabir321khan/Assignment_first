@@ -70,7 +70,7 @@
 
 
 <div class="container">
-    <a href="{{ route('employees.create') }}" data-toggle="modal" data-target="#myModal1" class="btn btn-primary mx-3">create employee</a>
+    <a href="{{ route('employees.create') }}" data-toggle="modal" data-target="#myModal1" class="btn btn-primary mx-3">Create Employee</a>
     <div class="nk-content ">
         <div class="container-fluid">
             <div class="nk-content-inner">

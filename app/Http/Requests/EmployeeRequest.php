@@ -41,4 +41,18 @@ class EmployeeRequest extends FormRequest
                 }
         }
     }
+    public function messages()
+    {
+        return [
+            'company_id.required' => 'The :attribute field is required.',
+            'company_id.exists' => 'The selected :attribute is invalid.',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'company_id' => 'company name',
+        ];
+    }
 }
