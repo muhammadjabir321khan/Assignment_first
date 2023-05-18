@@ -1,84 +1,99 @@
 @extends('dashboard.layout')
 @section('content')
 <div class="container">
-    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
+    <!-- .Edit Modal-Content -->
+    <div class="modal fade" id="myModal2">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel"></h4>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <form id="companyForm" class="mx-5">
-                            <h5 class="text-center">Add Project</h5>
-                            <div class="row g-gs">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="form-label" for="name">Name:</label>
-                                        <div class="form-control-wrap">
-                                            <input type="text" class="form-control" id="name" placeholder="Name" name="name" class="@error('name') is-invalid @enderror">
-                                        </div>
-                                        <div id="name-error" class="text-danger"></div>
+                <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                    <em class="icon ni ni-cross-sm"></em>
+                </a>
+                <div class="modal-body modal-body-md">
+                    <h5 class="modal-title">Add Employee</h5>
+                    <form id="companyForm1" class="mx-5">
+                        <h5 class="text-center">Add Project</h5>
+                        <div class="row g-gs">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="name">Name:</label>
+                                    <div class="form-control-wrap">
+                                        <input type="text" class="form-control" id="name" placeholder="Name" name="name" class="@error('name') is-invalid @enderror">
                                     </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div id="email-error" class="text-danger"></div>
-                                    <div class="form-group">
-                                        <label class="form-label" for="detail">Detail:</label>
-                                        <div class="form-control-wrap">
-                                            <input type="text" class="form-control" id="detail" placeholder="Project detail" name="detail">
-                                        </div>
-                                        <div id="detail-error" class="text-danger"></div>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div id="logo-error" class="text-danger"></div>
-                                    <div class="form-group">
-                                        <label class="form-label" for="totalCost">Total Cost:</label>
-                                        <div class="form-control-wrap">
-                                            <input type="text" class="form-control" id="totalCost" placeholder="Total Cost" name="totalCost">
-                                        </div>
-                                    </div>
-                                    <div id="totalCost-error" class="text-danger"></div>
-
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="form-label" for="deadline">Deadline:</label>
-                                        <div class="form-control-wrap">
-                                            <input type="date" class="form-control" id="deadline" placeholder="deadline" name="deadline">
-                                        </div>
-                                    </div>
-                                    <div id="deadline-error" class="text-danger"></div>
-                                </div>
-                                <div class="select-wrapper col-md-12">
-                                    <label for="company">Employee:</label>
-                                    <select name="employee_id" id="employee_id">
-                                        <option value="">Select a employee</option>
-                                        @foreach ($employies as $employee)
-                                        <option value="{{ $employee->id }}">{{ $employee->fname }}</option>
-                                        @endforeach
-                                    </select>
+                                    <div id="pname"></div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary my-3">save</button>
-                        </form>
-                    </div>
-                    <div id="modal2-loader" style="display: none;">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="sr-only">Loading...</span>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="detail">Detail:</label>
+                                    <div class="form-control-wrap">
+                                        <input type="text" class="form-control" id="detail" placeholder="Project detail" name="detail">
+                                    </div>
+                                    <div id="pdetail"></div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div id="logo-error" class="text-danger"></div>
+                                <div class="form-group">
+                                    <label class="form-label" for="totalCost">Total Cost:</label>
+                                    <div class="form-control-wrap">
+                                        <input type="text" class="form-control" id="totalCost" placeholder="Total Cost" name="totalCost">
+                                    </div>
+                                </div>
+                                <div id="ptotalCost" class="text-danger"></div>
+
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="deadline">Deadline:</label>
+                                    <div class="form-control-wrap">
+                                        <input type="date" class="form-control" id="deadline" placeholder="deadline" name="deadline">
+                                    </div>
+                                </div>
+                                <div id="pdeadline" class="text-danger"></div>
+                            </div>
+                            <div class="select-wrapper col-md-12">
+                                <label for="company">Employee:</label>
+                                <select name="employee_id" id="employee_id">
+                                    <option value="">Select a employee</option>
+                                    @foreach ($employies as $employee)
+                                    <option value="{{ $employee->id }}">{{ $employee->fname }}</option>
+                                    @endforeach
+                                </select>
+                                <div id="empid" class="text-danger"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div id="modal2-content"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary my-3">save</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
+    <!-- <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="footer">Close</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
 </div>
 <div class="container">
     <a href="#" class="btn btn-primary mx-3 " data-toggle="modal" data-target="#myModal2">create project</a>
@@ -103,6 +118,7 @@
                                     <div class="form-control-wrap">
                                         <input type="hidden" class="form-control" id="id" placeholder="Name" name="id" value="">
                                     </div>
+                                    <div id="fname-error"></div>
                                 </div>
                             </div>
                             <div class="col-md-10">
@@ -112,6 +128,7 @@
                                     <div class="form-control-wrap">
                                         <input type="text" class="form-control" id="fdetail" placeholder="Project detail" name="detail" value="">
                                     </div>
+                                    <div id="fdetail-error"></div>
 
                                 </div>
                             </div>
@@ -122,6 +139,9 @@
                                     <div class="form-control-wrap">
                                         <input type="text" class="form-control" id="ftotalCost" placeholder="Total Cost" name="totalCost" value="">
                                     </div>
+                                    <div id="ucast">
+
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-10">
@@ -131,6 +151,9 @@
                                     <div class="form-control-wrap">
                                         <input type="date" class="form-control" id="fdeadline" placeholder="deadline" name="deadline" value="">
                                     </div>
+                                </div>
+                                <div id="udeadline">
+
                                 </div>
                             </div>
                             <div class="select-wrapper col-md-10">
@@ -211,7 +234,7 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
-        $('#companyForm').on('submit', function(e) {
+        $('#companyForm1').on('submit', function(e) {
             e.preventDefault();
             var formData = new FormData(this);
             $.ajax({
@@ -224,27 +247,58 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
-                    $('#companyForm')[0].reset();
+                    $('#companyForm1')[0].reset();
                     window.location.href = "/projects";
 
 
                 },
-                error: function(xhr, status, error) {
-                    var response = xhr.responseJSON;
-                    if (response && response.errors) {
-                        $.each(response.errors, function(key, value) {
-                            if (key == 'email' && value[0] == 'The email has already been taken.') {
-                                $('#' + key + '-error').text('Email is already taken.');
-                            } else {
-                                $('#' + key + '-error').text(value[0]);
-                            }
-                        });
-                    } else {
-                        console.log(error);
+                error: function(response) {
+                    if (response.responseJSON.errors) {
+                        if (response.responseJSON.errors.name) {
+                            $('#pname').html('<span class="text-danger">' + response.responseJSON.errors.name + '</span>');
+
+                        } else {
+                            $('#pname').html('');
+                        }
+                        if (response.responseJSON.errors.detail) {
+                            $('#pdetail').html('<span class="text-danger">' + response.responseJSON.errors.detail + '</span>');
+
+                        } else {
+                            $('#pdetail').html('');
+                        }
+                        if (response.responseJSON.errors.totalCost) {
+                            $('#ptotalCost').html('<span class="text-danger">' + response.responseJSON.errors.totalCost + '</span>');
+
+                        } else {
+                            $('#ptotalCost').html('');
+                        }
+                        if (response.responseJSON.errors.deadline) {
+                            $('#pdeadline').html('<span class="text-danger">' + response.responseJSON.errors.deadline + '</span>');
+                        } else {
+                            $('#pdeadline').html('');
+                        }
                     }
+
                 }
 
             });
+
+
+
+            function clear() {
+                $('#pname').html('');
+                $('#pdetail').html('');
+                $('#ptotalCost').html('');
+                $('#pdeadline').html('');
+                $('#employee_id').val(''); // Reset the select field value
+                $('#companyForm1')[0].reset(); // Reset the form fields
+            }
+
+
+            $('#footer').click(clear);
+            $('#close').click(clear);
+
+
         });
 
 
@@ -350,10 +404,27 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(response) {
-                window.location.href = "/projects";
+
+
             },
-            error: function(xhr, status, error) {
-                console.log(xhr.responseText);
+            error: function(response) {
+                if (response.responseJSON.errors) {
+                    if (response.responseJSON.errors.name) {
+                        $('#fname-error').html('<span class="text-danger">' + response.responseJSON.errors.name + '</span>');
+                    } else {
+                        $('#fname-error').html('')
+                    }
+                    if (response.responseJSON.errors.detail) {
+                        $('#fdetail-error').html('<span class="text-danger">' + response.responseJSON.errors.detail + '</span>');
+                    } else {
+                        $('#fdetail-error').html('')
+                    }
+                    if (response.responseJSON.errors.totalCost) {
+                        $('#ucast').html('<span class="text-danger">' + response.responseJSON.errors.totalCost + '</span>');
+                    } else {
+                        $('#ucast').html('')
+                    }
+                }
             }
         });
     });

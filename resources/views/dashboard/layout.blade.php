@@ -26,7 +26,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel">Add Employee</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
                     <div id="modal1-loader" style="display: none;">
@@ -37,11 +37,12 @@
                     <div id="modal1-content"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="footer">Close</button>
                 </div>
             </div>
         </div>
     </div>
+
 
 
     <div class="nk-app-root">
@@ -74,6 +75,14 @@
                 modalContent1.show();
             });
 
+            function clear() {
+                $('#fname').html('');
+                $('#lemail').html('');
+                $('#company_id').html('');
+            }
+
+            $('#footer').click(clear);
+            $('#close').click(clear);
 
         });
     </script>

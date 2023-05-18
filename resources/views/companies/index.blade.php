@@ -1,11 +1,17 @@
 @extends('dashboard.layout')
 @section('content')
+
+
+
+
+
+
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Add Company</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="head"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <form id="companyForm">
@@ -49,15 +55,9 @@
                         </div>
                     </div>
                 </form>
-                <div id="modal-loader" style="display: none;">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                </div>
-                <div id="modal-content"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="footer">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="foot">Close</button>
             </div>
         </div>
     </div>
@@ -189,8 +189,59 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
-        $('#companyForm').on('submit', function(e) {
 
+        function clearForm() {
+            $('#companyForm')[0].reset();
+            $('#cname').html('');
+            $('#cemail').html('');
+            $('#cimage').html('');
+        }
+
+
+        $('#full-name-1').on('input', function() {
+            validateName($(this).val());
+        });
+
+        $('#email-address-1').on('input', function() {
+            validateEmail($(this).val());
+        });
+
+
+
+        function validateName(name) {
+            if (name.trim() === '') {
+                $('#cname').html('<span class="text-danger">The name field is required</span>');
+            } else {
+                $('#cname').html('');
+            }
+        }
+
+
+
+        function validateEmail(email) {
+            if (email.trim() === '') {
+                $('#cemail').html('<span class="text-danger">The email field is required</span>');
+            } else {
+                $('#cemail').html('');
+            }
+        }
+
+        function validateImage(image) {
+            if (image.trim() === '') {
+                $('#cimage').html('<span class="text-danger">The image field is required</span>');
+            } else {
+                $('#cimage').html('');
+            }
+        }
+
+        // Real-time validation for the image input
+        $('#phone-no-1').on('input', function() {
+            var imageValue = $(this).val();
+            validateImage(imageValue);
+        });
+
+        // Submit form
+        $('#companyForm').on('submit', function(e) {
             e.preventDefault();
             var formData = new FormData(this);
             $.ajax({
@@ -202,21 +253,23 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-
-
                 success: function(response) {
-                    window.location.href = "/companies";
-                    $('#companyForm')[0].reset();
+                    clearForm();
+                    setTimeout(function() {
+                        $('#myModal').modal('hide');
+                    }, 500);
+                    $('#company').DataTable().ajax.reload();
+
+
                 },
                 error: function(response) {
 
 
-
+                    // Display name error message
                     if (response.responseJSON.errors.name) {
                         var errorMessage = JSON.stringify(response.responseJSON.errors.name);
                         var formattedMessage = errorMessage.replace(/[\[\]"']+/g, '');
                         $('#cname').html('<span class="text-danger">' + formattedMessage + '</span>');
-
                     }
 
                     // Display email error message
@@ -224,7 +277,6 @@
                         var emailErrorMessage = JSON.stringify(response.responseJSON.errors.email[0]);
                         var formattedEmailMessage = emailErrorMessage.replace(/[\[\]"']+/g, '');
                         $('#cemail').html('<span class="text-danger">' + formattedEmailMessage + '</span>');
-
                     }
 
                     // Display image error message
@@ -232,27 +284,25 @@
                         var imageErrorMessage = JSON.stringify(response.responseJSON.errors.image[0]);
                         var formattedImageMessage = imageErrorMessage.replace(/[\[\]"']+/g, '');
                         $('#cimage').html('<span class="text-danger">' + formattedImageMessage + '</span>');
-
+                    } else {
+                        $('#cimage').html('');
                     }
                 }
-
-
             });
         });
 
-
-        function clear() {
+        function Errors() {
             $('#cname').html('');
             $('#cemail').html('');
             $('#cimage').html('');
-
-            setTimeout(function() {
-                $('#companyForm')[0].reset();
-            }, 500); // Adjust the delay time (in milliseconds) as needed
+            clearForm();
         }
+        $('#head').click(Errors);
+        $('#foot').click(Errors);
 
-        $('#footer').click(clear)
-        $('#close').click(clear)
+
+
+
         $('#company').DataTable({
             "responsive": true,
             "processing": false,
@@ -289,12 +339,12 @@
                 },
 
             ],
-            "initComplete": function(settings, json) {
-                $('.myCustomButtonContainer').html('<button id="myCustomButton" >Click Me</button>');
-                $('#myCustomButton').on('click', function() {
-                    alert('Button clicked!');
-                });
-            }
+            // "initComplete": function(settings, json) {
+            //     $('.myCustomButtonContainer').html('<button id="myCustomButton" >Click Me</button>');
+            //     $('#myCustomButton').on('click', function() {
+            //         alert('Button clicked!');
+            //     });
+            // }
         });
         // $('#company thead th:last-child').append('<button id="myButton">Click Me</button>');
 
@@ -304,25 +354,58 @@
         var table = $(this).data('table');
         var url = $(this).data('url');
         var method = $(this).data('method');
-        $.ajax({
-            url: url,
-            type: method,
-            data: {
-                _token: $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(data) {
-                swal.fire(data.success);
-                $('#' + table).DataTable().ajax.reload();
-            },
-            error: function(xhr, status, error) {
-                $('.alert-success').text('Data successfully deleted!').fadeIn().delay(3000).fadeOut();
-                console.log(xhr.responseText);
+
+        // Show confirmation message using SweetAlert2
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover this data!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // User confirmed deletion, proceed with AJAX request
+                $.ajax({
+                    url: url,
+                    type: method,
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        // Display success message using SweetAlert2
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: data.success,
+                            icon: 'success',
+                            timer: 3000
+                        });
+                        $('#' + table).DataTable().ajax.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        // Display error message using SweetAlert2
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'An error occurred while deleting the data.',
+                            icon: 'error',
+                            timer: 3000
+                        });
+                        console.log(xhr.responseText);
+                    }
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                // User canceled deletion, show cancel message
+                Swal.fire({
+                    title: 'Cancelled',
+                    text: 'Data deletion has been cancelled.',
+                    icon: 'info',
+                    timer: 3000
+                });
             }
         });
-
-
-
     });
+
     $(document).on('click', '.edit', function() {
         var id = $(this).data('id');
         $.ajax({
@@ -385,6 +468,7 @@
         }
         $('#updatemodal').click(clearUpdateErrors);
         $('#updateclose').click(clearUpdateErrors);
+
 
 
     });

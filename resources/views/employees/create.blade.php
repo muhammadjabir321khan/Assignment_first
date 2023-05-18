@@ -73,15 +73,29 @@
                 },
 
                 success: function(response) {
-                    $('#employee-form')[0].reset();
                     window.location.href = "/employees";
 
                 },
                 error: function(response) {
-                    $('#fname-error').html('<span class="text-danger">' + response.responseJSON.errors.fname + '</span>')
-                    $('#lname-error').html('<span class="text-danger">' + response.responseJSON.errors.lname + '</span>')
-                    $('#cname').html('<span class="text-danger">' + response.responseJSON.errors.company_id + '</span>')
+                    if (response.responseJSON.errors) {
+                        if (response.responseJSON.errors.fname) {
+                            $('#fname-error').html('<span class="text-danger">' + response.responseJSON.errors.fname + '</span>');
+                        } else {
+                            $('#fname-error').html('')
+                        }
+                        if (response.responseJSON.errors.lname) {
+                            $('#lname-error').html('<span class="text-danger">' + response.responseJSON.errors.lname + '</span>');
+                        } else {
+                            $('#lname-error').html('')
+                        }
+                        if (response.responseJSON.errors.company_id) {
+                            $('#cname').html('<span class="text-danger">' + response.responseJSON.errors.company_id + '</span>');
+                        } else {
+                            $('#cname').html('')
+                        }
+                    }
                 }
+
             });
         });
 

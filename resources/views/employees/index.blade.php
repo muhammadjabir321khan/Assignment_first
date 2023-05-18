@@ -6,7 +6,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Update Employee</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <form id="employee-form">
@@ -16,7 +16,7 @@
                             <div class="form-group">
                                 <label class="form-label" for="fname"> First Name</label>
                                 <div class="form-control-wrap">
-                                    <input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname">
+                                    <input type="text" class="form-control" id="fname" placeholder="Fisrt Name" name="fname">
                                 </div>
                                 <div id="fname-error" class="text-danger"></div>
                             </div>
@@ -27,11 +27,11 @@
                             <div class="form-group">
                                 <label class="form-label" for="fname"> Last Name</label>
                                 <div class="form-control-wrap">
-                                    <input type="text" class="form-control" id="fname" placeholder="First Name" name="fname">
+                                    <input type="text" class="form-control" id="lname" placeholder="last Name" name="lname">
                                 </div>
 
                             </div>
-                            <!-- <div id="lname-error" class="text-danger"></div> -->
+                            <div id="lname-error" class="text-danger"></div>
                         </div>
                     </div>
                     <div class="select-wrapper col-md-10">
@@ -44,7 +44,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="footer">Close</button>
             </div>
         </div>
     </div>
@@ -199,7 +199,8 @@
                         companySelect.append(option);
                     });
 
-            }
+            },
+
 
         });
     });
@@ -221,11 +222,29 @@
             success: function(response) {
                 window.location.href = "/employees";
             },
-            error: function(xhr, status, error) {
-                console.log(xhr.responseText);
+            error: function(response) {
+                if (response.responseJSON.errors) {
+                    if (response.responseJSON.errors.fname) {
+                        $('#fname-error').html('<span class="text-danger">' + response.responseJSON.errors.fname + '</span>');
+                    }
+                    if (response.responseJSON.errors.lname) {
+                        $('#lname-error').html('<span class="text-danger">' + response.responseJSON.errors.lname + '</span>');
+                    }
+                    if (response.responseJSON.errors.company_id) {
+                        $('#cname').html('<span class="text-danger">' + response.responseJSON.errors.company_id + '</span>');
+                    }
+                }
             }
         });
     });
+
+    function clear() {
+        $('#fname-error').html('');
+        $('#lname-error').html('');
+    }
+
+    $('#footer').click(clear)
+    $('#close').click(clear)
 
     $(document).on('click', '.delete', function(event) {
         event.preventDefault();
