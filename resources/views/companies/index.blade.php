@@ -113,6 +113,8 @@
         </div>
     </div>
 </div>
+
+
 <div class="nk-block nk-block-lg">
     <div class="card card-preview">
         <div class="card-inner">
@@ -134,12 +136,9 @@
             </table>
         </div>
     </div><!-- .card-preview -->
-</div> <!-- nk-block -->
+</div>
+<!-- nk-block -->
 <style>
-    /* .table-responsive {
-        overflow-x: auto;
-    } */
-
     .myCustomButtonContainer {
         justify-content: flex-end;
         margin-top: 10px;
@@ -166,8 +165,8 @@
 </style>
 @endsection
 @section('scripts')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> -->
 <script>
     $(document).ready(function() {
 
@@ -292,7 +291,7 @@
             "responsive": true,
             "processing": false,
             "serverSide": true,
-            "dom": '<"row"<"col-md-4"l><"col-md-3"<"myCustomButtonContainer">><"col-md-5"f>>t<"row"<"col-md-8"i><"col-md-4"p>>',
+            // "dom": '<"row"<"col-md-4"l><"col-md-3"<"myCustomButtonContainer">><"col-md-5"f>>t<"row"<"col-md-8"i><"col-md-4"p>>',
             "ajax": {
                 "url": "{{route('companies.index') }}",
                 "method": "GET",

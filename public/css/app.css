@@ -18,7 +18,7 @@ html {
     -webkit-text-size-adjust: 100%;
     -moz-tab-size: 4;
     -o-tab-size: 4;
-       tab-size: 4;
+    tab-size: 4;
     font-family: Figtree, sans-serif;
     font-feature-settings: normal;
 }
@@ -118,7 +118,6 @@ select {
 [type="submit"],
 button {
     -webkit-appearance: button;
-    background-color: transparent;
     background-image: none;
 }
 
@@ -194,7 +193,8 @@ textarea {
     resize: vertical;
 }
 
-input::-moz-placeholder, textarea::-moz-placeholder {
+input::-moz-placeholder,
+textarea::-moz-placeholder {
     opacity: 1;
     color: #9ca3af;
 }
@@ -801,4 +801,3 @@ video {
         padding: 2rem;
     }
 }
-

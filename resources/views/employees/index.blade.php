@@ -35,17 +35,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="select-wrapper col-md-10">
-                            <label for="company">Company:</label>
-                            <select name="company_id" id="company_id">
-                                <option value="">Select a company</option>
-                                @foreach ($companies as $company)
-                                <option value="{{ $company->id }}">{{ $company->name }}</option>
-                                @endforeach
-                            </select>
-                            <div id="companyname" class="text-danger"></div>
+                        <div>
+                            <div class="select-wrapper col-md-10">
+                                <label for="company">Employee:</label>
+                                <select name="company_id" id="company_id">
+                                    <option value="">Select a employee</option>
+                                    @foreach ($companies as $company)
+                                    <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                    @endforeach
+                                </select>
+                                <div id="companyname" class="text-danger"></div>
+                            </div>
                         </div>
-
                         <button type="submit" class="btn btn-primary my-3" style="margin-left: 13px;">Save Employee</button>
                     </form>
                     <div id="modal1-loader" style="display: none;">
@@ -61,8 +62,23 @@
             </div>
         </div>
     </div>
-
 </div>
+<style>
+    .select-wrapper select {
+        font-size: 16px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .select-wrapper label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+</style>
 
 
 <div class="modal fade" id="edit-employee-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -118,84 +134,36 @@
 
 
 
-<style>
-    .select-wrapper select {
-        font-size: 16px;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        width: 100%;
-        max-width: 400px;
-    }
-
-    .select-wrapper label {
-        display: block;
-        margin-bottom: 10px;
-        font-weight: bold;
-    }
-
-    .select-wrapper select {
-        font-size: 16px;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        width: 100%;
-        max-width: 400px;
-    }
-
-    .select-wrapper label {
-        display: block;
-        margin-bottom: 10px;
-        font-weight: bold;
-    }
-</style>
 
 
 
 
 
 
-<div class="container">
-    <a href="{{ route('employees.create') }}" data-toggle="modal" data-target="#myModal1" class="btn btn-primary mx-3">Create Employee</a>
-    <div class="nk-content ">
-        <div class="container-fluid">
-            <div class="nk-content-inner">
-                <div class="nk-content-body">
-                    <div class="components-preview wide-md mx-auto">
-                        <div class="nk-block nk-block-lg">
-                            <div class="card card-preview">
-                                <div class="card-inner">
-                                    <div class="table-responsive">
-                                        <table id="companies-table" class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>FName</th>
-                                                    <th>lname</th>
-                                                    <th>company</th>
-                                                    <th>project</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </thead>
 
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+<a href="{{ route('employees.create') }}" data-toggle="modal" data-target="#myModal1" class="btn btn-primary my-3">Create Employee</a>
+
+<div class="card card-preview">
+    <div class="card-inner">
+        <table id="employee-table" class="datatable-init nowrap table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>FName</th>
+                    <th>lname</th>
+                    <th>company</th>
+                    <th>project</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            </tbody>
+        </table>
     </div>
 </div>
-<style>
-    td.action-column {
-        padding: 0px 0px;
-    }
-</style>
+
 
 @endsection
 
@@ -263,10 +231,11 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
+                    $('#employee-table').DataTable().ajax.reload();
                     setTimeout(function() {
                         $('#myModal1').modal('hide');
                     }, 500);
-                    $('#companies-table').DataTable().ajax.reload();
+
                     clearForm();
                 },
                 error: function(response) {
@@ -306,13 +275,10 @@
 
 
 
-
-
-
-
-        $('#companies-table').DataTable({
+        $('#employee-table').DataTable({
             "processing": false,
             "serverSide": true,
+            "responsive": true,
             "ajax": {
                 "url": "{{route('employees.index') }}",
                 "method": "GET",
@@ -336,7 +302,9 @@
                 {
                     "data": "projects"
                 },
+
                 {
+
                     "data": "action",
                     "orderable": false,
                     "searchable": false,

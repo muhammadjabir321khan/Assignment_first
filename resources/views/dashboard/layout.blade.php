@@ -16,6 +16,20 @@
     @yield('style')
 
     <head>
+        <style>
+            div.dataTables_wrapper div.dataTables_length select {
+                margin: 10px;
+
+            }
+
+            .dataTables_filter {
+                float: right;
+            }
+
+            div.dataTables_wrapper div.dataTables_filter input {
+                width: 190px;
+            }
+        </style>
     </head>
 </head>
 
