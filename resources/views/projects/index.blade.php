@@ -300,10 +300,6 @@
 
 
         });
-
-
-
-
         $('#table').DataTable({
             "processing": false,
             "serverSide": true,

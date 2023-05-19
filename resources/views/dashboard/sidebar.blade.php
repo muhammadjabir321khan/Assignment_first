@@ -56,8 +56,9 @@
                             @endcan
                             @can('create-employee')
                             <li class="nk-menu-item">
-                                <a href="{{route('employees.create')}}" data-toggle="modal" data-target="#myModal1"><span class="nk-menu-text mx-5">Add Employee</span></a>
+                                <a href="{{route('employees.index')}}" id="add-employee-link"><span class="nk-menu-text mx-5">Add Employee</span></a>
                             </li>
+
                             @endcan
                         </ul>
                     </li>

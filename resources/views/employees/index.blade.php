@@ -1,6 +1,70 @@
 @extends('dashboard.layout')
 @section('content')
-@role('admin')
+
+
+<div class="nk-block nk-block-lg ">
+    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Add Employee</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form id="employee-form">
+                        <div>
+                            <div class="col-md-10">
+
+                                <div class="form-group">
+                                    <label class="form-label" for="fname"> First Name</label>
+                                    <div class="form-control-wrap">
+                                        <input type="text" class="form-control" id="fname" placeholder="First Name" name="fname">
+                                    </div>
+                                    <div id="fname-error" class="text-danger"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label class="form-label" for="fname"> Last Name</label>
+                                    <div class="form-control-wrap">
+                                        <input type="text" class="form-control" id="lname" placeholder="last Name" name="lname">
+                                    </div>
+                                    <div id="lname-error" class="text-danger"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="select-wrapper col-md-10">
+                            <label for="company">Company:</label>
+                            <select name="company_id" id="company_id">
+                                <option value="">Select a company</option>
+                                @foreach ($companies as $company)
+                                <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                @endforeach
+                            </select>
+                            <div id="companyname" class="text-danger"></div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary my-3" style="margin-left: 13px;">Save Employee</button>
+                    </form>
+                    <div id="modal1-loader" style="display: none;">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <div id="modal1-content"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="footer">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
 <div class="modal fade" id="edit-employee-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -50,6 +114,10 @@
     </div>
 
 </div>
+
+
+
+
 <style>
     .select-wrapper select {
         font-size: 16px;
@@ -65,7 +133,25 @@
         margin-bottom: 10px;
         font-weight: bold;
     }
+
+    .select-wrapper select {
+        font-size: 16px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .select-wrapper label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
 </style>
+
+
+
 
 
 
@@ -110,12 +196,120 @@
         padding: 0px 0px;
     }
 </style>
-@endrole
+
 @endsection
 
 @section('scripts')
 <script>
     $(document).ready(function() {
+        function clearForm() {
+            $('#employee-form')[0].reset();
+            $('#fname-error').html('');
+            $('#lname-error').html('');
+            $('#companyname').html('');
+        }
+
+        $('#fname').on('input', function() {
+            validateFirstName($(this).val());
+        });
+
+        $('#lname').on('input', function() {
+            validateLastName($(this).val());
+        });
+
+        $('#company_id').on('input', function() {
+            validateCompanyId($(this).val());
+        });
+
+        function validateFirstName(firstName) {
+            if (firstName.trim() === '') {
+                $('#fname-error').html('<span class="text-danger">The first name field is required</span>');
+            } else {
+                $('#fname-error').html('');
+            }
+        }
+
+        function validateLastName(lastName) {
+            if (lastName.trim() === '') {
+                $('#lname-error').html('<span class="text-danger">The last name field is required</span>');
+            } else {
+                $('#lname-error').html('');
+            }
+        }
+
+        function validateCompanyId(companyId) {
+            if (companyId.trim() === '') {
+                $('#companyname').html('<span class="text-danger">The company name field is required</span>');
+            } else {
+                $('#companyname').html('');
+            }
+        }
+
+        // Submit form
+        $('#employee-form').on('submit', function(e) {
+            e.preventDefault();
+
+            var formData = {
+                fname: $('#fname').val(),
+                lname: $('#lname').val(),
+                company_id: $('#company_id').val()
+            };
+
+            $.ajax({
+                url: '{{ route("employees.store") }}',
+                type: 'POST',
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    setTimeout(function() {
+                        $('#myModal1').modal('hide');
+                    }, 500);
+                    $('#companies-table').DataTable().ajax.reload();
+                    clearForm();
+                },
+                error: function(response) {
+                    var company_id = response.responseJSON.errors.company_id;
+                    if (response.responseJSON.errors) {
+                        if (response.responseJSON.errors.fname) {
+                            $('#fname-error').html('<span class="text-danger">' + response.responseJSON.errors.fname + '</span>');
+                        } else {
+                            $('#fname-error').html('');
+                        }
+                        if (response.responseJSON.errors.lname) {
+                            $('#lname-error').html('<span class="text-danger">' + response.responseJSON.errors.lname + '</span>');
+                        } else {
+                            $('#lname-error').html('');
+                        }
+                        if (company_id) {
+                            $('#companyname').html('<span class="text-danger">' + company_id + '</span>');
+                        } else {
+                            $('#companyname').html('');
+                        }
+                    }
+                }
+            });
+        });
+
+        function clear() {
+            $('#fname-error').html('');
+            $('#lname-error').html('');
+            $('#companyname').html('');
+            clearForm();
+        }
+
+        $('#footer').click(clear);
+        $('#close').click(clear);
+
+
+
+
+
+
+
+
+
         $('#companies-table').DataTable({
             "processing": false,
             "serverSide": true,
@@ -158,26 +352,58 @@
             var table = $(this).data('table');
             var url = $(this).data('url');
             var method = $(this).data('method');
-            console.log(table)
-            $.ajax({
-                url: url,
-                type: method,
-                data: {
-                    _token: $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(data) {
-                    // console.log(data)
-                    swal.fire(data.success);
-                    $('#' + table).DataTable().ajax.reload();
-                },
-                error: function(xhr, status, error) {
-                    $('.alert-success').text('Data successfully deleted!').fadeIn().delay(3000).fadeOut();
 
-                    console.log(xhr.responseText);
+            // Show a confirmation dialog to the user
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You will not be able to recover this data!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    // User confirmed the deletion
+                    $.ajax({
+                        url: url,
+                        type: method,
+                        data: {
+                            _token: $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(data) {
+                            Swal.fire({
+                                title: 'Deleted!',
+                                text: data.success,
+                                icon: 'success',
+                                timer: 3000
+                            });
+                            $('#' + table).DataTable().ajax.reload();
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'An error occurred while deleting the data.',
+                                icon: 'error',
+                                timer: 3000
+                            });
+                            console.log(xhr.responseText);
+                        }
+                    });
+                } else {
+                    // User canceled the deletion
+                    Swal.fire({
+                        title: 'Cancelled',
+                        text: 'Data deletion has been cancelled.',
+                        icon: 'info',
+                        timer: 3000
+                    });
                 }
             });
-
         });
+
+
+
 
     });
     $(document).on('click', '.edit', function() {
@@ -238,13 +464,7 @@
         });
     });
 
-    function clear() {
-        $('#fname-error').html('');
-        $('#lname-error').html('');
-    }
 
-    $('#footer').click(clear)
-    $('#close').click(clear)
 
     $(document).on('click', '.delete', function(event) {
         event.preventDefault();
@@ -269,6 +489,8 @@
                 }
             });
         }
+
+
     });
 </script>
 @endsection
