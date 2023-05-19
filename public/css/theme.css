@@ -728,6 +728,7 @@ pre code {
     flex-wrap: wrap;
     margin-right: -14px;
     margin-left: -14px;
+    margin-bottom: 27px;
 }
 
 .no-gutters {
@@ -25373,7 +25374,6 @@ div.dataTables_wrapper div.dataTables_length select {
 div.dataTables_wrapper div.dataTables_length label {
     display: inline-flex;
     align-items: center;
-    padding-left: 28px;
 }
 
 div.dataTables_wrapper div.dataTables_length span {
@@ -25383,21 +25383,17 @@ div.dataTables_wrapper div.dataTables_length span {
 
 div.dataTables_wrapper div.dataTables_filter label {
     font-weight: normal;
-    padding-left: 23px;
     white-space: nowrap;
 }
 
 div.dataTables_wrapper div.dataTables_filter input {
     display: inline-block;
-    padding-left: 15px;
-    margin-left: 8px;
 }
 
 div.dataTables_wrapper div.dataTables_info {
     padding: 0.5rem 0;
     white-space: nowrap;
     font-size: 0.75rem;
-    padding-left: 24px;
 }
 
 div.dataTables_wrapper div.dataTables_paginate {
@@ -25573,7 +25569,7 @@ div.dataTables_scrollHead table.table-bordered {
 }
 
 div.table-responsive > div.dataTables_wrapper > div.row {
-    margin-bottom: 30px;
+    margin: 0;
 }
 
 div.table-responsive
@@ -25592,8 +25588,7 @@ div.table-responsive
 
 @media (min-width: 768px) {
     div.dataTables_wrapper div.dataTables_paginate ul.pagination {
-        justify-content: end;
-        padding-right: 68px;
+        justify-content: flex-start;
     }
 }
 
@@ -29030,7 +29025,6 @@ a.fc-event-secondary-dim .fc-list-event-dot {
 span.fc-event-secondary-dim .dot {
     background-color: #e5ecf5 !important;
     border-color: #364a63 !important;
-   
 }
 
 .fc-event-secondary-dim:not(a) .fc-list-event-dot {
@@ -30226,7 +30220,7 @@ body.nav-shown {
 
 @media (min-width: 576px) {
     .nk-content {
-        /* padding: 32px 22px; */
+        padding: 32px 22px;
     }
     .nk-content-fluid {
         padding-left: 22px;

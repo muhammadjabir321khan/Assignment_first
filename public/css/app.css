@@ -18,7 +18,7 @@ html {
     -webkit-text-size-adjust: 100%;
     -moz-tab-size: 4;
     -o-tab-size: 4;
-    tab-size: 4;
+       tab-size: 4;
     font-family: Figtree, sans-serif;
     font-feature-settings: normal;
 }
@@ -118,7 +118,7 @@ select {
 [type="submit"],
 button {
     -webkit-appearance: button;
-    /* background-color: transparent; */
+    background-color: transparent;
     background-image: none;
 }
 
@@ -194,8 +194,7 @@ textarea {
     resize: vertical;
 }
 
-input::-moz-placeholder,
-textarea::-moz-placeholder {
+input::-moz-placeholder, textarea::-moz-placeholder {
     opacity: 1;
     color: #9ca3af;
 }
@@ -519,8 +518,8 @@ video {
 }
 
 .px-6 {
-    color: white;
-    width: 500px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
 }
 
 .text-center {
@@ -543,9 +542,6 @@ video {
 
 .font-semibold {
     font-weight: 600;
-    background: white;
-    padding: 8px 16px;
-    color: black;
 }
 
 .leading-relaxed {
@@ -555,8 +551,6 @@ video {
 .text-gray-600 {
     --tw-text-opacity: 1;
     color: rgb(75 85 99 / var(--tw-text-opacity));
-    padding-left: 20px;
-    margin-top: 20px;
 }
 
 .text-gray-900 {
@@ -807,3 +801,4 @@ video {
         padding: 2rem;
     }
 }
+

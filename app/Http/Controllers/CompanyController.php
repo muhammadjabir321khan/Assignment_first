@@ -17,7 +17,7 @@ class CompanyController extends Controller
 
     public function index(Request  $request)
     {
-        $company = Company::all();
+        $company = Company::orderBy('id', 'desc');
         if ($request->ajax()) {
             return Datatables::of($company)
                 ->addIndexColumn()

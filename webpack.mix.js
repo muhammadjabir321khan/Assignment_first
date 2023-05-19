@@ -11,6 +11,10 @@ mix.styles(
     "public/css/theme.css"
 );
 mix.scripts(
-    ["resources/assets/js/bundle.js", "resources/assets/js/scripts.js"],
+    [
+        "resources/assets/js/bundle.js",
+        "resources/assets/js/example-toastr.js",
+        "resources/assets/js/scripts.js",
+    ],
     "public/js/theme.js"
 );

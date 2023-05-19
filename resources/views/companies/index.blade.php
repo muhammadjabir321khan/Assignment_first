@@ -56,9 +56,7 @@
         </div>
     </div>
 </div>
-
-
-<a href=" {{route('companies.create')}}" data-toggle="modal" data-target="#myModal" class="btn btn-primary mb-2 mx-3">Create Company</a>
+<a href=" {{route('companies.create')}}" data-toggle="modal" data-target="#myModal" class="btn btn-primary mb-2 mx-1">Create Company</a>
 <div id="edit-company-modal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -115,41 +113,28 @@
         </div>
     </div>
 </div>
+<div class="nk-block nk-block-lg">
+    <div class="card card-preview">
+        <div class="card-inner">
+            <table id="company" class="datatable-init nowrap table" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>NAME</th>
+                        <th>Email</th>
+                        <th>image</th>
+                        <th>Actions</th>
 
+                    </tr>
+                </thead>
+                <tbody>
 
+                </tbody>
 
-<div class="nk-content ">
-    <div class="container-fluid">
-        <div class="nk-content-inner">
-            <div class="nk-content-body">
-                <div class="components-preview wide-md mx-auto">
-                    <div class="nk-block nk-block-lg">
-                        <div class="card card-preview">
-                            <div class="card-inner">
-                                <div class="table-responsive">
-                                    <table id="company" class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Logo</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </table>
         </div>
-    </div>
-</div>
-</div>
+    </div><!-- .card-preview -->
+</div> <!-- nk-block -->
 <style>
     /* .table-responsive {
         overflow-x: auto;
@@ -181,6 +166,8 @@
 </style>
 @endsection
 @section('scripts')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -248,13 +235,17 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
+
                     clearForm();
                     setTimeout(function() {
                         $('#myModal').modal('hide');
                     }, 500);
                     $('#company').DataTable().ajax.reload();
-
-
+                    setTimeout(function() {
+                        toastr.success('Data submitted successfully.', 'Success', {
+                            positionClass: 'toast-top-left',
+                        });
+                    }, 500);
                 },
                 error: function(response) {
 
