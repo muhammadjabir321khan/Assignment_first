@@ -16,9 +16,9 @@ Route::get('/', function () {
 });
 
 
-Route::get('dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('dashboard', function () {
+//     return view('dashboard');
+// });
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -33,10 +33,12 @@ Route::group(['middleware' =>
     Route::resource('/companies', CompanyController::class)->middleware(['auth', 'role:admin']);
     Route::resource('/projects', ProjectController::class)->middleware(['auth', 'role:admin']);
     Route::get('/search', [CompanyController::class, 'search'])->name('companies.search');
+
     Route::get('search-company', [CompanyController::class, 'showSearch']);
     Route::get('company-search', [CompanyController::class, 'company']);
     Route::resource('/filter', FilterController::class);
 });
+Route::get('dashboard', [CompanyController::class, 'companies'])->middleware(['auth', 'verified'])->name('dashboard');
 
 
 require __DIR__ . '/auth.php';

@@ -251,9 +251,9 @@
                 success: function(response) {
 
                     clearForm();
-                    setTimeout(function() {
-                        $('#myModal').modal('hide');
-                    }, 500);
+
+                    $('#myModal').modal('hide');
+
                     $('#company').DataTable().ajax.reload();
                     setTimeout(function() {
                         toastr.success('Data submitted successfully.', 'Success', {
@@ -438,7 +438,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(response) {
-                window.location.href = "/companies";
+                $('#edit-company-modal').modal('hide');
             },
             error: function(response) {
                 if (response.responseJSON.errors && response.responseJSON.errors.email) {

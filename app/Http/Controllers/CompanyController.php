@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
+use App\Models\Employee;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -173,5 +174,13 @@ class CompanyController extends Controller
         return response([
             'company' => $companies
         ]);
+    }
+
+    public function companies()
+    {
+        $companies = Company::count('id');
+        $employies = Employee::count('id');
+        $projects = Project::count('id');
+        return view('dashboard', compact('companies', 'employies', 'projects'));
     }
 }
