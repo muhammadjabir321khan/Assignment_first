@@ -36,7 +36,7 @@
                             <div class="form-group">
                                 <label class="form-label" for="phone-no-1">Image</label>
                                 <div class="form-control-wrap">
-                                    <input type="file" class="form-control" id="phone-no-1" name="image">
+                                    <input type="file" class="form-control" id="phone-no-1" name="image" style=" padding-bottom: 34px;">
                                 </div>
                             </div>
                             <div id="cimage">
@@ -56,6 +56,40 @@
         </div>
     </div>
 </div>
+
+
+<style>
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .form-control-wrap {
+        position: relative;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    #company-image {
+        display: block;
+        margin-top: 10px;
+        max-width: 70px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 5px;
+    }
+</style>
 <a href=" {{route('companies.create')}}" data-toggle="modal" data-target="#myModal" class="btn btn-primary mb-2 mx-1">Create Company</a>
 <div id="edit-company-modal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -91,7 +125,7 @@
                             <div class="form-group">
                                 <label class="form-label" for="phone-no-1">Image</label>
                                 <div class="form-control-wrap">
-                                    <input type="file" class="form-control" id="phone-no-1" name="image">
+                                    <input type="file" class="form-control" id="phone-no-1" name="image" style=" padding-bottom: 34px;">
                                     <img id="company-image" src="" alt="Company Image" width="70" class="my-3">
                                 </div>
                             </div>
@@ -139,6 +173,34 @@
 </div>
 <!-- nk-block -->
 <style>
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .form-control-wrap {
+        position: relative;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    #company-image {
+        display: block;
+        margin-top: 10px;
+        max-width: 70px;
+    }
+
     .myCustomButtonContainer {
         justify-content: flex-end;
         margin-top: 10px;
@@ -174,14 +236,7 @@
 </style>
 @endsection
 @section('scripts')
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
 
-<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 <script>
     $(document).ready(function() {
 

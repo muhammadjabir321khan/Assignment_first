@@ -196,8 +196,7 @@
 
 
 @endsection
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 
 @section('scripts')
 <script>
@@ -275,7 +274,7 @@
                     setTimeout(function() {
                         $('#myModal2').modal('hide');
                     }, 500);
-                    $('#company').DataTable().ajax.reload();
+                    $('#project').DataTable().ajax.reload();
                     setTimeout(function() {
                         toastr.success('Data submitted successfully.', 'Success', {
                             positionClass: 'toast-top-left',

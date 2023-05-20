@@ -36,15 +36,21 @@
                             </div>
                         </div>
                         <div>
-                            <div class="select-wrapper col-md-10">
-                                <label for="company">Employee:</label>
-                                <select name="company_id" id="company_id">
-                                    <option value="">Select a employee</option>
-                                    @foreach ($companies as $company)
-                                    <option value="{{ $company->id }}">{{ $company->name }}</option>
-                                    @endforeach
-                                </select>
-                                <div id="companyname" class="text-danger"></div>
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label class="form-label" for="company_id">Employee:</label>
+                                    <div class="form-control-wrap">
+                                        <select class="form-control" id="company_id" id="company_id">
+                                            <option value="">Select Last Name</option>
+                                            @foreach ($companies as $company)
+                                            <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                            @endforeach
+
+                                            <!-- Add more options as needed -->
+                                        </select>
+                                    </div>
+                                    <div id="companyname" class="text-danger"></div>
+                                </div>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary my-3" style="margin-left: 13px;">Save Employee</button>
@@ -109,11 +115,11 @@
                                 <div class="form-control-wrap">
                                     <input type="text" class="form-control" id="ulname" placeholder="last Name" name="lname">
                                 </div>
-
+                                <div id="lname-error" class="text-danger"></div>
                             </div>
-                            <div id="lname-error" class="text-danger"></div>
                         </div>
                     </div>
+
                     <div class="select-wrapper col-md-10">
                         <label for="company">Company:</label>
                         <select name="company_id" id="companyid">
