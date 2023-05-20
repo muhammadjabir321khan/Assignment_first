@@ -162,11 +162,26 @@
         width: auto;
         flex: 0 0 auto;
     }
+
+    /* Custom responsive styles for DataTables */
+    @media (max-width: 767px) {
+
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_filter {
+            text-align: center;
+        }
+    }
 </style>
 @endsection
 @section('scripts')
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -291,7 +306,6 @@
             "responsive": true,
             "processing": false,
             "serverSide": true,
-            // "dom": '<"row"<"col-md-4"l><"col-md-3"<"myCustomButtonContainer">><"col-md-5"f>>t<"row"<"col-md-8"i><"col-md-4"p>>',
             "ajax": {
                 "url": "{{route('companies.index') }}",
                 "method": "GET",

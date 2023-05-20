@@ -96,7 +96,7 @@
                             <div class="form-group">
                                 <label class="form-label" for="fname"> First Name</label>
                                 <div class="form-control-wrap">
-                                    <input type="text" class="form-control" id="fname" placeholder="Fisrt Name" name="fname">
+                                    <input type="text" class="form-control" id="ufname" placeholder="Fisrt Name" name="fname">
                                 </div>
                                 <div id="fname-error" class="text-danger"></div>
                             </div>
@@ -107,7 +107,7 @@
                             <div class="form-group">
                                 <label class="form-label" for="fname"> Last Name</label>
                                 <div class="form-control-wrap">
-                                    <input type="text" class="form-control" id="lname" placeholder="last Name" name="lname">
+                                    <input type="text" class="form-control" id="ulname" placeholder="last Name" name="lname">
                                 </div>
 
                             </div>
@@ -384,8 +384,8 @@
                 // console.log(response.data);
                 $('#edit-employee-modal').modal('show');
                 $('#id').val(response.employee.id);
-                $('#lname').val(response.employee.lname)
-                $('#fname').val(response.employee.fname)
+                $('#ufname').val(response.employee.fname)
+                $('#ulname').val(response.employee.lname)
                 var companySelect = $('#companyid');
                 response.comapnies
                     .forEach(function(company) {
@@ -414,7 +414,10 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(response) {
-                window.location.href = "/employees";
+                $('#employee-table').DataTable().ajax.reload();
+                setTimeout(function() {
+                    $('#edit-employee-modal').modal('hide');
+                }, 500);
             },
             error: function(response) {
                 if (response.responseJSON.errors) {
@@ -449,6 +452,7 @@
                 success: function(data) {
                     swalfire(data.success);
                     console.log("table", table)
+                    $('#employee-table')
                     $('#' + table).DataTable().ajax.reload();
                 },
                 error: function(xhr, status, error) {

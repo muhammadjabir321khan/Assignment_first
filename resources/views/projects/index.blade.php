@@ -202,6 +202,62 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
+        // Validation function
+        // Attach event listeners
+        $('#name').on('input', function() {
+            validateField('name', 'pname', 'The name field is required');
+        });
+
+        $('#detail').on('input', function() {
+            validateField('detail', 'pdetail', 'The detail field is required');
+        });
+
+        $('#totalCost').on('input', function() {
+            validateField('totalCost', 'ptotalCost', 'The total cost field is required');
+        });
+
+        $('#deadline').on('input', function() {
+            validateField('deadline', 'pdeadline', 'The deadline field is required');
+        });
+
+
+
+        // Form submission validation
+        $('#companyForm1').on('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Validate fields before submission
+            validateField('name', 'pname', 'The name field is required');
+            validateField('detail', 'pdetail', 'The  detail field is required');
+            validateField('totalCost', 'ptotalCost', 'The total cost field is required');
+            validateField('deadline', 'pdeadline', 'The deadline field is required');
+
+            // Proceed with form submission if all fields are valid
+            if (isFormValid()) {
+                this.submit();
+            }
+        });
+
+        // Validation function
+        function validateField(fieldId, errorId, errorMessage) {
+            var field = $('#' + fieldId);
+            var error = $('#' + errorId);
+            var fieldValue = field.val().trim();
+
+            if (fieldValue === '') {
+                error.html('<span class="text-danger">' + errorMessage + '</span>');
+            } else {
+                error.html('');
+            }
+        }
+
+        // Check if all fields are valid
+        function isFormValid() {
+            var errors = $('.text-danger');
+            return errors.length === 0;
+        }
+
+
         $('#companyForm1').on('submit', function(e) {
             e.preventDefault();
             var formData = new FormData(this);

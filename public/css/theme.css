@@ -1118,8 +1118,10 @@ pre code {
         max-width: 91.66667%;
     }
     .col-sm-12 {
+        /* display: inline-flex; */
         flex: 0 0 100%;
         max-width: 100%;
+        padding-right: 62px;
     }
     .order-sm-first {
         order: -1;
@@ -25588,7 +25590,7 @@ div.table-responsive
 
 @media (min-width: 768px) {
     div.dataTables_wrapper div.dataTables_paginate ul.pagination {
-        margin-right: -221px;
+        margin-right: 591px;
     }
 }
 
@@ -33404,6 +33406,7 @@ h6 .badge {
 
 .card .table {
     margin-bottom: 0;
+    width: 100%;
 }
 
 .card .table tr:first-child th,

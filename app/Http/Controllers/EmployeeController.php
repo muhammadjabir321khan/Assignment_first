@@ -23,7 +23,7 @@ class EmployeeController extends Controller
                 ->addColumn('action', function ($row) {
                     if (auth()->user()->hasRole('admin')) {
                         $action = '<a href="javascript:void(0)" class="btn btn-primary btn-sm my-2 edit" data-id="' . $row->id . '">Edit</a> ';
-                        $action .= '<a class="btn btn-danger btn-sm mx-1 delete-record text-white" data-table="companies-table" data-method="DELETE"
+                        $action .= '<a class="btn btn-danger btn-sm mx-1 delete-record text-white" data-table="employee-table" data-method="DELETE"
                     data-url="' . route('employees.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
                     Delete
                     </a>';
