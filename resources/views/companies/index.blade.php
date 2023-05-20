@@ -362,7 +362,7 @@
             "processing": false,
             "serverSide": true,
             "ajax": {
-                "url": "{{route('companies.index') }}",
+                "url": "{{ route('companies.index') }}",
                 "method": "GET",
                 "dataType": "json",
                 headers: {
@@ -389,16 +389,23 @@
                     "orderable": false,
                     "searchable": false,
                     "button": false
-                },
-
+                }
             ],
-            // "initComplete": function(settings, json) {
-            //     $('.myCustomButtonContainer').html('<button id="myCustomButton" >Click Me</button>');
-            //     $('#myCustomButton').on('click', function() {
-            //         alert('Button clicked!');
-            //     });
-            // }
+            "dom": '<"row d-flex justify-content-between align-items-center"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 text-right"f>><"row"<"col-sm-12"t>><"row d-flex justify-content-between align-items-center"<"col-sm-12 col-md-9"i><"col-sm-12 col-md-3"p>>',
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            "drawCallback": function(settings) {
+                $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'Search').css('margin-right', '34px');
+            }
         });
+
+
+
+
+
+
         // $('#company thead th:last-child').append('<button id="myButton">Click Me</button>');
 
 
