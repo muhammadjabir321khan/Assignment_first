@@ -146,7 +146,6 @@
                                 <label class="form-label" for="employee_id">Employee:</label>
                                 <div class="form-control-wrap">
                                     <select name="employee_id" id="employeeid" class="form-control">
-                                        <!-- Add your options dynamically -->
                                     </select>
                                 </div>
                                 <div id="empid" class="text-danger"></div>

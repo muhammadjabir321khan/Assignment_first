@@ -67,4 +67,8 @@ class FilterController extends Controller
     {
         //
     }
+
+    public function filter()
+    {
+    }
 }

@@ -44,8 +44,7 @@
         </div>
     </div>
 </div>
-</div>
-</div>
+
 <style>
     .select-wrapper select {
         font-size: 16px;
