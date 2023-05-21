@@ -44,7 +44,7 @@
                         </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Save Informations</button>
+                                <button type="submit" class="btn btn-primary">Save </button>
                             </div>
                         </div>
                     </div>
@@ -132,7 +132,7 @@
                         </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <button type="button" class="btn btn-primary save">Update Information</button>
+                                <button type="button" class="btn btn-primary save">Update</button>
                             </div>
                         </div>
                     </div>

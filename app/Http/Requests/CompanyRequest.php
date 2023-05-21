@@ -29,8 +29,7 @@ class CompanyRequest extends FormRequest
                     return [
                         'name' => 'required',
                         'email' => 'required|unique:companies,email|email',
-                        'image' => 'required|mimes:jpg,jpeg,png,bmp,tiff|dimensions:min_width=100,min_height=100
-                        '
+                        'image' => 'required|mimes:jpg,jpeg,png,bmp,tiff|dimensions:min_width=100,min_height=100',
                     ];
                 }
             case 'PUT':
@@ -38,9 +37,22 @@ class CompanyRequest extends FormRequest
                     return [
                         'name' => ['required'],
                         'email' => ['required', 'email', 'unique:companies,email,' . $this->id . ',id'],
-                        'image' => ['mimes:jpg,jpeg,png,bmp,tiff', 'dimensions:min_width=100,min_height=100']
+                        'image' => ['mimes:jpg,jpeg,png,bmp,tiff', 'dimensions:min_width=100,min_height=100'],
                     ];
                 }
         }
+    }
+
+    /**
+     * Get the validation error messages.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'image.mimes' => 'Invalid file format.',
+            'image.dimensions' => 'Invalid image dimensions. Minimum width and height required: 100px.',
+        ];
     }
 }
