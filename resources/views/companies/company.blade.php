@@ -11,7 +11,7 @@
                                 <div class="table-responsive">
                                     <div class="container">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label class="form-label" for="companySelect">Select Company:</label>
                                                     <select id="companySelect" class="form-control">
@@ -22,7 +22,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-5">
                                                 <form action="" method="get">
                                                     <div class="form-group">
                                                         <label class="form-label" for="search">Search:</label>
@@ -36,7 +36,7 @@
 
 
                                         <table class="table my-5">
-                                            <thead>
+                                            <thead id="tableHeader">
                                                 <tr>
                                                     <th>ID</th>
                                                     <th>Name</th>
@@ -44,13 +44,13 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="employeeList">
-                                                <!-- @foreach($companies as $key => $company)
+                                                @foreach($companies as $key => $company)
                                                 <tr>
                                                     <td>{{$key+1}}</td>
                                                     <td>{{$company->name}}</td>
                                                     <td>{{$company->email}}</td>
                                                 </tr>
-                                                @endforeach -->
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -63,11 +63,7 @@
         </div>
     </div>
 </div>
-<style>
-    .table-responsive {
-        overflow-x: auto;
-    }
-</style>
+
 @endsection
 
 @section('scripts')
@@ -120,22 +116,33 @@
                     console.log('response', response);
 
                     var employeeHtml = '';
-                    $.each(response.employee, function(index, employee) {
-                        var key = index + 1;
-                        employeeHtml += '<tr>';
-                        employeeHtml += '<td>' + key + '</td>';
-                        employeeHtml += '<td> ' + employee.lname + '</td>';
-                        employeeHtml += '<td> ' + employee.fname + '</td>';
-                        employeeHtml += '</tr>';
+                    if (response.employee.length > 0) {
+                        $.each(response.employee, function(index, employee) {
+                            var key = index + 1;
+                            employeeHtml += '<tr>';
+                            employeeHtml += '<td>' + key + '</td>';
+                            employeeHtml += '<td>' + employee.fname + '</td>';
+                            employeeHtml += '<td>' + employee.lname + '</td>';
+                            employeeHtml += '</tr>';
+                        });
+                    } else {
+                        employeeHtml = '<tr><td colspan="3">No employees found for the selected company.</td></tr>';
+                    }
 
-                    });
                     $('#employeeList').html(employeeHtml);
+
+                    var tableHeader = '<tr><th>ID</th><th>First Name</th><th>Last Name</th></tr>';
+                    if (response.employee.length == 0) {
+                        tableHeader = '<tr><th>ID</th><th>First Name</th><th>Last Name</th></tr>';
+                    }
+                    $('#tableHeader').html(tableHeader);
                 },
                 error: function(xhr) {
                     console.log(xhr.responseText);
                 }
             });
         });
+
     });
 </script>
 @endsection
