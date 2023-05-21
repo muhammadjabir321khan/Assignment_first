@@ -40,8 +40,7 @@
                                 <div class="form-group">
                                     <label class="form-label" for="company_id">Employee:</label>
                                     <div class="form-control-wrap">
-                                        <select class="form-control" id="company_id" id="company_id">
-                                            <option value="">Select Last Name</option>
+                                        <select class="form-control" name="company_id" id="company_id">
                                             @foreach ($companies as $company)
                                             <option value="{{ $company->id }}">{{ $company->name }}</option>
                                             @endforeach
@@ -69,7 +68,7 @@
         </div>
     </div>
 </div>
-<style>
+<!-- <style>
     .select-wrapper select {
         font-size: 16px;
         padding: 10px;
@@ -84,7 +83,7 @@
         margin-bottom: 10px;
         font-weight: bold;
     }
-</style>
+</style> -->
 
 
 <div class="modal fade" id="edit-employee-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -120,10 +119,18 @@
                         </div>
                     </div>
 
-                    <div class="select-wrapper col-md-10">
-                        <label for="company">Company:</label>
-                        <select name="company_id" id="companyid">
-                        </select>
+                    <div>
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <label class="form-label" for="company_id">Employee:</label>
+                                <div class="form-control-wrap">
+                                    <select class="form-control" name="company_id" id="companyid">
+
+                                    </select>
+                                </div>
+                                <div id="companyname" class="text-danger"></div>
+                            </div>
+                        </div>
                     </div>
                     <button type="button" class="btn btn-primary my-3 save" style="margin-left: 10px;">Update Employee</button>
                 </form>
@@ -149,13 +156,12 @@
 
 
 <a href="{{ route('employees.create') }}" data-toggle="modal" data-target="#myModal1" class="btn btn-primary my-3">Create Employee</a>
-
 <div class="card card-preview">
     <div class="card-inner">
         <table id="employee-table" class="datatable-init nowrap table" style="width: 100%;">
 
             <thead>
-                <tr>
+                <tr style="justify-content: center;">
                     <th>ID</th>
                     <th>FName</th>
                     <th>lname</th>
@@ -170,6 +176,9 @@
         </table>
     </div>
 </div>
+
+
+
 
 
 @endsection
@@ -238,9 +247,14 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
-                    $('#employee-table').DataTable().ajax.reload();
+
+
                     setTimeout(function() {
                         $('#myModal1').modal('hide');
+                        $('#employee-table').DataTable().ajax.reload();
+                        toastr.success('Data submitted successfully.', 'Success', {
+                            positionClass: 'toast-top-left',
+                        });
                     }, 500);
 
                     clearForm();
@@ -272,11 +286,13 @@
             $('#fname-error').html('');
             $('#lname-error').html('');
             $('#companyname').html('');
-            clearForm();
+            $('#employee-form')[0].reset();
+
         }
 
-        $('#footer').click(clear);
-        $('#close').click(clear);
+
+        // $('#footer').click(clear);
+        // $('#close').click(clear);
 
 
 
@@ -325,9 +341,9 @@
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
-            "drawCallback": function(settings) {
-                $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'Search').css('margin-right', '34px');
-            }
+            // "drawCallback": function(settings) {
+            //     $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'Search').css('margin-right', '34px');
+            // },
 
 
         });
@@ -432,6 +448,9 @@
             success: function(response) {
                 $('#employee-table').DataTable().ajax.reload();
                 setTimeout(function() {
+                    toastr.success('Data Updated successfully.', 'Success', {
+                        positionClass: 'toast-top-left',
+                    });
                     $('#edit-employee-modal').modal('hide');
                 }, 500);
             },

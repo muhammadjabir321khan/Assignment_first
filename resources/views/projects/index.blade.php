@@ -10,7 +10,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="head"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <form id="companyForm1" class="mx-5">
+                <form id="companyForm1">
                     <div class="row g-4">
                         <div class="col-lg-12">
                             <div class="form-group">
@@ -28,7 +28,6 @@
                                     <input type="text" class="form-control" id="detail" placeholder="Project detail" name="detail">
                                 </div>
                                 <div id="pdetail"></div>
-
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -38,9 +37,8 @@
                                 <div class="form-control-wrap">
                                     <input type="text" class="form-control" id="totalCost" placeholder="Total Cost" name="totalCost">
                                 </div>
+                                <div id="ptotalCost" class="text-danger"></div>
                             </div>
-                            <div id="ptotalCost" class="text-danger"></div>
-
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
@@ -48,25 +46,29 @@
                                 <div class="form-control-wrap">
                                     <input type="date" class="form-control" id="deadline" placeholder="deadline" name="deadline">
                                 </div>
+                                <div id="pdeadline" class="text-danger"></div>
                             </div>
-                            <div id="pdeadline" class="text-danger"></div>
                         </div>
-                        <div class="select-wrapper col-md-12">
-                            <label for="company">Employee:</label>
-                            <select name="employee_id" id="employee_id">
-                                <option value="">Select a employee</option>
-                                @foreach ($employies as $employee)
-                                <option value="{{ $employee->id }}">{{ $employee->fname }}</option>
-                                @endforeach
-                            </select>
-                            <div id="empid" class="text-danger"></div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="form-label" for="employee_id">Employee:</label>
+                                <div class="form-control-wrap">
+                                    <select name="employee_id" id="employee_id" class="form-control">
+                                        <option value="">Select an employee</option>
+                                        @foreach ($employies as $employee)
+                                        <option value="{{ $employee->id }}">{{ $employee->fname }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div id="empid" class="text-danger"></div>
+                            </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary my-3">save</button>
+                    <button type="submit" class="btn btn-primary my-3">Save</button>
                 </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" id="foot">Close</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="foot">Close</button>
             </div>
         </div>
     </div>
@@ -75,19 +77,28 @@
 
 
 
+<style>
+    .project-modal .modal-dialog {
+        max-width: 500px;
+        /* Set your desired width here */
+    }
+</style>
+
+
+
 
 <a href="#" class="btn btn-primary my-2 " data-toggle="modal" data-target="#myModal2">create project</a>
 <div id="edit-company-modal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Edit Project</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="updatehead"><span aria-hidden="true">&times;</span></button>
             </div>
-            <div class="container my-3 mx-5">
-                <form id="companyForm">
-                    <div class="row g-gs">
-                        <div class="col-md-10">
+            <div class="modal-body">
+                <form id="companyForm" class="company-form">
+                    <div class="row g-4">
+                        <div class="col-lg-12">
                             <div id="name-error" class="text-danger"></div>
                             <div class="form-group">
                                 <label class="form-label" for="name">Name:</label>
@@ -100,73 +111,55 @@
                                 <div id="fname-error"></div>
                             </div>
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-lg-12">
                             <div id="email-error" class="text-danger"></div>
                             <div class="form-group">
-                                <label class="form-label" for="detail">Detaill:</label>
+                                <label class="form-label" for="detail">Detail:</label>
                                 <div class="form-control-wrap">
                                     <input type="text" class="form-control" id="fdetail" placeholder="Project detail" name="detail" value="">
                                 </div>
                                 <div id="fdetail-error"></div>
-
                             </div>
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-lg-12">
                             <div id="logo-error" class="text-danger"></div>
                             <div class="form-group">
                                 <label class="form-label" for="totalCost">Total Cost:</label>
                                 <div class="form-control-wrap">
                                     <input type="text" class="form-control" id="ftotalCost" placeholder="Total Cost" name="totalCost" value="">
                                 </div>
-                                <div id="ucast">
-
-                                </div>
+                                <div id="ucast" class="text-danger"></div>
                             </div>
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-lg-12">
                             <div id="logo-error" class="text-danger"></div>
                             <div class="form-group">
                                 <label class="form-label" for="deadline">Deadline:</label>
                                 <div class="form-control-wrap">
                                     <input type="date" class="form-control" id="fdeadline" placeholder="deadline" name="deadline" value="">
                                 </div>
-                            </div>
-                            <div id="udeadline">
-
+                                <div id="udeadline" class="text-danger"></div>
                             </div>
                         </div>
-                        <div class="select-wrapper col-md-10">
-                            <label for="company">Company:</label>
-                            <select name="employee_id" id="employeeid">
-
-                            </select>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="form-label" for="employee_id">Employee:</label>
+                                <div class="form-control-wrap">
+                                    <select name="employee_id" id="employeeid" class="form-control">
+                                        <!-- Add your options dynamically -->
+                                    </select>
+                                </div>
+                                <div id="empid" class="text-danger"></div>
+                            </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-primary my-3 save">save</button>
+                    <button type="button" class="btn btn-primary my-3 save">Save</button>
                 </form>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" id="ufoot">Close</button>
-                </div>
-                <style>
-                    .select-wrapper select {
-                        font-size: 16px;
-                        padding: 10px;
-                        border-radius: 5px;
-                        border: 1px solid #ccc;
-                        width: 100%;
-                        max-width: 400px;
-                    }
-
-                    .select-wrapper label {
-                        display: block;
-                        margin-bottom: 10px;
-                        font-weight: bold;
-                    }
-                </style>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="ufoot">Close</button>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -497,6 +490,14 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(response) {
+                $('#edit-company-modal').modal('hide');
+                $('#project').DataTable().ajax.reload();
+
+                setTimeout(function() {
+                    toastr.success('Data submitted successfully.', 'Success', {
+                        positionClass: 'toast-top-left',
+                    });
+                }, 500);
 
 
             },

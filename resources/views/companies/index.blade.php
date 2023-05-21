@@ -92,53 +92,50 @@
 </style>
 <a href=" {{route('companies.create')}}" data-toggle="modal" data-target="#myModal" class="btn btn-primary mb-2 mx-1">Create Company</a>
 <div id="edit-company-modal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Edit Company</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="updateclose"><span aria-hidden="true">&times;</span></button>
             </div>
-            <div class="container my-2">
+            <div class="modal-body">
                 <form id="companyForm">
                     <div class="row g-4">
                         <input type="hidden" name="id" id="id" class="form-control" value="">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label class="form-label" for="full-name-1"> Name</label>
+                                <label class="form-label" for="name">Name</label>
                                 <div class="form-control-wrap">
                                     <input type="text" class="form-control" id="name" name="name" value="">
                                 </div>
                             </div>
                             <div id="upname"></div>
                         </div>
-                        <div class=" col-lg-12">
+                        <div class="col-lg-12">
                             <div class="form-group">
-                                <label class="form-label" for="email-address-1">Email address</label>
+                                <label class="form-label" for="email">Email address</label>
                                 <div class="form-control-wrap">
                                     <input type="text" class="form-control" id="email" name="email" value="">
                                 </div>
                                 <div id="update"></div>
                             </div>
-
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label class="form-label" for="phone-no-1">Image</label>
+                                <label class="form-label" for="image">Image</label>
                                 <div class="form-control-wrap">
-                                    <input type="file" class="form-control" id="phone-no-1" name="image" style=" padding-bottom: 34px;">
+                                    <input type="file" class="form-control" id="image" name="image" style="padding-bottom: 34px;">
                                     <img id="company-image" src="" alt="Company Image" width="70" class="my-3">
                                 </div>
                             </div>
-
                             <div id="upimage"></div>
                         </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <button type="button" class="btn btn-lg btn-primary mb-1 save" style="height: 37px;">Update Informations</button>
+                                <button type="button" class="btn btn-primary save">Update Information</button>
                             </div>
                         </div>
                     </div>
-
                 </form>
             </div>
             <div class="modal-footer">
@@ -149,14 +146,16 @@
 </div>
 
 
+
+
 <div class="nk-block nk-block-lg">
     <div class="card card-preview">
         <div class="card-inner">
             <table id="company" class="datatable-init nowrap table" style="width: 100%;">
                 <thead>
-                    <tr>
+                    <tr style="justify-content: center;">
                         <th>ID</th>
-                        <th>NAME</th>
+                        <th>Name</th>
                         <th>Email</th>
                         <th>image</th>
                         <th>Actions</th>
@@ -172,7 +171,7 @@
     </div><!-- .card-preview -->
 </div>
 <!-- nk-block -->
-<style>
+<!-- <style>
     .form-group {
         margin-bottom: 20px;
     }
@@ -201,10 +200,10 @@
         max-width: 70px;
     }
 
-    .myCustomButtonContainer {
+    /* .myCustomButtonContainer {
         justify-content: flex-end;
         margin-top: 10px;
-    }
+    } */
 
     .myCustomButtonContainer button {
         background-color: #007bff;
@@ -220,10 +219,10 @@
     }
 
     /* Optional: adjust the column width for the button container */
-    .dataTables_wrapper .col-md-6:last-child {
+    /* .dataTables_wrapper .col-md-6:last-child {
         width: auto;
         flex: 0 0 auto;
-    }
+    } */
 
     /* Custom responsive styles for DataTables */
     @media (max-width: 767px) {
@@ -233,7 +232,7 @@
             text-align: center;
         }
     }
-</style>
+</style> -->
 @endsection
 @section('scripts')
 
@@ -293,6 +292,7 @@
         // Submit form
         $('#companyForm').on('submit', function(e) {
             e.preventDefault();
+
             var formData = new FormData(this);
             $.ajax({
                 url: "{{url('companies')}}",
@@ -341,18 +341,20 @@
                     } else {
                         $('#cimage').html('');
                     }
+
                 }
+
             });
+            $('#myModal').on('hidden.bs.modal', function() {
+                $('#cname').html('');
+                $('#cemail').html('');
+                $('#cimage').html('');
+                clearForm();
+            });
+
         });
 
-        function Errors() {
-            $('#cname').html('');
-            $('#cemail').html('');
-            $('#cimage').html('');
-            clearForm();
-        }
-        $('#head').click(Errors);
-        $('#foot').click(Errors);
+
 
 
 
@@ -487,6 +489,7 @@
 
     });
     $(document).on('click', '.save', function() {
+
         var form = $(this).closest('form');
         var formData = new FormData(form[0]);
         formData.append('_method', 'PUT');
@@ -500,7 +503,17 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(response) {
-                $('#edit-company-modal').modal('hide');
+
+                clearUpdateErrors()
+                $('#company').DataTable().ajax.reload();
+                setTimeout(function() {
+                    $('#edit-company-modal').modal('hide');
+                    toastr.options = {
+                        // positionClass: 'toast-top-left'
+                    };
+                    toastr.success('Data updated successfully.', 'Success');
+                }, 500);
+
             },
             error: function(response) {
                 if (response.responseJSON.errors && response.responseJSON.errors.email) {
@@ -520,17 +533,29 @@
             }
         });
 
+        $('#myModal').on('hidden.bs.modal', function() {
+            clearUpdateErrors()
+        });
 
         function clearUpdateErrors() {
             $('#upname').html('');
             $('#update').html('');
             $('#upimage').html('');
         }
-        $('#updatemodal').click(clearUpdateErrors);
-        $('#updateclose').click(clearUpdateErrors);
 
 
 
+
+    });
+    $(document).on('change', '#phone-no-1', function() {
+        var input = $(this)[0];
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#company-image').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
     });
 </script>
 @endsection

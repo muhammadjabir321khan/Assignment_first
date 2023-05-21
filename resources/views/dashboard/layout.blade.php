@@ -13,6 +13,8 @@
     <title>@yield('title')</title>
     <link href="{{ mix('css/theme.css') }}" rel="stylesheet">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
     @yield('style')
 
     <head>
@@ -51,6 +53,7 @@
     </div>
     <script src="{{ mix('js/app.js') }}"></script>
     <script src="{{ mix('js/theme.js') }}"></script>
+
     @yield('scripts')
 
 
