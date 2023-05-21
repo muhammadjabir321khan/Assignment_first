@@ -87,7 +87,7 @@
 
 
 
-<a href="#" class="btn btn-primary my-2 " data-toggle="modal" data-target="#myModal2">create project</a>
+<a href="#" class="btn btn-primary my-2 " data-toggle="modal" data-target="#myModal2">Create Project</a>
 <div id="edit-company-modal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -327,9 +327,6 @@
 
         });
         $('#project').DataTable({
-
-
-
             "responsive": true,
             "processing": false,
             "serverSide": true,

@@ -153,7 +153,7 @@
         <div class="card-inner">
             <table id="company" class="datatable-init nowrap table" style="width: 100%;">
                 <thead>
-                    <tr style="justify-content: center;">
+                    <tr>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
@@ -354,11 +354,6 @@
 
         });
 
-
-
-
-
-
         $('#company').DataTable({
             "responsive": true,
             "processing": false,
@@ -402,13 +397,6 @@
                 $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'Search').css('margin-right', '34px');
             }
         });
-
-
-
-
-
-
-        // $('#company thead th:last-child').append('<button id="myButton">Click Me</button>');
 
 
     });

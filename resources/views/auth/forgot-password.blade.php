@@ -15,7 +15,7 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" style="margin-top: 10px" />
         </div>
 
-        <div class="flex items-center justify-end mt-5" style="padding: 10px 10px 10px 10px;">
+        <div class="flex items-center justify-end mt-5" style="padding: -6px -5px 10px 10px;">
             <x-primary-button style="background-color: #059669; border-color: #059669; color: #fff; display: inline-flex; justify-content: center; align-items: center; padding: 0.75rem 1.5rem; font-size: 0.875rem; font-weight: 600; text-transform: none; border-radius: 0.25rem; border-width: 1px; cursor: pointer; margin-top: 100px;">
                 {{ __('Email Password Reset Link') }}
             </x-primary-button>

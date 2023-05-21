@@ -51,7 +51,7 @@ class CompanyRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'image.mimes' => 'Invalid file format.',
+            'image.mimes' => 'Invalid file format',
             'image.dimensions' => 'Invalid image dimensions. Minimum width and height required: 100px.',
         ];
     }

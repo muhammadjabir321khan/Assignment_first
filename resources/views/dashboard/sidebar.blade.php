@@ -50,9 +50,9 @@
                             <li class="nk-menu-item">
                                 <a href="{{route('employees.index')}}" class="nk-menu-link"><span class="nk-menu-text ">Employee List</span></a>
                             </li>
-                            <li class="nk-menu-item">
+                            <!-- <li class="nk-menu-item">
                                 <a href="{{url('filter')}}" class="nk-menu-link"><span class="nk-menu-text "> Filter Employee</span></a>
-                            </li>
+                            </li> -->
                             @endcan
                             @can('create-employee')
                             <li class="nk-menu-item">
