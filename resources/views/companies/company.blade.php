@@ -88,6 +88,8 @@
                         companyHtml += '</tr>';
                     });
                     $('#employeeList').html(companyHtml);
+                    var tableHeader = '<tr><th>ID</th><th>Name</th><th>Email</th></tr>';
+                    $('#tableHeader').html(tableHeader);
                 }
             });
         }
@@ -97,6 +99,8 @@
                 var value = $(this).val();
                 if (value.length > 3) {
                     fetchData(value);
+                    var tableHeader = '<tr><th>ID</th><th>Name</th><th>Email</th></tr>';
+                    $('#tableHeader').html(tableHeader);
                 }
             },
             keydown: function() {
