@@ -152,7 +152,8 @@
 
 <div class="card card-preview">
     <div class="card-inner">
-        <table id="employee-table" class="datatable-init nowrap table">
+        <table id="employee-table" class="datatable-init nowrap table" style="width: 100%;">
+
             <thead>
                 <tr>
                     <th>ID</th>
@@ -318,7 +319,16 @@
                 }
 
 
-            ]
+            ],
+            "dom": '<"row d-flex justify-content-between align-items-center"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 text-right"f>><"row"<"col-sm-12"t>><"row d-flex justify-content-between align-items-center"<"col-sm-12 col-md-9"i><"col-sm-12 col-md-3"p>>',
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            "drawCallback": function(settings) {
+                $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'Search').css('margin-right', '34px');
+            }
+
 
         });
 
