@@ -64,7 +64,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary my-3">Save</button>
+                    <button type="submit" class="btn btn-primary my-3">update</button>
                 </form>
             </div>
             <div class="modal-footer">
