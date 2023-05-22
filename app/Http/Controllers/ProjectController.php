@@ -17,7 +17,7 @@ class ProjectController extends Controller
     {
         $employies = Employee::all();
         if ($request->ajax()) {
-            $employees = Project::with('employee')->get();
+            $employees = Project::with('employee')->orderBy('id', 'desc');
             return Datatables::of($employees)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -92,12 +92,24 @@ class ProjectController extends Controller
      */
     public function update(ProjectRequest $request, Project $project)
     {
-        $project->update($request->all());
-        $project->employee()->sync([$request->employee_id]);
+        $data = $request->all();
+        // dd($data);
+        $project->update($data);
+
+        // dd($employeeId);
+        if ($request->employee_id == null) {
+            $project->employee()->detach();
+        } else {
+            // dd('clcik');
+            $project->employee()->sync([$request->employee_id]);
+        }
+
         return response([
             'status' => 'data is updated'
         ]);
     }
+
+
 
     /**
      * Remove the specified resource from storage.

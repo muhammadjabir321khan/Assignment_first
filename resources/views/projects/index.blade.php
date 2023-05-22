@@ -64,7 +64,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary my-3">update</button>
+                    <button type="submit" class="btn btn-primary my-3">Update</button>
                 </form>
             </div>
             <div class="modal-footer">
@@ -145,7 +145,9 @@
                             <div class="form-group">
                                 <label class="form-label" for="employee_id">Employee:</label>
                                 <div class="form-control-wrap">
+
                                     <select name="employee_id" id="employeeid" class="form-control">
+                                        <option value="">Empty</option>
                                     </select>
                                 </div>
                                 <div id="empid" class="text-danger"></div>
@@ -320,9 +322,9 @@
                 $('#companyForm1')[0].reset(); // Reset the form fields
             }
 
-
-            $('#foot').click(clear);
-            $('#head').click(clear);
+            $('#myModal2').on('hidden.bs.modal', function() {
+                clear();
+            });
 
 
         });
@@ -436,30 +438,32 @@
         });
     });
 
-    $(document).on('click', '.edit', function() {
+    $(document).off('click', '.edit').on('click', '.edit', function() {
         var id = $(this).data('id');
         $.ajax({
             url: '{{ url("projects","")}}' + '/' + id + '/edit',
-            method: 'Get',
+            method: 'GET',
             success: function(response) {
                 console.log(response.employee);
                 $('#edit-company-modal').modal('show');
                 $('#id').val(response.project.id);
-                $('#fname').val(response.project.name)
-                $('#fdetail').val(response.project.detail)
-                $('#ftotalCost').val(response.project.totalCost)
-                $('#fdeadline').val(response.project.deadline)
+                $('#fname').val(response.project.name);
+                $('#fdetail').val(response.project.detail);
+                $('#ftotalCost').val(response.project.totalCost);
+                $('#fdeadline').val(response.project.deadline);
                 var employeeSelect = $('#employeeid');
-                response.employee
-                    .forEach(function(employee) {
+
+                response.employee.forEach(function(employee) {
+                    var optionExists = employeeSelect.find('option[value="' + employee.id + '"]').length > 0;
+                    if (!optionExists) {
                         var option = $('<option>').attr('value', employee.id).text(employee.fname);
                         employeeSelect.append(option);
-                    });
-
+                    }
+                });
             }
-
         });
     });
+
 
     function updateFiled() {
         $('#fname-error').html('');
@@ -475,6 +479,9 @@
     $(document).on('click', '.save', function() {
         var form = $(this).closest('form');
         var formData = new FormData(form[0]);
+        if ($('#employeeid option:selected').length === 0) {
+            formData.append('employee_id', ''); // Append an empty value for employee_id
+        }
         formData.append('_method', 'PUT');
         $.ajax({
             url: '{{ route("projects.update", ["project" => ":id"]) }}'.replace(':id', $('#id').val()),
@@ -485,6 +492,7 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
+
             success: function(response) {
                 $('#edit-company-modal').modal('hide');
                 $('#project').DataTable().ajax.reload();

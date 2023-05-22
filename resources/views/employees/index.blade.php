@@ -2,73 +2,72 @@
 @section('content')
 
 
-<div class="nk-block nk-block-lg ">
-    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Add Employee</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <form id="employee-form">
-                        <div>
-                            <div class="col-md-10">
+<!-- <div class="nk-block nk-block-lg "> -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Add Employee</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="employee-form">
+                    <div class="row g-4">
 
-                                <div class="form-group">
-                                    <label class="form-label" for="fname"> First Name</label>
-                                    <div class="form-control-wrap">
-                                        <input type="text" class="form-control" id="fname" placeholder="First Name" name="fname">
-                                    </div>
-                                    <div id="fname-error" class="text-danger"></div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="form-label" for="fname"> First Name</label>
+                                <div class="form-control-wrap">
+                                    <input type="text" class="form-control" id="fname" placeholder="First Name" name="fname">
                                 </div>
+                                <div id="fname-error" class="text-danger"></div>
                             </div>
                         </div>
-                        <div>
-                            <div class="col-md-10">
-                                <div class="form-group">
-                                    <label class="form-label" for="fname"> Last Name</label>
-                                    <div class="form-control-wrap">
-                                        <input type="text" class="form-control" id="lname" placeholder="last Name" name="lname">
-                                    </div>
-                                    <div id="lname-error" class="text-danger"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="col-md-10">
-                                <div class="form-group">
-                                    <label class="form-label" for="company_id">Company:</label>
-                                    <div class="form-control-wrap">
-                                        <select class="form-control" name="company_id" id="company_id">
-                                            <option value="">Select Company</option>
-                                            @foreach ($companies as $company)
-                                            <option value="{{ $company->id }}">{{ $company->name }}</option>
-                                            @endforeach
 
-                                            <!-- Add more options as needed -->
-                                        </select>
-                                    </div>
-                                    <div id="companyname" class="text-danger"></div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="form-label" for="fname"> Last Name</label>
+                                <div class="form-control-wrap">
+                                    <input type="text" class="form-control" id="lname" placeholder="last Name" name="lname">
                                 </div>
+                                <div id="lname-error" class="text-danger"></div>
                             </div>
                         </div>
+
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="form-label" for="company_id">Company:</label>
+                                <div class="form-control-wrap">
+                                    <select class="form-control" name="company_id" id="company_id">
+                                        <option value="">Select Company</option>
+                                        @foreach ($companies as $company)
+                                        <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                        @endforeach
+
+                                        <!-- Add more options as needed -->
+                                    </select>
+                                </div>
+                                <div id="companyname" class="text-danger"></div>
+                            </div>
+                        </div>
+
                         <button type="submit" class="btn btn-primary my-3" style="margin-left: 13px;">Save</button>
-                    </form>
-                    <div id="modal1-loader" style="display: none;">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
                     </div>
-                    <div id="modal1-content"></div>
+                </form>
+                <div id="modal1-loader" style="display: none;">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" id="footer">Close</button>
-                </div>
+                <div id="modal1-content"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="footer">Close</button>
             </div>
         </div>
     </div>
 </div>
+<!-- </div> -->
 <!-- <style>
     .select-wrapper select {
         font-size: 16px;
@@ -96,8 +95,8 @@
             </div>
             <div class="modal-body">
                 <form id="employee-form">
-                    <div>
-                        <div class="col-md-10">
+                    <div class="row g-4">
+                        <div class="col-lg-12">
                             <input type="hidden" name="id" id="id">
                             <div class="form-group">
                                 <label class="form-label" for="fname"> First Name</label>
@@ -107,9 +106,8 @@
                                 <div id="fname-error" class="text-danger"></div>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <div class="col-md-10">
+
+                        <div class="col-lg-12">
                             <div class="form-group">
                                 <label class="form-label" for="fname"> Last Name</label>
                                 <div class="form-control-wrap">
@@ -118,22 +116,22 @@
                                 <div id="lname-error" class="text-danger"></div>
                             </div>
                         </div>
-                    </div>
 
-                    <div>
-                        <div class="col-md-10">
+                        <div class="col-lg-12">
                             <div class="form-group">
-                                <label class="form-label" for="company_id">Employee:</label>
+                                <label class="form-label" for="company_id">Company:</label>
                                 <div class="form-control-wrap">
                                     <select class="form-control" name="company_id" id="companyid">
+
+
 
                                     </select>
                                 </div>
                                 <div id="companyname" class="text-danger"></div>
                             </div>
                         </div>
+                        <button type="button" class="btn btn-primary my-3 save" style="margin-left: 10px;">Update</button>
                     </div>
-                    <button type="button" class="btn btn-primary my-3 save" style="margin-left: 10px;">Update</button>
                 </form>
 
             </div>

@@ -308,12 +308,11 @@
                     clearForm();
 
                     $('#myModal').modal('hide');
-
-                    $('#company').DataTable().ajax.reload();
                     setTimeout(function() {
                         toastr.success('Data submitted successfully.', 'Success', {
                             positionClass: 'toast-top-left',
                         });
+                        $('#company').DataTable().ajax.reload();
                     }, 500);
                 },
                 error: function(response) {
@@ -384,8 +383,7 @@
                 {
                     "data": "action",
                     "orderable": false,
-                    "searchable": false,
-                    "button": false
+                    "searchable": false
                 }
             ],
             "dom": '<"row d-flex justify-content-between align-items-center"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 text-right"f>><"row"<"col-sm-12"t>><"row d-flex justify-content-between align-items-center"<"col-sm-12 col-md-9"i><"col-sm-12 col-md-3"p>>',
@@ -535,7 +533,7 @@
 
 
     });
-    $(document).on('change', '#phone-no-1', function() {
+    $(document).on('change', '#image', function() {
         var input = $(this)[0];
         if (input.files && input.files[0]) {
             var reader = new FileReader();
