@@ -14,11 +14,17 @@ class ProjectEmployeeSeeder extends Seeder
      */
     public function run(): void
     {
+
+
+
         $employees = Employee::all();
         $projects = Project::all();
-        foreach ($projects as $project) {
-            foreach ($employees as $employee) {
+        $usedEmployees = collect();
+        foreach ($employees as $employee) {
+            $randomProjects = $projects->except($usedEmployees->pluck('id')->toArray())->random(2);
+            foreach ($randomProjects as $project) {
                 $project->employee()->attach($employee->id);
+                $usedEmployees->push($employee->id);
             }
         }
     }

@@ -172,14 +172,14 @@
             <table id="project" class="datatable-init nowrap table" style="width: 100%;">
 
                 <thead>
-                    <tr>
+                    <tr style="justify-content: center;">
                         <th>ID</th>
                         <th>Name</th>
                         <th>Detail</th>
                         <th>totalCast</th>
                         <th>deadLine</th>
-                        <th>Employee</th>
-                        <th>Actions</th>
+                        <th class="d-none d-sm-table-cell">Employee</th>
+                        <th class="d-none d-sm-table-cell">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -239,7 +239,7 @@
             var fieldValue = field.val().trim();
 
             if (fieldValue === '') {
-                error.html('<span class="text-danger">' + errorMessage + '</span>');
+                error.html('<span class=" text-danger">' + errorMessage + '</span>');
             } else {
                 error.html('');
             }
@@ -333,7 +333,7 @@
             "processing": false,
             "serverSide": true,
             "ajax": {
-                "url": "{{route('projects.index')}}",
+                "url": "{{ route('projects.index') }}",
                 "method": "GET",
                 "dataType": "json",
                 headers: {
@@ -356,28 +356,26 @@
                     "data": "deadline"
                 },
                 {
-                    "data": "employee"
+                    "data": "employee",
+                    "className": "d-none d-sm-table-cell"
                 },
-
                 {
                     "data": "action",
                     "orderable": false,
-                    "searchable": false
-                },
-
-
-
+                    "searchable": false,
+                    "className": "d-none d-sm-table-cell"
+                }
             ],
             "dom": '<"row d-flex justify-content-between align-items-center"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 text-right"f>><"row"<"col-sm-12"t>><"row d-flex justify-content-between align-items-center"<"col-sm-12 col-md-9"i><"col-sm-12 col-md-3"p>>',
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
+            "scrollX": true, // Enable horizontal scrolling
             "drawCallback": function(settings) {
                 $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'Search');
                 $('.pagination').css('padding-left', '41px');
             }
-
         });
 
         $(document).on('click', '.delete-project', function() {

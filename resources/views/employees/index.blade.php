@@ -157,26 +157,24 @@
 <a href="{{ route('employees.create') }}" data-toggle="modal" data-target="#myModal1" class="btn btn-primary my-3">Create Employee</a>
 <div class="card card-preview">
     <div class="card-inner">
+        <!-- <div class="table-responsive"> -->
         <table id="employee-table" class="datatable-init nowrap table" style="width: 100%;">
-
             <thead>
                 <tr style="justify-content: center;">
                     <th>ID</th>
                     <th>FirstName</th>
                     <th>lastName</th>
                     <th>Company</th>
-                    <th>Project</th>
-                    <th>Actions</th>
+                    <th class="d-none d-sm-table-cell">Project</th>
+                    <th class="d-none d-sm-table-cell">Actions</th>
                 </tr>
             </thead>
-
             <tbody>
             </tbody>
         </table>
+        <!-- </div> -->
     </div>
 </div>
-
-
 
 
 
@@ -304,7 +302,7 @@
             "serverSide": true,
             "responsive": true,
             "ajax": {
-                "url": "{{route('employees.index') }}",
+                "url": "{{ route('employees.index') }}",
                 "method": "GET",
                 "dataType": "json",
                 headers: {
@@ -322,33 +320,29 @@
                 },
                 {
                     "data": "company"
+
                 },
                 {
-                    "data": "projects"
+                    "data": "projects",
+                    "className": "d-none d-sm-table-cell"
                 },
-
                 {
-
                     "data": "action",
                     "orderable": false,
                     "searchable": false,
-
+                    "className": "d-none d-sm-table-cell"
                 }
-
-
             ],
-            "dom": '<"row d-flex justify-content-between align-items-center"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 text-right"f>><"row"<"col-sm-12"t>><"row d-flex justify-content-between align-items-center"<"col-sm-12 col-md-9"i><"col-sm-12 col-md-3"p>>',
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
-            "drawCallback": function(settings) {
-                $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'Search');
-                $('.pagination').css('padding-left', '41px');
-            }
-
-
+            // "lengthMenu": [
+            //     [10, 25, 50, -1],
+            //     [10, 25, 50, "All"]
+            // ],
+            // "drawCallback": function(settings) {
+            //     $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'Search');
+            //     $('.pagination').css('padding-left', '41px');
+            // }
         });
+
 
         $(document).on('click', '.delete-record', function() {
             var table = $(this).data('table');
