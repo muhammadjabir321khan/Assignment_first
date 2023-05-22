@@ -374,10 +374,8 @@
                 [10, 25, 50, "All"]
             ],
             "drawCallback": function(settings) {
-                $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'Search').css('margin-right', '34px');
-                // $('.dataTable').addClass('form-control').attr('placeholder', 'Search').css('width', '0px');
-
-
+                $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'Search');
+                $('.pagination').css('padding-left', '41px');
             }
 
         });

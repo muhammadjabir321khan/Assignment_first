@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Employee;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
         $adminRole = Role::create(['name' => 'admin']);
         $userRole = Role::create(['name' => 'subAdmin']);
         $editCompanyPermission = Permission::create(['name' => 'edit companies']);
@@ -37,5 +36,12 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => Hash::make('password')
         ])->assignRole('admin');
+
+        $this->call([
+            CompanySeeder::class,
+            EmployeeSeeder::class,
+            ProjectSeeder::class,
+            ProjectEmployeeSeeder::class
+        ]);
     }
 }

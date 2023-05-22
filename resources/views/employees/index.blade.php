@@ -162,10 +162,10 @@
             <thead>
                 <tr style="justify-content: center;">
                     <th>ID</th>
-                    <th>FName</th>
-                    <th>lname</th>
-                    <th>company</th>
-                    <th>project</th>
+                    <th>FirstName</th>
+                    <th>lastName</th>
+                    <th>Company</th>
+                    <th>Project</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -332,7 +332,7 @@
                     "data": "action",
                     "orderable": false,
                     "searchable": false,
-                    "className": "action-column"
+
                 }
 
 
@@ -342,9 +342,10 @@
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
-            // "drawCallback": function(settings) {
-            //     $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'Search').css('margin-right', '34px');
-            // },
+            "drawCallback": function(settings) {
+                $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'Search');
+                $('.pagination').css('padding-left', '41px');
+            }
 
 
         });

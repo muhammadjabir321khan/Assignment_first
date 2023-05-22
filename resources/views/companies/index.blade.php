@@ -59,28 +59,6 @@
 
 
 <style>
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    .form-label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
-
-    .form-control-wrap {
-        position: relative;
-    }
-
-    .form-control {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 14px;
-    }
-
     #company-image {
         display: block;
         margin-top: 10px;
@@ -90,7 +68,7 @@
         padding: 5px;
     }
 </style>
-<a href=" {{route('companies.create')}}" data-toggle="modal" data-target="#myModal" class="btn btn-primary mb-2 mx-1">Create Company</a>
+<a href="#" data-toggle="modal" data-target="#myModal" class="btn btn-primary mb-2 mx-1">Create Company</a>
 <div id="edit-company-modal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -151,91 +129,35 @@
 <div class="nk-block nk-block-lg">
     <div class="card card-preview">
         <div class="card-inner">
-            <table id="company" class="datatable-init nowrap table" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>image</th>
-                        <th>Actions</th>
+            <div class="responsive">
+                <table id="company" class="datatable-init nowrap table" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>image</th>
+                            <th>Actions</th>
 
-                    </tr>
-                </thead>
-                <tbody>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                </tbody>
+                    </tbody>
 
-            </table>
+                </table>
+            </div>
         </div>
     </div><!-- .card-preview -->
 </div>
-<!-- nk-block -->
-<!-- <style>
-    .form-group {
-        margin-bottom: 20px;
+<style>
+    .modal-dialog {
+        max-width: 500px;
+        /* Set your desired width here */
     }
-
-    .form-label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
-
-    .form-control-wrap {
-        position: relative;
-    }
-
-    .form-control {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 14px;
-    }
-
-    #company-image {
-        display: block;
-        margin-top: 10px;
-        max-width: 70px;
-    }
-
-    /* .myCustomButtonContainer {
-        justify-content: flex-end;
-        margin-top: 10px;
-    } */
-
-    .myCustomButtonContainer button {
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        padding: 5px 10px;
-        cursor: pointer;
-
-    }
-
-    .myCustomButtonContainer button:hover {
-        background-color: #0056b3;
-    }
-
-    /* Optional: adjust the column width for the button container */
-    /* .dataTables_wrapper .col-md-6:last-child {
-        width: auto;
-        flex: 0 0 auto;
-    } */
-
-    /* Custom responsive styles for DataTables */
-    @media (max-width: 767px) {
-
-        .dataTables_wrapper .dataTables_length,
-        .dataTables_wrapper .dataTables_filter {
-            text-align: center;
-        }
-    }
-</style> -->
+</style>
 @endsection
 @section('scripts')
-
 <script>
     $(document).ready(function() {
 
@@ -313,7 +235,7 @@
                             positionClass: 'toast-top-left',
                         });
                         $('#company').DataTable().ajax.reload();
-                    }, 500);
+                    }, 300);
                 },
                 error: function(response) {
 
@@ -357,6 +279,7 @@
             "responsive": true,
             "processing": false,
             "serverSide": true,
+            "stateSave": true,
             "ajax": {
                 "url": "{{ route('companies.index') }}",
                 "method": "GET",
@@ -392,8 +315,10 @@
                 [10, 25, 50, "All"]
             ],
             "drawCallback": function(settings) {
-                $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'Search').css('margin-right', '34px');
+                $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'Search');
+                $('.pagination').css('padding-left', '41px');
             }
+
         });
 
 
