@@ -37,6 +37,7 @@ class FilterController extends Controller
      */
     public function show($id)
     {
+
         $company = Company::findOrFail($id);
         $employees = $company->employee;
         return response()->json([
