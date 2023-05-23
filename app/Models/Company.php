@@ -20,5 +20,8 @@ class Company extends Model
         return  $this->hasMany(Employee::class);
     }
 
+
+
+
     use HasFactory;
 }

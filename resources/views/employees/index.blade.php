@@ -157,22 +157,22 @@
 <a href="{{ route('employees.create') }}" data-toggle="modal" data-target="#myModal1" class="btn btn-primary my-3">Create Employee</a>
 <div class="card card-preview">
     <div class="card-inner">
-        <!-- <div class="table-responsive"> -->
-        <table id="employee-table" class="datatable-init nowrap table" style="width: 100%;">
-            <thead>
-                <tr style="justify-content: center;">
-                    <th>ID</th>
-                    <th>FirstName</th>
-                    <th>lastName</th>
-                    <th>Company</th>
-                    <th class="d-none d-sm-table-cell">Project</th>
-                    <th class="d-none d-sm-table-cell">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-        <!-- </div> -->
+        <div class="table-responsive">
+            <table id="employee-table" class="datatable-init nowrap table" style="width: 100%;">
+                <thead>
+                    <tr style="justify-content: center;">
+                        <th>ID</th>
+                        <th>FirstName</th>
+                        <th>lastName</th>
+                        <th>Company</th>
+                        <th class="d-none d-sm-table-cell">Project</th>
+                        <th class="d-none d-sm-table-cell">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

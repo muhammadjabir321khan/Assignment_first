@@ -23,5 +23,6 @@ class Employee extends Model
     {
         return $this->belongsToMany(Project::class, 'employee_projects', 'employee_id', 'project_id');
     }
+
     use HasFactory;
 }
