@@ -32,8 +32,11 @@ class CompanyController extends Controller
                     </a>';
 
                     return $action;
+                })->addColumn('checkbox', function ($row) {
+                    $checkbox = '<input type="checkbox" name="company_checkbox" data-id="' . $row->id . '" class="data_id">';
+                    return $checkbox;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'checkbox'])
                 ->make(true);
         }
         return view('companies.index', compact('company'));
@@ -182,5 +185,16 @@ class CompanyController extends Controller
         $employies = Employee::count('id');
         $projects = Project::count('id');
         return view('dashboard', compact('companies', 'employies', 'projects'));
+    }
+
+
+    public function deleteAll(Request $request)
+    {
+        // dd($request->all());
+        $companies = Company::whereIn('id', $request->ids);
+        $companies->delete();
+        return response()->json([
+            'data' => 'data is deleted'
+        ]);
     }
 }

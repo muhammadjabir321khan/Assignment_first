@@ -133,12 +133,14 @@
                 <table id="company" class="datatable-init nowrap table" style="width: 100%;">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>
+                                <input type="checkbox" name="check_box" id="check" style="margin-left: 3px;">
+                                <label for="check"> checkbox</label>
+                            </th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>image</th>
-                            <th>Actions</th>
-
+                            <th>Actions <button class="btn btn-sm btn-danger d-none " id="deleteAllbtn">Delete All</button></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -158,6 +160,12 @@
 </style>
 @endsection
 @section('scripts')
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
+
 <script>
     $(document).ready(function() {
 
@@ -279,7 +287,6 @@
             "responsive": true,
             "processing": false,
             "serverSide": true,
-            "stateSave": true,
             "ajax": {
                 "url": "{{ route('companies.index') }}",
                 "method": "GET",
@@ -289,14 +296,21 @@
                 },
             },
             "columns": [{
-                    "data": "id"
+
+                    "data": "checkbox",
+                    "orderable": false,
+                    "searchable": false,
+
+
                 },
+
                 {
                     "data": "name"
                 },
                 {
                     "data": "email"
                 },
+
                 {
                     "data": "logo",
                     "render": function(data, type, row) {
@@ -306,7 +320,7 @@
                 {
                     "data": "action",
                     "orderable": false,
-                    "searchable": false
+                    "searchable": false,
                 }
             ],
             "dom": '<"row d-flex justify-content-between align-items-center"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 text-right"f>><"row"<"col-sm-12"t>><"row d-flex justify-content-between align-items-center"<"col-sm-12 col-md-9"i><"col-sm-12 col-md-3"p>>',
@@ -317,9 +331,104 @@
             "drawCallback": function(settings) {
                 $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'Search');
                 $('.pagination').css('padding-left', '41px');
-            }
+            },
 
         });
+
+        $(document).on('click', '#check', function() {
+            var isChecked = $(this).is(':checked');
+            if (isChecked) {
+                Btn()
+                $('input[name="company_checkbox"]').prop('checked', isChecked)
+                table.rows().invalidate().draw(false);
+            } else {
+                $('input[name="company_checkbox"]').prop('checked', false)
+                Btn()
+            }
+
+
+        });
+        $(document).on('change', 'input[name="company_checkbox"]', function() {
+            if ($('input[name="company_checkbox"]').length == $('input[name="company_checkbox"]:checked').length) {
+
+                $('input[name="check_box"]').prop('checked', true)
+
+            } else {
+                $('input[name="check_box"]').prop('checked', false)
+
+            }
+            Btn()
+
+        });
+
+        $(document).on('click', '#deleteAllbtn', function() {
+            var checkboxes = [];
+            var method = "POST";
+            $('input[name="company_checkbox"]:checked').each(function() {
+                checkboxes.push($(this).data('id'));
+            });
+            var url = "{{ route('delete-all') }}"
+            if (checkboxes.length > 0) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You will not be able to recover this data!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'No, cancel!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: url,
+                            type: method,
+                            data: {
+                                _token: $('meta[name="csrf-token"]').attr('content'),
+                                ids: checkboxes
+                            },
+                            success: function(data) {
+                                Swal.fire({
+                                    title: 'Deleted!',
+                                    text: data.success,
+                                    icon: 'success',
+                                    timer: 3000
+                                });
+                                $('#company').DataTable().ajax.reload();
+                            },
+                            error: function(xhr, status, error) {
+                                // Display error message using SweetAlert2
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'An error occurred while deleting the data.',
+                                    icon: 'error',
+                                    timer: 3000
+                                });
+                                console.log(xhr.responseText);
+                            }
+                        });
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        // User canceled deletion, show cancel message
+                        Swal.fire({
+                            title: 'Cancelled',
+                            text: 'Data deletion has been cancelled.',
+                            icon: 'info',
+                            timer: 3000
+                        });
+                    }
+                });
+
+
+            }
+
+
+        });
+
+
+
+
+
+
+
 
 
     });
@@ -389,6 +498,7 @@
                 $('#name').val(response.data.name)
                 $('#id').val(response.data.id)
                 $('#email').val(response.data.email)
+                $('#del').val(response.data.id)
                 $('#company-image').attr('src', "/storage/images/" + response.data.logo);
             },
             error: function(response) {
@@ -468,5 +578,13 @@
             reader.readAsDataURL(input.files[0]);
         }
     });
+
+    function Btn() {
+        if ($('input[name="company_checkbox"]:checked').length > 0 || $('input[name="check_box"]:checked').length > 0) {
+            $('#deleteAllbtn').removeClass('d-none');
+        } else {
+            $('#deleteAllbtn').addClass('d-none');
+        }
+    }
 </script>
 @endsection

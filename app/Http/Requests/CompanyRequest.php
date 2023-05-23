@@ -29,7 +29,7 @@ class CompanyRequest extends FormRequest
                     return [
                         'name' => 'required',
                         'email' => 'required|unique:companies,email|email',
-                        'image' => 'required|mimes:jpg,jpeg,png,bmp,tiff|dimensions:min_width=100,min_height=100',
+                        'image' => 'required|mimes:jpg,jpeg,png,bmp,tiff|image|dimensions:width=500,height=500',
                     ];
                 }
             case 'PUT':
