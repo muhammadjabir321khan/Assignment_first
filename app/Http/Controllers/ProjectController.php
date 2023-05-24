@@ -15,13 +15,14 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
+        $employies = Employee::all();
         if ($request->ajax()) {
-            $employees = Project::with('employee')->get();
+            $employees = Project::with('employee')->orderBy('id', 'desc');
             return Datatables::of($employees)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $action = '<a href="' . route('projects.edit', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
-                    $action .= '<a class="btn btn-danger  btn-sm mx-1 delete" data-table="companies-table" data-method="DELETE"
+                    $action = '<a href="javascript:void(0)"  class="btn btn-primary btn-sm  edit" data-id="' . $row->id . '">Edit</a>     ';
+                    $action .= '<a class="btn btn-danger btn-sm text-white delete-project" data-table="table" data-method="DELETE"
                     data-url="' . route('projects.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
                         Delete
                     </a>';
@@ -35,14 +36,13 @@ class ProjectController extends Controller
                 ->rawColumns(['action', 'employee'])
                 ->toJson();
         }
-        return view('projects.index');
+        return view('projects.index', compact('employies'));
     }
 
 
     public function create()
     {
-        $employies = Employee::all();
-        return view('projects.create', compact('employies'));
+        return abort(403);
     }
 
     /**
@@ -50,12 +50,18 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
-
-        $project = Project::create($request->all());
-        $project->employee()->attach($request->employee_id);
-        return response([
-            'project' => 'project is created succesfully'
-        ]);
+        try {
+            $project = Project::create($request->all());
+            $project->employee()->attach($request->employee_id);
+            return response([
+                'project' => 'project is created succesfully'
+            ], 200);
+        } catch (\Exception $e) {
+            return response([
+                'errors' => 'project is Not succesfully',
+                'errors' => $e->getMessage(),
+            ], 401);
+        }
     }
 
     /**
@@ -72,7 +78,13 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $employies  = Employee::all();
-        return view('projects.edit', compact('project', 'employies'));
+
+        return response()->json([
+            'employee' => $employies,
+            'project' => $project
+
+        ]);
+        // return view('projects.edit', compact('project', 'employies'));
     }
 
     /**
@@ -80,12 +92,24 @@ class ProjectController extends Controller
      */
     public function update(ProjectRequest $request, Project $project)
     {
-        $project->update($request->all());
-        $project->employee()->sync([$request->employee_id]);
+        $data = $request->all();
+        // dd($data);
+        $project->update($data);
+
+        // dd($employeeId);
+        if ($request->employee_id == null) {
+            $project->employee()->detach();
+        } else {
+            // dd('clcik');
+            $project->employee()->sync([$request->employee_id]);
+        }
+
         return response([
             'status' => 'data is updated'
         ]);
     }
+
+
 
     /**
      * Remove the specified resource from storage.

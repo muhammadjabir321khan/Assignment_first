@@ -21,11 +21,24 @@ class ProjectRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required',
-             'detail' => 'required',
-             'totalCost' => 'required',
-             'deadline'=>'required'
-        ];
+        switch ($this->method()) {
+            case 'POST': {
+                    return [
+                        'name' => 'required',
+                        'detail' => 'required',
+                        'totalCost' => 'required|integer',
+                        'deadline' => 'required'
+                    ];
+                }
+            case 'PUT':
+            case 'PATCH': {
+                    return [
+                        'name' => 'required',
+                        'detail' => 'required',
+                        'totalCost' => 'required|integer',
+                        'deadline' => 'required'
+                    ];
+                }
+        }
     }
 }

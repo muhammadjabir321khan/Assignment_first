@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
+use App\Models\Employee;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,37 +16,35 @@ use Yajra\Datatables\Datatables;
 class CompanyController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware(
-            'permission: create companies|edit companies| view companies|delete companies',
-            ['only' => ['index', 'store', 'create', 'edit', 'show', 'update', 'delete']]
-        );
-    }
-
     public function index(Request  $request)
     {
-        $company = Company::all();
+        $company = Company::orderBy('id', 'desc');
         if ($request->ajax()) {
             return Datatables::of($company)
                 ->addIndexColumn()
+
+
                 ->addColumn('action', function ($row) {
-                    $action = '<a href="' . route('companies.edit', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
-                    $action .= '<a class="btn btn-danger mx-1 btn-sm delete" data-table="companies-table" data-method="DELETE"
+                    $action = '<a href="javascript:void(0)"  class="btn btn-primary btn-sm edit" data-id="' . $row->id . '">Edit</a>     ';
+                    $action .= '<a class="btn btn-danger  btn-sm delete-company text-white" data-table="company" data-method="DELETE"
                     data-url="' . route('companies.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
                         Delete
                     </a>';
+
                     return $action;
+                })->addColumn('checkbox', function ($row) {
+                    $checkbox = '<input type="checkbox" name="company_checkbox" data-id="' . $row->id . '" class="data_id">';
+                    return $checkbox;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'checkbox'])
                 ->make(true);
         }
-        return view('companies.index');
+        return view('companies.index', compact('company'));
     }
 
     public function create()
     {
-        return view('companies.create');
+        return abort(403);
     }
 
     public function store(CompanyRequest $request)
@@ -64,21 +63,20 @@ class CompanyController extends Controller
                 $request->validate();
             }
             Company::create($data);
-        if($request->user()->hasRole('admin')){
-             $user=Auth::user();
-            \App\Jobs\MailJob::dispatch($user)->delay(now()->addSecond(1));
-        }
-          
+            if ($request->user()->hasRole('admin')) {
+                $user = Auth::user();
+                \App\Jobs\MailJob::dispatch($user)->delay(now()->addSecond(1));
+            }
+
             DB::commit();
             return response([
                 'company ' => ' company  is created'
-            ]);
+            ], 200);
         } catch (\Exception $e) {
             DB::rollback();
-            return response()->json([
-                'message' => 'The given data was invalid.',
-                'errors' => $e->getMessage(),
-            ], 422);
+            return response([
+                'errors' => $e->getMessage()
+            ]);
         }
     }
 
@@ -95,30 +93,48 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        return view('companies.edit', compact('company'));
+
+        return response()->json([
+            'data' => $company
+        ]);
     }
+
 
     /**
      * Update the specified resource in storage.
      */
     // Inside the update method of the controller
-    public function update(Request $request, Company $company)
+    public function update(CompanyRequest $request, $id)
     {
-        $company->name = $request->input('name');
-        $company->email = $request->input('email');
-        if ($request->hasFile('image')) {
-            Storage::delete('public/images/' . $company->logo);
-            $image = $request->file('image');
-            $filename = $image->getClientOriginalName();
-            $path = $request->file('image')->storeAs('public/images', $filename);
-            $company->logo = $filename;
+
+        try {
+            $existingCompany = Company::find($id);
+            if (!$existingCompany) {
+                throw new \Exception('Company not found.');
+            }
+
+            if ($request->hasFile('image')) {
+                Storage::delete('public/images/' . $existingCompany->logo);
+                $image = $request->file('image');
+                $filename = $image->getClientOriginalName();
+                $path = $request->file('image')->storeAs('public/images', $filename);
+                $existingCompany->logo = $filename;
+            }
+
+            $existingCompany->update($request->all());
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Company updated successfully.'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'errors' => $e->getMessage(),
+            ], 401);
         }
-        $company->update();
-        return response()->json([
-            'success' => true,
-            'message' => 'Company updated successfully.'
-        ]);
     }
+
+
 
     public function destroy(Company $company)
     {
@@ -128,21 +144,57 @@ class CompanyController extends Controller
 
     public  function search(Request $request)
     {
+
         $search = request('search');
         $projects = Project::Where('detail', 'like', "%$search%")->pluck('detail');
-        
         $companies = Company::where(function ($query) use ($projects) {
             foreach ($projects  as $project) {
                 $query->orWhere('name', 'like', "%$project%");
             }
         })->get();
-        // projects search by name
-        // $companies= Company::Where('name', 'like', "%$search%")->pluck('name','email');
-        // $companies = Project::where(function ($query) use ($companies) {
-        //     foreach ($companies as $project) {
-        //         $query->orWhere('detail', 'like', "%$project%");
-        //     }
-        // })->get();
         return view('companies.searching', compact('companies'));
+    }
+
+
+    public function showSearch()
+    {
+        $companies = Company::all();
+        return view('companies.company', compact('companies'));
+    }
+
+    public function company(Request $request)
+    {
+        $search = $request->input('search') ?? null;
+        $companies = Company::where(function ($query) use ($search, $request) {
+            $query->when($search, function ($query) use ($request) {
+                $query->where('name', 'like', "%$request->search%");
+                $query->orWhere('email', 'like', "%$request->search%");
+                $query->orWhereHas('employee', function ($query) use ($request) {
+                    $query->where('fname', 'like', "%$request->search%")->orWhere('lname', 'like', "%$request->search%");
+                });
+            });
+        })->get();
+        return response([
+            'company' => $companies
+        ]);
+    }
+
+    public function companies()
+    {
+        $companies = Company::count('id');
+        $employies = Employee::count('id');
+        $projects = Project::count('id');
+        return view('dashboard', compact('companies', 'employies', 'projects'));
+    }
+
+
+    public function deleteAll(Request $request)
+    {
+        // dd($request->all());
+        $companies = Company::whereIn('id', $request->ids);
+        $companies->delete();
+        return response()->json([
+            'data' => 'data is deleted'
+        ]);
     }
 }

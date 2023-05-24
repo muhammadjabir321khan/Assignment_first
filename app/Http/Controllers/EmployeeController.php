@@ -11,42 +11,42 @@ use App\Http\Requests\EmployeeRequest;
 class EmployeeController extends Controller
 {
 
+
+
     public function index(Request  $request)
     {
+        $companies = Company::all();
         if ($request->ajax()) {
-            $employees = Employee::with(['company', 'projects'])->get();
+            $employees = Employee::with(['company', 'projects'])->orderBy('id', 'desc');
             return Datatables::of($employees)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $action = '<a href="' . route('employees.edit', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
-
-                    $action .= '<a class="btn btn-danger mx-1 btn-sm delete" data-table="companies-table" data-method="DELETE"
+                    if (auth()->user()->hasRole('admin')) {
+                        $action = '<a href="javascript:void(0)" class="btn btn-primary btn-sm my-2 edit" data-id="' . $row->id . '">Edit</a> ';
+                        $action .= '<a class="btn btn-danger btn-sm mx-1 delete-record text-white" data-table="employee-table" data-method="DELETE"
                     data-url="' . route('employees.destroy', $row->id) . '" data-toggle="tooltip" data-placement="top" title="Delete Company">
-                        Delete
+                    Delete
                     </a>';
-                    return $action;
+                        return  $action;
+                    }
                 })->addColumn('company', function ($row) {
                     return $row->company ? $row->company->name : 'N/A';
                 })->addColumn('projects', function ($row) {
-                    $project = $row->projects ;
-                    $newData= $project->pluck('name')->implode(', ');
-                    return  $newData ? $newData : 'No PROJECT AVALIABLE';
+                    $project = $row->projects;
+                    $newData = $project->pluck('name')->implode(', ');
+                    return  $newData ? $newData : 'NA';
                 })
                 ->rawColumns(['action', 'company', 'projects'])
                 ->toJson();
         }
 
-
-        return view('employees.index');
+        return view('employees.index', compact('companies'));
     }
-
-
-
 
     public function create()
     {
-        $companies = Company::all();
-        return view('employees.create', compact('companies'));
+
+        abort(403);
     }
 
 
@@ -58,15 +58,16 @@ class EmployeeController extends Controller
     {
 
         try {
-            $employe = Employee::create($request->all());
+            Employee::create($request->all());
             return response([
                 'company ' => 'Employee is created'
-            ]);
+
+            ], 200);
         } catch (\Exception $e) { {
                 return response()->json([
                     'message' => 'The given data was invalid.',
-                    'errors' => $request->errors(),
-                ], 422);
+                    'errors' => $e->getMessage()
+                ], 401);
             }
         }
     }
@@ -82,7 +83,10 @@ class EmployeeController extends Controller
     public function edit(Employee $employee)
     {
         $companies = Company::all();
-        return view('employees.edit', compact('employee', 'companies'));
+        return response()->json([
+            'comapnies' => $companies,
+            'employee' => $employee,
+        ]);
     }
 
 
@@ -91,12 +95,21 @@ class EmployeeController extends Controller
      */
     public function update(EmployeeRequest $request,  Employee $employee)
     {
-        $employee->update(
-            $request->all()
-        );
-        return response([
-            'employee' => 'employee is updated succfully'
-        ]);
+
+
+        try {
+            $employee->update(
+                $request->all()
+            );
+            return response([
+                'employee' => 'employee is updated succfully'
+            ]);
+        } catch (\Exception $e) {
+            return response([
+                'status' =>  401,
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 
     /**

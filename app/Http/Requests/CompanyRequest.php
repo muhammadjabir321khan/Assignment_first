@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Company;
+use GuzzleHttp\Psr7\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CompanyRequest extends FormRequest
@@ -21,11 +24,35 @@ class CompanyRequest extends FormRequest
      */
     public function rules(): array
     {
+        switch ($this->method()) {
+            case 'POST': {
+                    return [
+                        'name' => 'required',
+                        'email' => 'required|unique:companies,email|email',
+                        'image' => 'required|mimes:jpg,jpeg,png,bmp,tiff|image|dimensions:width=500,height=500',
+                    ];
+                }
+            case 'PUT':
+            case 'PATCH': {
+                    return [
+                        'name' => ['required'],
+                        'email' => ['required', 'email', 'unique:companies,email,' . $this->id . ',id'],
+                        'image' => ['mimes:jpg,jpeg,png,bmp,tiff', 'dimensions:min_width=100,min_height=100'],
+                    ];
+                }
+        }
+    }
+
+    /**
+     * Get the validation error messages.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
         return [
-            'name' =>'required',
-            'email' => 'required|unique:companies|max:255',
-            'image' => 'required|dimensions:min_width=100,min_height=100|mimes:jpeg,png,gif'
-    
+            'image.mimes' => 'Invalid file format',
+            'image.dimensions' => 'Invalid image dimensions. Minimum width and height required: 100px.',
         ];
     }
 }
