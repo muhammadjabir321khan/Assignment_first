@@ -20,6 +20,11 @@ class Company extends Model
         return  $this->hasMany(Employee::class);
     }
 
+    public function  projects()
+    {
+        return  $this->hasMany(Project::class);
+    }
+
 
 
 

@@ -5,81 +5,41 @@ namespace App\Http\Controllers;
 use App\Http\Resources\CompanyResource;
 use App\Models\Company;
 use App\Models\Employee;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 
 class ApiController extends Controller
 {
     public function index(Request $request)
     {
-        $search = $request->search;
-
-        $companies = Company::with(['employee'])->where(function ($query) use ($search) {
-            $query->when($search, function ($query) use ($search) {
-                $query->where('name', 'like', "%$search%")
-                    ->orWhere('email', 'like', "%$search%")
-                    ->orWhereHas('employee', function ($query) use ($search) {
-                        $query->where('fname', 'like', "%$search%")
-                            ->orWhere('lname', 'like', "%$search%");
+        $companies =  Company::where(function ($query) use ($request) {
+            if ($request->has('name')) {
+                $query->where('name', 'like', "%$request->name%")
+                    ->orWhere('email', 'like', "%$request->name%");
+                $query->orWhereHas('employee', function ($query)  use ($request) {
+                    $query->where('fname', 'like', "%$request->name%")
+                        ->orWhere('lname', 'like', "%$request->name%");
+                    $query->orWhereHas('projects', function ($query) use ($request) {
+                        $query->where('name', 'like', "%$request->name%")->orWhere('detail', 'like', "%$request->name%");
                     });
-            });
-        })->get();
-
-        // $companiesWithEmployeesInRange = $companies->filter(function ($company) {
-        //     $employeeCount = $company->employee->count();
-        //     return $employeeCount >= 2 && $employeeCount <= 10;
-        // });
-
-        // $companiesWithMinEmployees = $companiesWithEmployeesInRange->filter(function ($company) {
-        //     $employeeCount = $company->employee->count();
-        //     return $employeeCount >= 5;
-        // });
-        return response()->json([
-            // 'companies' => $companiesWithEmployeesInRange,
-            'all' => $companies,
-            // 'employee' => $companiesWithMinEmployees
-
-        ]);
-        // }
-
-        // $companiesWithEmployeesInRange now contains the filtered companies
-
-        // ...rest of your code
-
-        // public function index(Request $request)
-        // {
-        //     $search = $request->search;
-
-        //     $companies = Company::with(['employee'])->where(function ($query) use ($search) {
-        //         $query->when($search, function ($query) use ($search) {
-        //             $query->where('name', 'like', "%$search%")
-        //                 ->orWhere('email', 'like', "%$search%")
-        //                 ->orWhereHas('employee', function ($query) use ($search) {
-        //                     $query->where('fname', 'like', "%$search%")
-        //                         ->orWhere('lname', 'like', "%$search%");
-        //                 });
-        //         });
-        //     });
-
-        //     if ($request->has('employee')) {
-        //         $companies = $companies->whereHas('employee', function ($query) use ($search) {
-        //             $query->where('fname', 'like', "%$search%")
-        //                 ->orWhere('lname', 'like', "%$search%");
-        //         });
-        //     }
-
-        //     $companies = $companies->get();
-        //     return response()->json([
-        //         'companies' => $companies
-
-        //     ]);
-
-        //     // $companies now contains the filtered companies based on the search query
-
-        //     // ...rest of your code
-        // }
-
-
-
-
+                });
+            }
+            if (($request->has('date'))) {
+                $dateTime = DateTime::createFromFormat('d M, Y', $request->date);
+                $databaseDate = $dateTime->format('Y-m-d');
+                $query->where('created_at', 'like', "%$databaseDate%");
+            }
+            if (($request->has('min')) || ($request->has('max'))) {
+                $query->whereHas('employee', function ($query)  use ($request) {
+                    $query->select('company_id')
+                        ->groupBy('company_id')
+                        ->havingRaw('COUNT(*) >= ' . $request->min)
+                        ->havingRaw('COUNT(*) <= ' . $request->max);
+                });
+            }
+        })->with('employee.projects')->get();
+        return CompanyResource::collection($companies);
     }
 }

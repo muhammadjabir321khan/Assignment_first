@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('detail');
             $table->integer('totalCost');
             $table->date('deadline');
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->timestamps();
         });
     }

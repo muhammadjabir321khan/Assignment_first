@@ -134,8 +134,7 @@
                     <thead>
                         <tr>
                             <th>
-                                <input type="checkbox" name="check_box" id="check" style="margin-left: 3px;">
-                                <label for="check"> checkbox</label>
+                                <input type="checkbox" name="check_box" id="check">
                             </th>
                             <th>Name</th>
                             <th>Email</th>
@@ -284,7 +283,7 @@
         });
 
         $('#company').DataTable({
-            "responsive": true,
+            "responsive": false,
             "processing": false,
             "serverSide": true,
             "ajax": {

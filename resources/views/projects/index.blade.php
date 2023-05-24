@@ -328,7 +328,7 @@
 
         });
         $('#project').DataTable({
-            "responsive": true,
+            "responsive": false,
             "processing": false,
             "serverSide": true,
             "ajax": {

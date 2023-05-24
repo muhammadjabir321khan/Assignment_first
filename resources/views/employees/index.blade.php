@@ -304,7 +304,7 @@
         $('#employee-table').DataTable({
             "processing": false,
             "serverSide": true,
-            "responsive": true,
+            "responsive": false,
             "ajax": {
                 "url": "{{ route('employees.index') }}",
                 "method": "GET",

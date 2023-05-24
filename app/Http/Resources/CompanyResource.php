@@ -19,6 +19,7 @@ class CompanyResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'logo' => $this->logo,
+            'created_at' => $this->created_at,
             'employee' => EmployeeResource::collection($this->whenLoaded('employee'))
         ];
     }
